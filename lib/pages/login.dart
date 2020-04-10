@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pass_manager_frontend/forms/login.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -29,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
                 color: Colors.grey[800],
                 size: 120,
               ),
+              LoginForm(),
             ],
           ),
         )
