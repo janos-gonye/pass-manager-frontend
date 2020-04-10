@@ -24,6 +24,11 @@ class _LoginPageState extends State<LoginPage> {
                   fontSize: 30,
                 ),
               ),
+              Icon(
+                Icons.vpn_key,
+                color: Colors.grey[800],
+                size: 120,
+              ),
             ],
           ),
         )
