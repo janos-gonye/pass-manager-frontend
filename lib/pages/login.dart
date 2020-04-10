@@ -16,6 +16,14 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Text('Johnny\'s\nPassword\nManager',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.grey[800],
+                  fontWeight: FontWeight.w800,
+                  fontSize: 30,
+                ),
+              ),
             ],
           ),
         )
