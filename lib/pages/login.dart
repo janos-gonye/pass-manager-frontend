@@ -11,13 +11,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: Container(
+      body: Scrollbar(
+        child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 60,
-              vertical: 40,
-            ),
+            padding: const EdgeInsets.fromLTRB(60, 130, 60, 40),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -38,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                 LoginForm(),
               ],
             ),
-          ),
+          )
         )
       )
     );
