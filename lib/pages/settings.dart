@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pass_manager_frontend/forms/settings.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -20,7 +21,8 @@ class SettingsPage extends StatelessWidget {
                     fontWeight: FontWeight.w800,
                     fontSize: 30,
                   )
-                )
+                ),
+                SettingsForm(),
               ],
             )
           )
