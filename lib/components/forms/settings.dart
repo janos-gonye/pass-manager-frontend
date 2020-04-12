@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SettingsForm extends StatefulWidget {
   @override
@@ -33,6 +34,10 @@ class _SettingsFormState extends State<SettingsForm> {
               labelText: 'Port number',
               hintText: 'generally 443 for HTTPS',
             ),
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              WhitelistingTextInputFormatter.digitsOnly,
+            ],
             validator: (value) {
               if (value.isEmpty) {
                 return 'Please enter port number';
