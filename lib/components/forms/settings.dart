@@ -8,6 +8,7 @@ class SettingsForm extends StatefulWidget {
 
 class _SettingsFormState extends State<SettingsForm> {
   final _formKey = GlobalKey<FormState>();
+  String protocol = 'https';
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,31 @@ class _SettingsFormState extends State<SettingsForm> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          Row(
+            children: <Widget>[
+              Text(
+                'Select protocol: ',
+              ),
+              DropdownButton<String>(
+                value: protocol,
+                onChanged: (String newProtocol) {
+                  if (newProtocol == protocol) {
+                    return null;
+                  }
+                  setState(() {
+                    protocol = newProtocol;
+                    print(protocol);
+                  });
+                },
+                items: <String>['http', 'https'].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
           TextFormField(
             decoration: InputDecoration(
               labelText: 'Server URL',
