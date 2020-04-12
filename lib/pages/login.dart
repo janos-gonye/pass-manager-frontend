@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pass_manager_frontend/forms/login.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
 
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
+class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
