@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pass_manager_frontend/forms/login.dart';
+import 'package:pass_manager_frontend/components/forms/login.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
 
 class LoginPage extends StatelessWidget {

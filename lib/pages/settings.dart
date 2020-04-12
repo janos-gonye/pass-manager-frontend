@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pass_manager_frontend/forms/settings.dart';
+import 'package:pass_manager_frontend/components/forms/settings.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
