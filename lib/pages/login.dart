@@ -11,6 +11,13 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+
+        },
+        child: Icon(Icons.settings),
+        backgroundColor: Colors.grey[800],
+      ),
       body: Scrollbar(
         child: SingleChildScrollView(
           child: Padding(
