@@ -18,7 +18,7 @@ class _LoginFormState extends State<LoginForm> {
         children: <Widget>[
           TextFormField(
             decoration: InputDecoration(
-              hintText: 'Username',
+              labelText: 'Username',
             ),
             validator: (value) {
               if (value.isEmpty) {
@@ -29,7 +29,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           TextFormField(
             decoration: InputDecoration(
-              hintText: 'Password',
+              labelText: 'Password',
             ),
             obscureText: true,
             validator: (value) {
