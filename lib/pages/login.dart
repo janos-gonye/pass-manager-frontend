@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pass_manager_frontend/forms/login.dart';
+import 'package:pass_manager_frontend/constants.dart' as constants;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
+          Navigator.pushNamed(context, constants.ROUTE_SETTINGS);
         },
         child: Icon(Icons.settings),
         backgroundColor: Colors.grey[800],
