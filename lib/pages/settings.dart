@@ -31,6 +31,7 @@ class SettingsPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(height: 30,),
                 SettingsForm(callAfterSave: () {
                   Navigator.pop(context, {'message': 'Settings saved'});
                 }),
