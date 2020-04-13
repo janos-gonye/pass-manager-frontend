@@ -21,13 +21,15 @@ class SettingsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text('Settings',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.grey[800],
-                    fontWeight: FontWeight.w800,
-                    fontSize: 30,
-                  )
+                Center(
+                  child: Text('Settings',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.w800,
+                      fontSize: 30,
+                    ),
+                  ),
                 ),
                 SettingsForm(callAfterSave: () {
                   Navigator.pop(context, {'message': 'Settings saved'});
