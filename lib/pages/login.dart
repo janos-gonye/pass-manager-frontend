@@ -1,18 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:pass_manager_frontend/components/forms/login.dart';
-import 'package:pass_manager_frontend/constants.dart' as constants;
+import 'package:pass_manager_frontend/pages/settings.dart';
 
 class LoginPage extends StatelessWidget {
+
+  _navigateToSettingsAndShowMessage(BuildContext context) async {
+    final Map<String, String> result = await Navigator.push(
+      context, MaterialPageRoute(builder: (context) => SettingsPage()));
+    if (result != null &&
+        result.isNotEmpty &&
+        result.containsKey("message")) {
+      String message = result['message'];
+      Scaffold.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text("$message")));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, constants.ROUTE_SETTINGS);
+      // Use a 'Builder' to avoid an error related to 'Scaffold.of'.
+      // See more by visiting the following URL.
+      // https://api.flutter.dev/flutter/material/Scaffold/of.html#material.Scaffold.of.2
+      floatingActionButton: Builder(
+        builder: (BuildContext context) {
+          return FloatingActionButton(
+            onPressed: () {
+              _navigateToSettingsAndShowMessage(context);
+            },
+            child: Icon(Icons.settings),
+            backgroundColor: Colors.grey[800],
+          );
         },
-        child: Icon(Icons.settings),
-        backgroundColor: Colors.grey[800],
       ),
       body: Scrollbar(
         child: SingleChildScrollView(
