@@ -6,6 +6,13 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: Icon(Icons.arrow_back),
+        backgroundColor: Colors.grey[800],
+      ),
       body: Scrollbar(
         child: SingleChildScrollView(
           child: Padding(
