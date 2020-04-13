@@ -14,9 +14,9 @@ class SettingsForm extends StatefulWidget {
 
 class _SettingsFormState extends State<SettingsForm> {
   final _formKey = GlobalKey<FormState>();
-  String protocol = 'https';
-  String host;
-  int port;
+  String _protocol = 'https';
+  String _host;
+  int _port;
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +32,14 @@ class _SettingsFormState extends State<SettingsForm> {
                 'Select protocol: ',
               ),
               DropdownButton<String>(
-                value: protocol,
+                value: _protocol,
                 onChanged: (String newProtocol) {
-                  if (newProtocol == protocol) {
+                  if (newProtocol == _protocol) {
                     return null;
                   }
                   setState(() {
-                    protocol = newProtocol;
-                    print(protocol);
+                    _protocol = newProtocol;
+                    print(_protocol);
                   });
                 },
                 items: <String>['http', 'https'].map<DropdownMenuItem<String>>((String value) {
@@ -83,9 +83,9 @@ class _SettingsFormState extends State<SettingsForm> {
             onPressed: () {
               if (_formKey.currentState.validate()) {
                 Settings settings = new Settings(
-                  protocol: protocol,
-                  host: host,
-                  port: port
+                  protocol: _protocol,
+                  host: _host,
+                  port: _port
                 );
                 SettingsService.saveSettings(settings);
                 widget.callAfterSave();
