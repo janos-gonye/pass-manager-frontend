@@ -45,12 +45,12 @@ class _SettingsFormState extends State<SettingsForm> {
           ),
           TextFormField(
             decoration: InputDecoration(
-              labelText: 'Server URL',
+              labelText: 'Hostname',
               hintText: 'server.example.com',
             ),
             validator: (value) {
               if (value.isEmpty) {
-                return 'Please enter server URL';
+                return 'Please enter hostname or IP address';
               }
               return null;
             },

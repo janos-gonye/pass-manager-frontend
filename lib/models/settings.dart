@@ -1,7 +1,7 @@
 class Settings {
   String protocol;
-  String url;
+  String host;
   int port;
 
-  Settings({this.protocol, this.url, this.port});
+  Settings({this.protocol, this.host, this.port});
 }
