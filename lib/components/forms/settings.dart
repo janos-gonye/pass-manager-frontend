@@ -4,6 +4,10 @@ import 'package:pass_manager_frontend/models/settings.dart';
 import 'package:pass_manager_frontend/services/settings.dart';
 
 class SettingsForm extends StatefulWidget {
+  final Function callAfterSave;
+
+  const SettingsForm ({ Key key, this.callAfterSave }): super(key: key);
+
   @override
   _SettingsFormState createState() => _SettingsFormState();
 }
@@ -84,7 +88,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   port: port
                 );
                 SettingsService.saveSettings(settings);
-                Navigator.pop(context);
+                widget.callAfterSave();
               }
             },
             child: Text('Save')

@@ -29,7 +29,9 @@ class SettingsPage extends StatelessWidget {
                     fontSize: 30,
                   )
                 ),
-                SettingsForm(),
+                SettingsForm(callAfterSave: () {
+                  Navigator.pop(context, {'message': 'Settings saved'});
+                }),
               ],
             )
           )
