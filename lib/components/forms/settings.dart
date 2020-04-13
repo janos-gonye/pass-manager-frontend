@@ -102,7 +102,7 @@ class _SettingsFormState extends State<SettingsForm> {
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
-        return CircularProgressIndicator();
+        return LinearProgressIndicator();
       }
     );
   }
