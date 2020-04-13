@@ -16,7 +16,7 @@ class _SettingsFormState extends State<SettingsForm> {
   final _formKey = GlobalKey<FormState>();
   String protocol = 'https';
   String host;
-  String port;
+  int port;
 
   @override
   Widget build(BuildContext context) {

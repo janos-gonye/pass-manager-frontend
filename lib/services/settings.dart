@@ -7,7 +7,7 @@ class SettingsService {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('protocol', settings.protocol);
     prefs.setString('host', settings.host);
-    prefs.setString('port', settings.port);
+    prefs.setInt('port', settings.port);
   }
 
 }
