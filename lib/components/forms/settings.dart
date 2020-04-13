@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pass_manager_frontend/models/settings.dart';
+import 'package:pass_manager_frontend/services/settings.dart';
 
 class SettingsForm extends StatefulWidget {
   @override
@@ -9,6 +11,8 @@ class SettingsForm extends StatefulWidget {
 class _SettingsFormState extends State<SettingsForm> {
   final _formKey = GlobalKey<FormState>();
   String protocol = 'https';
+  String host;
+  int port;
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +78,13 @@ class _SettingsFormState extends State<SettingsForm> {
           RaisedButton(
             onPressed: () {
               if (_formKey.currentState.validate()) {
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(content: Text('Save Settings'))
+                Settings settings = new Settings(
+                  protocol: protocol,
+                  host: host,
+                  port: port
                 );
+                SettingsService.saveSettings(settings);
+                Navigator.pop(context);
               }
             },
             child: Text('Save')
