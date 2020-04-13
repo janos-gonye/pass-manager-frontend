@@ -10,4 +10,12 @@ class SettingsService {
     prefs.setInt('port', settings.port);
   }
 
+  static Future<Settings> loadSettings() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return Settings(
+      protocol: prefs.getString('protocol') ?? 'https',
+      host: prefs.getString('host'),
+      port: prefs.getInt('port') ?? 443,
+    );
+  }
 }
