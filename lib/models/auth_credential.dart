@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 
-class AuthCredentialModel {
+class AuthCredential {
     String username;
     String password;
 
-    AuthCredentialModel({@required this.username, @required this.password});
+    AuthCredential({@required this.username, @required this.password});
 }
