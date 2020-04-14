@@ -42,7 +42,12 @@ class _LoginFormState extends State<LoginForm> {
           RaisedButton(
             onPressed: () {
               if (_formKey.currentState.validate()) {
-                Scaffold.of(context).showSnackBar(SnackBar(content: Text('Login')));
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Login'),
+                    duration: Duration(seconds: 2),
+                  )
+                );
               }
             },
             child: Text('Login'),
