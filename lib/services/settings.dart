@@ -18,4 +18,13 @@ class SettingsService {
       port: prefs.getInt('port') ?? 443,
     );
   }
+
+  static Future<Uri> getServerUrl() async {
+    Settings settings = await loadSettings();
+    return Uri(
+      scheme: settings.protocol,
+      host: settings.host,
+      port: settings.port,
+    );
+  }
 }
