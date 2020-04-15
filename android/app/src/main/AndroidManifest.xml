@@ -8,7 +8,11 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="pass_manager_frontend"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false"
+        android:fullBackupContent="false">
+        <!-- Disable android backup.
+             See more here: https://developer.android.com/guide/topics/data/autobackup#IncludingFiles -->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
