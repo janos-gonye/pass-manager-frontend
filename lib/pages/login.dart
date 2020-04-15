@@ -13,7 +13,9 @@ class LoginPage extends StatelessWidget {
       String message = result['message'];
       Scaffold.of(context)
       ..removeCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text("$message")));
+      ..showSnackBar(SnackBar(
+        content: Text("$message"),
+        duration: Duration(seconds: 2)));
     }
   }
 
