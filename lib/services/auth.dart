@@ -13,16 +13,17 @@ class AuthService extends ApiService {
   static const String _refreshTokenName = 'refreshToken';
 
   static Future<bool> login(AuthCredential authCredential) async {
-    Response response = await post(
-      constants.PATH_OBTAIN_TOKENS,
-      body: authCredential.toJson());
+    Response response = await ApiService.post(
+      constants.PATH_OBTAIN_TOKENS, authCredential.toJson());
     if (response.statusCode == 401) {
       return false;
+    } else if (response.statusCode == 201) {
+      final Map <String, String> tokens = jsonDecode(response.body);
+      accessToken = tokens["access"];
+      refreshToken = tokens["refresh"];
+      return true;
     }
-    final Map <String, String> tokens = jsonDecode(response.body);
-    accessToken = tokens["access"];
-    refreshToken = tokens["refresh"];
-    return true;
+    // TODO: Handle exceptions and other status codes.
   }
 
   static void _setToken({@required String key, @required String value}) {
