@@ -5,27 +5,34 @@ class ApiService {
 
   static Future<Uri> _getServerUrl(String path) async {
     Uri url = await SettingsService.getServerUrl();
-    url.replace(path: path);
-    return url;
+    return url.replace(path: path);
   }
 
-  static Future<Response> get(String path, {Map<String, String> headers}) {
-    return Client().get(_getServerUrl(path), headers: headers);
+  static Map<String, String> _headers(Map <String, String> headers) {
+    headers = headers ?? {};
+    if (!headers.containsKey("Content-Type")) {
+      headers["Content-Type"] = "application/json";
+    }
+    return headers;
   }
 
-  static Future<Response> post(String path, body, {Map<String, String> headers}) {
-    return Client().post(_getServerUrl(path), body: body, headers: headers);
+  static Future<Response> get(String path, {Map<String, String> headers}) async {
+    return await Client().get(await _getServerUrl(path), headers: _headers(headers));
   }
 
-  static Future<Response> put(String path, body, {Map<String, String> headers}) {
-    return Client().put(_getServerUrl(path), body: body, headers: headers);
+  static Future<Response> post(String path, body, {Map<String, String> headers}) async {
+    return await Client().post(await _getServerUrl(path), body: body, headers: _headers(headers));
   }
 
-  static Future<Response> patch(String path, body, {Map<String, String> headers}) {
-    return Client().patch(_getServerUrl(path), body: body, headers: headers);
+  static Future<Response> put(String path, body, {Map<String, String> headers}) async {
+    return await Client().put(await _getServerUrl(path), body: body, headers: _headers(headers));
   }
 
-  static Future<Response> delete(String path, {Map<String, String> headers}) {
-    return Client().delete(_getServerUrl(path), headers: headers);
+  static Future<Response> patch(String path, body, {Map<String, String> headers}) async {
+    return await Client().patch(await _getServerUrl(path), body: body, headers: _headers(headers));
+  }
+
+  static Future<Response> delete(String path, {Map<String, String> headers}) async {
+    return await Client().delete(await _getServerUrl(path), headers: _headers(headers));
   }
 }
