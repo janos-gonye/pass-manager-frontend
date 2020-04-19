@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:html';
 
 import 'package:http/http.dart';
 import 'package:flutter/foundation.dart';
@@ -16,10 +15,10 @@ class AuthService extends ApiService {
   static Future<bool> login(AuthCredential authCredential) async {
     Response response = await ApiService.post(
       constants.PATH_OBTAIN_TOKENS, authCredential.toJson());
-    if (response.statusCode == HttpStatus.unauthorized) {
+    if (response.statusCode == 401) {
       return false;
-    } else if (response.statusCode == HttpStatus.created) {
-      final Map <String, String> tokens = jsonDecode(response.body);
+    } else if (response.statusCode == 200) {
+      final Map <String, dynamic> tokens = json.decode(response.body.toString());
       accessToken = tokens["access"];
       refreshToken = tokens["refresh"];
       return true;

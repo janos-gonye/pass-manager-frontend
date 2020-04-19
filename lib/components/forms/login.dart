@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pass_manager_frontend/models/auth_credential.dart';
+import 'package:pass_manager_frontend/services/auth.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -7,6 +9,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
+  AuthCredential _authCredential = AuthCredential(username: "", password: "");
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +27,7 @@ class _LoginFormState extends State<LoginForm> {
               if (value.isEmpty) {
                 return 'Please enter your username';
               }
+              _authCredential.username = value;
               return null;
             },
           ),
@@ -36,15 +40,17 @@ class _LoginFormState extends State<LoginForm> {
               if (value.isEmpty) {
                 return 'Please enter your password';
               }
+              _authCredential.password = value;
               return null;
             },
           ),
           RaisedButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState.validate()) {
+                bool success = await AuthService.login(_authCredential);
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Login'),
+                    content: Text("$success"),
                     duration: Duration(seconds: 2),
                   )
                 );

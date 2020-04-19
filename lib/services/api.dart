@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:pass_manager_frontend/services/settings.dart';
 
@@ -10,9 +11,8 @@ class ApiService {
 
   static Map<String, String> _headers(Map <String, String> headers) {
     headers = headers ?? {};
-    if (!headers.containsKey("Content-Type")) {
-      headers["Content-Type"] = "application/json";
-    }
+    headers["Content-Type"] = "application/json";
+    headers["Accept"] = "application/json";
     return headers;
   }
 
@@ -21,15 +21,15 @@ class ApiService {
   }
 
   static Future<Response> post(String path, body, {Map<String, String> headers}) async {
-    return await Client().post(await _getServerUrl(path), body: body, headers: _headers(headers));
+    return await Client().post(await _getServerUrl(path), body: json.encode(body), headers: _headers(headers));
   }
 
   static Future<Response> put(String path, body, {Map<String, String> headers}) async {
-    return await Client().put(await _getServerUrl(path), body: body, headers: _headers(headers));
+    return await Client().put(await _getServerUrl(path), body: json.encode(body), headers: _headers(headers));
   }
 
   static Future<Response> patch(String path, body, {Map<String, String> headers}) async {
-    return await Client().patch(await _getServerUrl(path), body: body, headers: _headers(headers));
+    return await Client().patch(await _getServerUrl(path), body: json.encode(body), headers: _headers(headers));
   }
 
   static Future<Response> delete(String path, {Map<String, String> headers}) async {
