@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pass_manager_frontend/components/forms/login.dart';
 import 'package:pass_manager_frontend/pages/settings.dart';
+import 'package:pass_manager_frontend/constants.dart' as constants;
 
 class LoginPage extends StatelessWidget {
 
@@ -59,6 +60,9 @@ class LoginPage extends StatelessWidget {
                   size: 120,
                 ),
                 LoginForm(callAfterSuccess: () {
+                  Navigator.pushNamed(context, constants.ROUTE_PROFILES, arguments: {
+                    "message": "Successfully logged in",
+                  });
                 }),
               ],
             ),
