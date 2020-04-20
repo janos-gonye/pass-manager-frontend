@@ -58,7 +58,8 @@ class LoginPage extends StatelessWidget {
                   color: Colors.grey[800],
                   size: 120,
                 ),
-                LoginForm(),
+                LoginForm(callAfterSuccess: () {
+                }),
               ],
             ),
           )

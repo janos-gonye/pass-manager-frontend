@@ -3,6 +3,10 @@ import 'package:pass_manager_frontend/models/auth_credential.dart';
 import 'package:pass_manager_frontend/services/auth.dart';
 
 class LoginForm extends StatefulWidget {
+  final Function callAfterSuccess;
+
+  LoginForm({Key key, this.callAfterSuccess}): super(key: key);
+
   @override
   _LoginFormState createState() => _LoginFormState();
 }
@@ -48,12 +52,9 @@ class _LoginFormState extends State<LoginForm> {
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 bool success = await AuthService.login(_authCredential);
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text("$success"),
-                    duration: Duration(seconds: 2),
-                  )
-                );
+                if (success) {
+                  widget.callAfterSuccess();
+                }
               }
             },
             child: Text('Login'),
