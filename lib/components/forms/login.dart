@@ -54,6 +54,13 @@ class _LoginFormState extends State<LoginForm> {
                 bool success = await AuthService.login(_authCredential);
                 if (success) {
                   widget.callAfterSuccess();
+                } else {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Invalid credentials"),
+                      duration: Duration(seconds: 2),
+                    )
+                  );
                 }
               }
             },
