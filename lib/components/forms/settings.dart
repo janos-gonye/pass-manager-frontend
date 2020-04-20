@@ -43,7 +43,9 @@ class _SettingsFormState extends State<SettingsForm> {
                         if (newProtocol == snapshot.data.protocol) {
                           return null;
                         }
-                        snapshot.data.protocol = newProtocol;
+                        setState(() {
+                          snapshot.data.protocol = newProtocol;
+                        });
                       },
                       items: <String>['http', 'https']
                       .map<DropdownMenuItem<String>>((String value) {
