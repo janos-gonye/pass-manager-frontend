@@ -1,0 +1,12 @@
+import 'package:pass_manager_frontend/services/api.dart';
+import 'package:pass_manager_frontend/services/auth.dart';
+
+class AuthorizedApiSerive extends ApiService {
+
+  @override
+  Future<Map<String, String>> extendHeaders(Map <String, String> headers) async {
+    headers = await super.extendHeaders(headers);
+    headers["Authorization"] = "Bearer ${await AuthService.accessToken}";
+    return headers;
+  }
+}
