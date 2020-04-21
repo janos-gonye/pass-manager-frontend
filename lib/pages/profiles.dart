@@ -25,13 +25,6 @@ class _ProfilesPageState extends State<ProfilesPage> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        child: Icon(Icons.arrow_back),
-        backgroundColor: Colors.grey[800],
-      ),
       body: Center(child: Text("Profiles page")),
     );
   }
