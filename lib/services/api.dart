@@ -9,7 +9,7 @@ class ApiService {
     return url.replace(path: path);
   }
 
-  Map<String, String> extendHeaders(Map <String, String> headers) {
+  Future<Map<String, String>> extendHeaders(Map <String, String> headers) async {
     headers = headers ?? {};
     headers["Content-Type"] = "application/json";
     headers["Accept"] = "application/json";
@@ -17,22 +17,22 @@ class ApiService {
   }
 
   Future<Response> get(String path, {Map<String, String> headers}) async {
-    return await Client().get(await _getServerUrl(path), headers: extendHeaders(headers));
+    return await Client().get(await _getServerUrl(path), headers: await extendHeaders(headers));
   }
 
   Future<Response> post(String path, body, {Map<String, String> headers}) async {
-    return await Client().post(await _getServerUrl(path), body: json.encode(body), headers: extendHeaders(headers));
+    return await Client().post(await _getServerUrl(path), body: json.encode(body), headers: await extendHeaders(headers));
   }
 
   Future<Response> put(String path, body, {Map<String, String> headers}) async {
-    return await Client().put(await _getServerUrl(path), body: json.encode(body), headers: extendHeaders(headers));
+    return await Client().put(await _getServerUrl(path), body: json.encode(body), headers: await extendHeaders(headers));
   }
 
   Future<Response> patch(String path, body, {Map<String, String> headers}) async {
-    return await Client().patch(await _getServerUrl(path), body: json.encode(body), headers: extendHeaders(headers));
+    return await Client().patch(await _getServerUrl(path), body: json.encode(body), headers: await extendHeaders(headers));
   }
 
   Future<Response> delete(String path, {Map<String, String> headers}) async {
-    return await Client().delete(await _getServerUrl(path), headers: extendHeaders(headers));
+    return await Client().delete(await _getServerUrl(path), headers: await extendHeaders(headers));
   }
 }
