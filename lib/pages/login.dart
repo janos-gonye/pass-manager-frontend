@@ -60,7 +60,7 @@ class LoginPage extends StatelessWidget {
                   size: 120,
                 ),
                 LoginForm(callAfterSuccess: () {
-                  Navigator.pushNamed(context, constants.ROUTE_PROFILES, arguments: {
+                  Navigator.pushReplacementNamed(context, constants.ROUTE_PROFILES, arguments: {
                     "message": "Successfully logged in",
                   });
                 }),
