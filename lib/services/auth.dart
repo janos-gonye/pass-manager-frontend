@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -10,10 +10,11 @@ import 'package:pass_manager_frontend/services/api.dart';
 
 class AuthService extends ApiService {
   static const String _accesTokenName = 'accessToken';
-  static const String _refreshTokenName = 'refreshToken';
+  static const _refreshTokenName = 'refreshToken';
+  static final _secureStorage = FlutterSecureStorage();
 
-  static Future<bool> login(AuthCredential authCredential) async {
-    Response response = await ApiService.post(
+  Future<bool> login(AuthCredential authCredential) async {
+    http.Response response = await post(
       constants.PATH_OBTAIN_TOKENS, authCredential.toJson());
     if (response.statusCode == 401) {
       return false;
@@ -27,13 +28,11 @@ class AuthService extends ApiService {
   }
 
   static void _setToken({@required String key, @required String value}) {
-    final FlutterSecureStorage secureStorage = FlutterSecureStorage();
-    secureStorage.write(key: key, value: value);
+    _secureStorage.write(key: key, value: value);
   }
 
   static Future<String> _getToken({@required String key}) async {
-    final FlutterSecureStorage storage = FlutterSecureStorage();
-    return await storage.read(key: key);
+    return await _secureStorage.read(key: key);
   }
 
   static set accessToken(String value) {

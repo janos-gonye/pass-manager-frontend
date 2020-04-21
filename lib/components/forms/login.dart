@@ -13,7 +13,8 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
-  AuthCredential _authCredential = AuthCredential(username: "", password: "");
+  final AuthCredential _authCredential = AuthCredential(username: "", password: "");
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class _LoginFormState extends State<LoginForm> {
           RaisedButton(
             onPressed: () async {
               if (_formKey.currentState.validate()) {
-                bool success = await AuthService.login(_authCredential);
+                bool success = await _authService.login(_authCredential);
                 if (success) {
                   widget.callAfterSuccess();
                 } else {
