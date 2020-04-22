@@ -1,7 +1,7 @@
 import 'package:pass_manager_frontend/services/api.dart';
 import 'package:pass_manager_frontend/services/auth.dart';
 
-class AuthorizedApiSerive extends ApiService {
+class AuthorizedApiService extends ApiService {
 
   @override
   Future<Map<String, String>> extendHeaders(Map <String, String> headers) async {
