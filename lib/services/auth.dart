@@ -14,7 +14,7 @@ class AuthService extends ApiService {
   static final _secureStorage = FlutterSecureStorage();
 
   Future<bool> login(AuthCredential authCredential) async {
-    http.Response response = await post(
+    final http.Response response = await post(
       constants.PATH_OBTAIN_TOKENS, authCredential.toJson());
     if (response.statusCode == 401) {
       return false;
