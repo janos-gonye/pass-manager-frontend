@@ -1,23 +1,20 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:encrypt/encrypt.dart';
 import 'package:pass_manager_frontend/models/profile_crypter.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
 import 'package:pass_manager_frontend/services/authorized_api.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
+import 'package:pass_manager_frontend/services/crypto.dart';
 
 class ProfileService extends AuthorizedApiService {
 
   Future<bool> setProfiles({List<Profile> profiles, ProfileCrypter crypter}) async {
-    final String encryptedProfiles = json.encode(profiles);
-    final Key key = Key.fromUtf8(crypter.masterPassword);
-    final Encrypter encrypter = Encrypter(AES(key));
-    final IV iv = IV.fromLength(16);
-    final Encrypted encrypted = encrypter.encrypt(encryptedProfiles, iv: iv);
+    final String encrypted = CryptoService().encrypt(
+      textForEncryption: json.encode(profiles),
+      symmetricKey: crypter.masterPassword);
     http.Response response = await post(constants.PATH_PROFILES, json.encode({
-      'data': encrypted.base64
-    }));
+      'data': encrypted}));
     if (response.statusCode == 201) {
       return true;
     } else {
@@ -35,11 +32,9 @@ class ProfileService extends AuthorizedApiService {
       if (encryptedProfiles == "") {
         return [];
       } else {
-        final Key key = Key.fromUtf8(crypter.masterPassword);
-        final IV iv = IV.fromLength(16);
-        final Encrypter encrypter = Encrypter(AES(key));
-        final Encrypted encrypted = Encrypted.fromBase64(encryptedProfiles);
-        final String decrypted = encrypter.decrypt(encrypted, iv: iv);
+        final String decrypted = CryptoService().decrypt(
+          textForDecryption: encryptedProfiles,
+          symmetricKey: crypter.masterPassword);
         final List<Profile> profiles = json.decode(decrypted);
         return profiles;
       }
