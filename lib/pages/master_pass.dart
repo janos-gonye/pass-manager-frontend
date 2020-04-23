@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pass_manager_frontend/components/forms/master_pass.dart';
 
 class MasterPassPage extends StatefulWidget {
   @override
@@ -26,12 +27,15 @@ class _MasterPassPageState extends State<MasterPassPage> {
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text("Master password page"),
-          ]
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(60, 130, 60, 40),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              MasterPassForm(),
+            ]
+          ),
         ),
       ),
     );
