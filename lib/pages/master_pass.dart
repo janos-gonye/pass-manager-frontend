@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pass_manager_frontend/components/forms/master_pass.dart';
+import 'package:pass_manager_frontend/constants.dart' as constants;
 
 class MasterPassPage extends StatefulWidget {
   @override
@@ -33,7 +34,12 @@ class _MasterPassPageState extends State<MasterPassPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              MasterPassForm(),
+              MasterPassForm(callAfterSuccess: () {
+                Navigator.pushReplacementNamed(
+                  context, constants.ROUTE_PROFILES, arguments: {
+                    "message": "Profiles successfully unlocked",
+                  });
+              }),
             ]
           ),
         ),

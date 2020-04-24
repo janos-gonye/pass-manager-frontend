@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:pass_manager_frontend/components/forms/login.dart';
 import 'package:pass_manager_frontend/pages/settings.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
+import 'package:pass_manager_frontend/services/profile.dart';
 
 class LoginPage extends StatelessWidget {
+  final ProfileService _profileService = ProfileService();
 
   _navigateToSettingsAndShowMessage(BuildContext context) async {
     final Map<String, String> result = await Navigator.push(
@@ -59,10 +61,24 @@ class LoginPage extends StatelessWidget {
                   color: Colors.grey[800],
                   size: 120,
                 ),
-                LoginForm(callAfterSuccess: () {
-                  Navigator.pushReplacementNamed(context, constants.ROUTE_MASTER_PASS, arguments: {
-                    "message": "Successfully logged in",
-                  });
+                LoginForm(callAfterSuccess: () async {
+                  bool hasProfiles = await _profileService.hasProfiles();
+                  Map <String, String> arguments = {
+                    'message': "Successfully logged in",
+                  };
+                  if (hasProfiles) {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      constants.ROUTE_MASTER_PASS,
+                      arguments: arguments,
+                    );
+                  } else {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      constants.ROUTE_PROFILES,
+                      arguments: arguments,
+                    );
+                  }
                 }),
               ],
             ),
