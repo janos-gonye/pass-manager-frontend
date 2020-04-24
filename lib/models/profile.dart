@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class Profile {
   String title;
   String username;
@@ -7,10 +5,11 @@ class Profile {
   String notes;
   String url;
 
-  Profile(
-      {@required this.title,
-      @required this.username,
-      @required this.password,
-      @required this.notes,
-      @required this.url});
+  Profile({
+    this.title = "",
+    this.username = "",
+    this.password = "",
+    this.notes = "",
+    this.url = "",
+  });
 }
