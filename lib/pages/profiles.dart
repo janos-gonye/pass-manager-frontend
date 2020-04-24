@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pass_manager_frontend/components/forms/profile.dart';
 import 'package:pass_manager_frontend/services/profile.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
 
@@ -32,7 +33,22 @@ class _ProfilesPageState extends State<ProfilesPage> {
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Scrollbar(
+                child: SingleChildScrollView(
+                  child: AlertDialog(
+                    title: Text('Add new account'),
+                    content: ProfileForm(callAfterSave: () {
+                    }),
+                  )
+                ),
+              );
+            }
+          );
+        },
         child: Icon(Icons.add),
         backgroundColor: Colors.grey[800],
       ),
