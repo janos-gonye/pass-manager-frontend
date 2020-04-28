@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pass_manager_frontend/models/profile.dart';
 import 'package:pass_manager_frontend/models/profile_crypter.dart';
 import 'package:pass_manager_frontend/services/profile.dart';
 
@@ -43,8 +44,8 @@ class _MasterPassFormState extends State<MasterPassForm> {
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 // Handle decryption error.
-                await _profileService.getProfiles(crypter: _crypter);
-                widget.callAfterSuccess();
+                List<Profile> profiles = await _profileService.getProfiles(crypter: _crypter);
+                widget.callAfterSuccess(profiles.isNotEmpty);
               }
             },
           ),

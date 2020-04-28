@@ -34,10 +34,14 @@ class _MasterPassPageState extends State<MasterPassPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              MasterPassForm(callAfterSuccess: () {
+              MasterPassForm(callAfterSuccess: (hasProfiles) {
+                String message;
+                if (hasProfiles) {
+                  message = "Decryption successful";
+                }
                 Navigator.pushReplacementNamed(
                   context, constants.ROUTE_PROFILES, arguments: {
-                    "message": "Profiles successfully unlocked"
+                    "message": message
                   });
                 }
               ),
