@@ -3,8 +3,11 @@ import 'package:pass_manager_frontend/models/profile.dart';
 
 class ProfileForm extends StatefulWidget {
   final Function callAfterSave;
+  final Function callIfEmpty;
 
-  ProfileForm({Key key, this.callAfterSave}): super(key:key);
+  ProfileForm({
+    Key key, this.callAfterSave, this.callIfEmpty,
+  }): super(key:key);
 
   @override
   _ProfileFormState createState() => _ProfileFormState();
