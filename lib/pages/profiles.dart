@@ -41,8 +41,18 @@ class _ProfilesPageState extends State<ProfilesPage> {
                 child: SingleChildScrollView(
                   child: AlertDialog(
                     title: Text('Add new account'),
-                    content: ProfileForm(callAfterSave: () {
-                    }),
+                    content: ProfileForm(
+                      callAfterSave: (message) {
+                        Navigator.of(context).pop();
+                        _scaffoldKey.currentState.showSnackBar(
+                          new SnackBar(
+                            content: Text(message),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      }, callIfEmpty: () {
+                        Navigator.of(context).pop();
+                      }),
                   )
                 ),
               );

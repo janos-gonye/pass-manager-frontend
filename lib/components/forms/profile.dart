@@ -91,7 +91,12 @@ class _ProfileFormState extends State<ProfileForm> {
           RaisedButton(
             onPressed: () async {
               if (_formKey.currentState.validate()) {
-
+                if (_profile.isEmpty()) {
+                  widget.callIfEmpty();
+                } else {
+                  String message = "message";
+                  widget.callAfterSave(message);
+                }
               }
             },
             child: Text('Save'),
