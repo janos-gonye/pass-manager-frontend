@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pass_manager_frontend/components/forms/login.dart';
 import 'package:pass_manager_frontend/pages/settings.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
-import 'package:pass_manager_frontend/services/profile.dart';
 
 class LoginPage extends StatelessWidget {
-  final ProfileService _profileService = ProfileService();
 
   _navigateToSettingsAndShowMessage(BuildContext context) async {
     final Map<String, String> result = await Navigator.push(
