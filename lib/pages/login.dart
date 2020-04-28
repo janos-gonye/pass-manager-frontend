@@ -61,24 +61,14 @@ class LoginPage extends StatelessWidget {
                   color: Colors.grey[800],
                   size: 120,
                 ),
-                LoginForm(callAfterSuccess: () async {
-                  bool hasProfiles = await _profileService.hasProfiles();
-                  Map <String, String> arguments = {
-                    'message': "Successfully logged in",
-                  };
-                  if (hasProfiles) {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      constants.ROUTE_MASTER_PASS,
-                      arguments: arguments,
-                    );
-                  } else {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      constants.ROUTE_PROFILES,
-                      arguments: arguments,
-                    );
-                  }
+                LoginForm(callAfterSuccess: () {
+                  Navigator.pushReplacementNamed(
+                    context,
+                    constants.ROUTE_MASTER_PASS,
+                    arguments: {
+                      'message': "Successfully logged in",
+                    },
+                  );
                 }),
               ],
             ),
