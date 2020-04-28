@@ -94,7 +94,7 @@ class _ProfileFormState extends State<ProfileForm> {
                 if (_profile.isEmpty()) {
                   widget.callIfEmpty();
                 } else {
-                  String message = "message";
+                  String message = "Profile successfully saved";
                   widget.callAfterSave(message);
                 }
               }
