@@ -10,9 +10,7 @@ class LoginPage extends StatelessWidget {
   _navigateToSettingsAndShowMessage(BuildContext context) async {
     final Map<String, String> result = await Navigator.push(
       context, MaterialPageRoute(builder: (context) => SettingsPage()));
-    if (result != null &&
-        result.isNotEmpty &&
-        result.containsKey("message")) {
+    if (result.containsKey("message")) {
       String message = result['message'];
       Scaffold.of(context)
       ..removeCurrentSnackBar()
