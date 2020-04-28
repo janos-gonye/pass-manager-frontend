@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:pass_manager_frontend/services/settings.dart';
 
@@ -9,6 +10,7 @@ class ApiService {
     return url.replace(path: path);
   }
 
+  @protected
   Future<Map<String, String>> extendHeaders(Map <String, String> headers) async {
     headers = headers ?? {};
     headers["Content-Type"] = "application/json";
