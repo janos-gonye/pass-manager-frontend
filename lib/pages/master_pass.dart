@@ -37,9 +37,22 @@ class _MasterPassPageState extends State<MasterPassPage> {
               MasterPassForm(callAfterSuccess: () {
                 Navigator.pushReplacementNamed(
                   context, constants.ROUTE_PROFILES, arguments: {
-                    "message": "Profiles successfully unlocked",
+                    "message": "Profiles successfully unlocked"
                   });
-              }),
+                }
+              ),
+              SizedBox(height: 15),
+              Text(
+                "This password gets used " +
+                "to encrypt/decrypt your data." +
+                "Do not forget it, because there is " +
+                "no other way to recover your data.",
+                style: TextStyle(
+                  color: Colors.grey[800],
+                  fontSize: 12,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
             ]
           ),
         ),
