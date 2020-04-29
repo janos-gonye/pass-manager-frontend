@@ -6,10 +6,12 @@ import 'package:pass_manager_frontend/models/profile.dart';
 import 'package:pass_manager_frontend/services/authorized_api.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
 import 'package:pass_manager_frontend/services/crypto.dart';
+import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
 class ProfileService extends AuthorizedApiService {
 
-  Future<bool> setProfiles({List<Profile> profiles, ProfileCrypter crypter}) async {
+  Future<bool> setProfiles({List<Profile> profiles}) async {
+    ProfileCrypter crypter = ProfileCrypterStorageService.crypter;
     final String encrypted = CryptoService().encrypt(
       textForEncryption: json.encode(profiles),
       symmetricKey: crypter.masterPassword);
@@ -23,7 +25,8 @@ class ProfileService extends AuthorizedApiService {
     // TODO: Handle other status codes and errors.
   }
 
-  Future<List<Profile>> getProfiles({ProfileCrypter crypter}) async {
+  Future<List<Profile>> getProfiles() async {
+    ProfileCrypter crypter = ProfileCrypterStorageService.crypter;
     final http.Response response = await get(constants.PATH_PROFILES);
     if (response.statusCode == 200) {
       final Map<String, dynamic> body = json.decode(response.body);

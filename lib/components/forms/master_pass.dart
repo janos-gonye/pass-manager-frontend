@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
 import 'package:pass_manager_frontend/models/profile_crypter.dart';
 import 'package:pass_manager_frontend/services/profile.dart';
+import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
 class MasterPassForm extends StatefulWidget {
   final Function callAfterSuccess;
@@ -43,8 +44,9 @@ class _MasterPassFormState extends State<MasterPassForm> {
             child: Text("Unlock"),
             onPressed: () async {
               if (_formKey.currentState.validate()) {
+                ProfileCrypterStorageService.crypter = _crypter;
                 // Handle decryption error.
-                List<Profile> profiles = await _profileService.getProfiles(crypter: _crypter);
+                List<Profile> profiles = await _profileService.getProfiles();
                 widget.callAfterSuccess(profiles.isNotEmpty);
               }
             },
