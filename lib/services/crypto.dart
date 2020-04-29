@@ -1,6 +1,19 @@
 import 'package:encrypt/encrypt.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
+/// This service is responsible for symmetrically
+/// crypting/decryipting data.
+/// 
+/// Typical usage:
+/// ```
+/// CryptoService cryptoService = CryptoService();
+/// String encryptedText = cryptoService.encrypt(
+///   textForEncrytion: "some-text",
+///   symmetricKey: "secret-key")
+/// String decryptedText = cryptoService.decrypt(
+///   textForDecryption: encryptedText,
+///   symmetricKey: "secret-key")
+/// ```
 class CryptoService {
   String encrypt({
     @foundation.required String textForEncryption,
