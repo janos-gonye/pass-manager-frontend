@@ -31,6 +31,17 @@ class Profile {
     }
     return false;
   }
+
+  toJson() {
+    return {
+      "id": id,
+      "title": title,
+      "username": username,
+      "password": password,
+      "notes": notes,
+      "url": url,
+    };
+  }
 }
 
 Profile _profileFromJson(Map <String, dynamic> json) {
