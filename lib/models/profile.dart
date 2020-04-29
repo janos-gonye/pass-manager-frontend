@@ -18,6 +18,7 @@ class Profile {
     Uuid uuid = Uuid();
     this.id = uuid.v4();
   }
+  factory Profile.fromJson(Map<String, dynamic> json) => _profileFromJson(json);
 
   bool isEmpty() {
     if (this.title.isEmpty &&
@@ -30,4 +31,16 @@ class Profile {
     }
     return false;
   }
+}
+
+Profile _profileFromJson(Map <String, dynamic> json) {
+  Profile profile = Profile(
+    title: json['title'],
+    username: json['username'],
+    password: json['password'],
+    notes: json['notes'],
+    url: json['url'],
+  );
+  profile.id = json['id'];
+  return profile;
 }
