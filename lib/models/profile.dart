@@ -1,4 +1,7 @@
+import 'package:uuid/uuid.dart';
+
 class Profile {
+  String id;
   String title;
   String username;
   String password;
@@ -11,7 +14,10 @@ class Profile {
     this.password = "",
     this.notes = "",
     this.url = "",
-  });
+  }) {
+    Uuid uuid = Uuid();
+    this.id = uuid.v4();
+  }
 
   bool isEmpty() {
     if (this.title.isEmpty &&
