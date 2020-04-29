@@ -35,7 +35,8 @@ class ProfileService extends AuthorizedApiService {
         final String decrypted = CryptoService().decrypt(
           textForDecryption: encryptedProfiles,
           symmetricKey: crypter.masterPassword);
-        final List<Profile> profiles = json.decode(decrypted);
+        final List parsedList = json.decode(decrypted);
+        final List<Profile> profiles = parsedList.map((val) => Profile.fromJson(val)).toList();
         return profiles;
       }
     }
