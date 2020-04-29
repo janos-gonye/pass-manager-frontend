@@ -41,17 +41,4 @@ class ProfileService extends AuthorizedApiService {
     }
     // TODO: Handle other status codes and errors.
   }
-
-  Future<bool> hasProfiles() async {
-    final http.Response response = await get(constants.PATH_PROFILES);
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> body = json.decode(response.body);
-      final String encryptedProfiles = body['data'];
-      if (encryptedProfiles == "") {
-        return false;
-      }
-      return true;
-    }
-    // TODO: Handle other status codes and errors.
-  }
 }
