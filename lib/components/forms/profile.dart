@@ -29,7 +29,6 @@ class _ProfileFormState extends State<ProfileForm> {
               labelText: 'Title',
             ),
             validator: (value) {
-              if (value.isEmpty)
               _profile.title = value;
               return null;
             },
@@ -39,7 +38,7 @@ class _ProfileFormState extends State<ProfileForm> {
               labelText: 'Username',
             ),
             validator: (value) {
-              _profile.title = value;
+              _profile.username = value;
              return null;
             },
           ),
