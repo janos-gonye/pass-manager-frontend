@@ -17,10 +17,10 @@ class _ProfilesPageState extends State<ProfilesPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
-        (_) => _scaffoldKey.currentState.showSnackBar(SnackBar(
-              content: Text(_pageArgs["message"]),
-              duration: Duration(seconds: 2),
-            )));
+      (_) => _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(_pageArgs["message"]),
+        duration: Duration(seconds: 2),
+      )));
     // TODO: Handle when 'profiles' contains no empty list
     _profiles = _profileService.getProfiles();
   }
