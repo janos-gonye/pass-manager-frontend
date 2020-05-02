@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pass_manager_frontend/components/cards/profile.dart';
 import 'package:pass_manager_frontend/components/forms/profile.dart';
 import 'package:pass_manager_frontend/services/profile.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
@@ -12,7 +13,6 @@ class _ProfilesPageState extends State<ProfilesPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   Map<String, String> _pageArgs;
   final ProfileService _profileService = ProfileService();
-  Future<List<Profile>> _profiles;
 
   void initState() {
     super.initState();
@@ -21,8 +21,6 @@ class _ProfilesPageState extends State<ProfilesPage> {
         content: Text(_pageArgs["message"]),
         duration: Duration(seconds: 2),
       )));
-    // TODO: Handle when 'profiles' contains no empty list
-    _profiles = _profileService.getProfiles();
   }
 
   @override
@@ -62,29 +60,48 @@ class _ProfilesPageState extends State<ProfilesPage> {
         child: Icon(Icons.add),
         backgroundColor: Colors.grey[800],
       ),
-      body: Scrollbar(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(60, 130, 60, 40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Center(
-                  child: Text('Your\nAccounts',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.w800,
-                      fontSize: 30,
-                    ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Center(
+                child: Text('Your\nAccounts',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.grey[800],
+                    fontWeight: FontWeight.w800,
+                    fontSize: 30,
                   ),
                 ),
-              ],
-            ),
-          )
-        )
-      )
+              ),
+              SizedBox(height: 10),
+              Divider(color: Colors.grey[800]),
+              Expanded(
+                child: FutureBuilder<List<Profile>>(
+                  future: _profileService.getProfiles(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    List<Profile> profiles = snapshot.data;
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        itemCount: profiles.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ProfileCard(profiles[index]);
+                        }
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text(snapshot.error));
+                    }
+                    return Center(child: CircularProgressIndicator());
+                  }
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
