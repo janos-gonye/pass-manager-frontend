@@ -15,9 +15,9 @@ class ProfileService extends AuthorizedApiService {
     final String encrypted = await CryptoService().symmetricEncrypt(
       stringForEncryption: json.encode(profiles),
       password: crypter.masterPassword);
-    http.Response response = await post(constants.PATH_PROFILES, json.encode({
-      'data': encrypted}));
-    if (response.statusCode == 201) {
+    http.Response response = await patch(constants.PATH_PROFILES, {
+      'data': encrypted});
+    if (response.statusCode == 200) {
       return true;
     } else {
       return false;
@@ -27,7 +27,9 @@ class ProfileService extends AuthorizedApiService {
 
   Future<bool> saveProfile(Profile profile) async {
     List<Profile> profiles = await getProfiles();
+    print(profiles);
     profiles.add(profile);
+    print(profiles);
     return await _setProfiles(profiles);
   }
 
