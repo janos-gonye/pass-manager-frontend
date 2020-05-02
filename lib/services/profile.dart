@@ -10,7 +10,7 @@ import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
 class ProfileService extends AuthorizedApiService {
 
-  Future<bool> _setProfiles({List<Profile> profiles}) async {
+  Future<bool> _setProfiles(List<Profile> profiles) async {
     ProfileCrypter crypter = ProfileCrypterStorageService.crypter;
     final String encrypted = CryptoService().encrypt(
       textForEncryption: json.encode(profiles),
@@ -23,6 +23,12 @@ class ProfileService extends AuthorizedApiService {
       return false;
     }
     // TODO: Handle other status codes and errors.
+  }
+
+  Future<bool> saveProfile(Profile profile) async {
+    List<Profile> profiles = await getProfiles();
+    profiles.add(profile);
+    return await _setProfiles(profiles);
   }
 
   Future<List<Profile>> getProfiles() async {
