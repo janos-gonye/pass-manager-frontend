@@ -28,9 +28,12 @@ class _ProfileFormState extends State<ProfileForm> {
         children: <Widget>[
           TextFormField(
             decoration: InputDecoration(
-              labelText: 'Title',
+              labelText: 'Title *',
             ),
             validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter title';
+              }
               _profile.title = value;
               return null;
             },
