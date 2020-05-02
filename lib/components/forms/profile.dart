@@ -4,10 +4,10 @@ import 'package:pass_manager_frontend/services/profile.dart';
 
 class ProfileForm extends StatefulWidget {
   final Function callAfterSave;
-  final Function callIfEmpty;
+  final Function callIfCancelled;
 
   ProfileForm({
-    Key key, this.callAfterSave, this.callIfEmpty,
+    Key key, this.callAfterSave, this.callIfCancelled,
   }): super(key:key);
 
   @override
@@ -92,20 +92,28 @@ class _ProfileFormState extends State<ProfileForm> {
               return null;
             },
           ),
-          RaisedButton(
-            onPressed: () async {
-              if (_formKey.currentState.validate()) {
-                if (_profile.isEmpty()) {
-                  widget.callIfEmpty();
-                } else {
-                  await _profileService.saveProfile(_profile);
-                  String message = "Profile successfully saved";
-                  widget.callAfterSave(message);
-                }
-              }
-            },
-            child: Text('Save'),
-          ),
+          SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              RaisedButton(
+                onPressed: () async {
+                  widget.callIfCancelled();
+                },
+                child: Text('Back'),
+              ),
+              RaisedButton(
+                onPressed: () async {
+                  if (_formKey.currentState.validate()) {
+                    await _profileService.saveProfile(_profile);
+                    String message = "Profile successfully saved";
+                    widget.callAfterSave(message);
+                  }
+                },
+                child: Text('Save'),
+              ),
+            ],
+          )
         ],
       )
     );

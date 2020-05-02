@@ -48,7 +48,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
                             duration: Duration(seconds: 2),
                           ),
                         );
-                      }, callIfEmpty: () {
+                      }, callIfCancelled: () {
                         Navigator.of(context).pop();
                       }),
                   )
