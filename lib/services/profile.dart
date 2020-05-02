@@ -12,9 +12,9 @@ class ProfileService extends AuthorizedApiService {
 
   Future<bool> _setProfiles(List<Profile> profiles) async {
     ProfileCrypter crypter = ProfileCrypterStorageService.crypter;
-    final String encrypted = CryptoService().encrypt(
-      textForEncryption: json.encode(profiles),
-      symmetricKey: crypter.masterPassword);
+    final String encrypted = await CryptoService().symmetricEncrypt(
+      stringForEncryption: json.encode(profiles),
+      password: crypter.masterPassword);
     http.Response response = await post(constants.PATH_PROFILES, json.encode({
       'data': encrypted}));
     if (response.statusCode == 201) {
@@ -41,9 +41,9 @@ class ProfileService extends AuthorizedApiService {
       if (encryptedProfiles == "") {
         return [];
       } else {
-        final String decrypted = CryptoService().decrypt(
-          textForDecryption: encryptedProfiles,
-          symmetricKey: crypter.masterPassword);
+        final String decrypted = await CryptoService().symmetricDecrypt(
+          stringForDecryption: encryptedProfiles,
+          password: crypter.masterPassword);
         final List parsedList = json.decode(decrypted);
         final List<Profile> profiles = parsedList.map((val) => Profile.fromJson(val)).toList();
         return profiles;
