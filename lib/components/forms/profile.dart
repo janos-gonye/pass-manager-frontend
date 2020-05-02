@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
+import 'package:pass_manager_frontend/services/profile.dart';
 
 class ProfileForm extends StatefulWidget {
   final Function callAfterSave;
@@ -16,6 +17,7 @@ class ProfileForm extends StatefulWidget {
 class _ProfileFormState extends State<ProfileForm> {
   final _formKey = GlobalKey<FormState>();
   final Profile _profile = Profile();
+  final ProfileService _profileService = ProfileService();
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +95,7 @@ class _ProfileFormState extends State<ProfileForm> {
                 if (_profile.isEmpty()) {
                   widget.callIfEmpty();
                 } else {
+                  await _profileService.saveProfile(_profile);
                   String message = "Profile successfully saved";
                   widget.callAfterSave(message);
                 }
