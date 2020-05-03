@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
 
@@ -68,9 +69,23 @@ class _Password extends StatefulWidget {
 
 class __PasswordState extends State<_Password> {
   bool displayPassword = false;
+  bool passwordCopiedToClipboard = false;
 
   _copyPasswordToClipboard() {
-
+    setState(() {
+      passwordCopiedToClipboard = !passwordCopiedToClipboard;
+    });
+    if (passwordCopiedToClipboard) {
+      Clipboard.setData(ClipboardData(text: widget.password));
+      Scaffold.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(SnackBar(
+        duration: Duration(seconds: 2),
+        content: Text('Password copied to clipboard')));
+      Future.delayed(Duration(milliseconds: 2250), () {
+        _copyPasswordToClipboard();
+      });
+    }
   }
 
   _toggleDisplayPassword() {
@@ -112,8 +127,8 @@ class __PasswordState extends State<_Password> {
               onPressed: _toggleDisplayPassword,
             ),
             FlatButton(
-              child: Icon(FontAwesomeIcons.clipboard),
-              onPressed: _copyPasswordToClipboard,
+              child: Icon(passwordCopiedToClipboard ? FontAwesomeIcons.clipboardCheck : FontAwesomeIcons.clipboard),
+              onPressed: passwordCopiedToClipboard ? null : _copyPasswordToClipboard,
             ),
           ],
         ),
