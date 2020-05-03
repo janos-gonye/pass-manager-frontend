@@ -67,14 +67,24 @@ class _Password extends StatefulWidget {
 }
 
 class __PasswordState extends State<_Password> {
-  String passwordText = "*" * 6;
+  bool displayPassword = false;
 
   _copyPasswordToClipboard() {
 
   }
 
-  _toogleHidePassword() {
-
+  _toggleDisplayPassword() {
+    setState(() {
+      displayPassword = !displayPassword;
+    });
+    if (displayPassword) {
+      Future.delayed(Duration(seconds: 5), () {
+        // Only invoke if the password is still displayed.
+        if (displayPassword) {
+          _toggleDisplayPassword();
+        }
+      });
+    }
   }
 
   @override
@@ -87,7 +97,7 @@ class __PasswordState extends State<_Password> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text("password: "),
-            Text(passwordText, style: TextStyle(
+            Text(displayPassword ? widget.password : "*" * 6, style: TextStyle(
               color: Colors.grey[800],
               fontWeight: FontWeight.w600,
             )),
@@ -98,12 +108,12 @@ class __PasswordState extends State<_Password> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             FlatButton(
-              child: Icon(FontAwesomeIcons.eye),
-              onPressed: _toogleHidePassword(),
+              child: Icon(displayPassword ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye),
+              onPressed: _toggleDisplayPassword,
             ),
             FlatButton(
               child: Icon(FontAwesomeIcons.clipboard),
-              onPressed: _copyPasswordToClipboard(),
+              onPressed: _copyPasswordToClipboard,
             ),
           ],
         ),
