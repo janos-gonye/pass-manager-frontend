@@ -26,6 +26,7 @@ dependencies:
   # TODO: If IOS is the target, see the following documentation:
   # https://pub.dev/packages/flutter_string_encryption#support
   flutter_string_encryption: ^0.3.1
+  font_awesome_flutter: ^8.8.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
