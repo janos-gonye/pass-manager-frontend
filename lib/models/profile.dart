@@ -1,36 +1,22 @@
-import 'package:uuid/uuid.dart';
+import 'package:equatable/equatable.dart';
 
-class Profile {
-  String id;
-  String title;
-  String username;
-  String password;
-  String notes;
-  String url;
+class Profile extends Equatable {
+  final String id;
+  final String title;
+  final String username;
+  final String password;
+  final String notes;
+  final String url;
 
   Profile({
+    this.id = "",
     this.title = "",
     this.username = "",
     this.password = "",
     this.notes = "",
     this.url = "",
-  }) {
-    Uuid uuid = Uuid();
-    this.id = uuid.v4();
-  }
+  });
   factory Profile.fromJson(Map<String, dynamic> json) => _profileFromJson(json);
-
-  bool isEmpty() {
-    if (this.title.isEmpty &&
-        this.username.isEmpty &&
-        this.password.isEmpty &&
-        this.notes.isEmpty &&
-        this.url.isEmpty
-    ) {
-      return true;
-    }
-    return false;
-  }
 
   toJson() {
     return {
@@ -42,16 +28,25 @@ class Profile {
       "url": url,
     };
   }
+
+  @override
+  List<Object> get props => [
+    id,
+    title,
+    username,
+    password,
+    notes,
+    url,
+  ];
 }
 
 Profile _profileFromJson(Map <String, dynamic> json) {
-  Profile profile = Profile(
+  return Profile(
+    id: json['id'],
     title: json['title'],
     username: json['username'],
     password: json['password'],
     notes: json['notes'],
     url: json['url'],
   );
-  profile.id = json['id'];
-  return profile;
 }
