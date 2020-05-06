@@ -34,7 +34,6 @@ class _ProfileFormState extends State<ProfileForm> {
               if (value.isEmpty) {
                 return 'Please enter title';
               }
-              _profile.title = value;
               return null;
             },
           ),
@@ -43,7 +42,6 @@ class _ProfileFormState extends State<ProfileForm> {
               labelText: 'Username',
             ),
             validator: (value) {
-              _profile.username = value;
              return null;
             },
           ),
@@ -54,7 +52,6 @@ class _ProfileFormState extends State<ProfileForm> {
               labelText: 'Password',
             ),
             validator: (value) {
-              _profile.password = value;
              return null;
             },
           ),
@@ -79,7 +76,6 @@ class _ProfileFormState extends State<ProfileForm> {
               labelText: 'Notes'
             ),
             validator: (value) {
-              _profile.notes = value;
               return null;
             },
           ),
@@ -88,7 +84,6 @@ class _ProfileFormState extends State<ProfileForm> {
               labelText: 'URL'
             ),
             validator: (value) {
-              _profile.url = value;
               return null;
             },
           ),
