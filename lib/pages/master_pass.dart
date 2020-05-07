@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pass_manager_frontend/blocs/profile/profile_bloc.dart';
 import 'package:pass_manager_frontend/components/forms/master_pass.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
 
@@ -14,10 +16,10 @@ class _MasterPassPageState extends State<MasterPassPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
-        (_) => _scaffoldKey.currentState.showSnackBar(SnackBar(
-              content: Text(_pageArgs["message"]),
-              duration: Duration(seconds: 2),
-            )));
+      (_) => _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(_pageArgs["message"]),
+        duration: Duration(seconds: 2),
+    )));
   }
 
   @override
@@ -34,16 +36,26 @@ class _MasterPassPageState extends State<MasterPassPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              MasterPassForm(callAfterSuccess: (hasProfiles) {
-                String message;
-                if (hasProfiles) {
-                  message = "Decryption successful";
-                }
-                Navigator.pushReplacementNamed(
-                  context, constants.ROUTE_PROFILES, arguments: {
-                    "message": message
-                  });
-                }
+              BlocListener<ProfileBloc, ProfileState>(
+                listener: (context, state) {
+                  if (state is ProfileError) {
+                    _scaffoldKey.currentState.showSnackBar(
+                      SnackBar(
+                        content: Text(state.message),
+                      ),
+                    );
+                } else if (state is ProfilesLoaded) {
+                  String message;
+                  if (state.profiles.isNotEmpty) {
+                    message = "Decryption successful";
+                  }
+                  Navigator.pushReplacementNamed(
+                    context, constants.ROUTE_PROFILES, arguments: {
+                      "message": message
+                    });
+                  }
+                },
+                child: MasterPassForm(),
               ),
               SizedBox(height: 15),
               Text(
