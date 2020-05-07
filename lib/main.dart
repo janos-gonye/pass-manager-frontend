@@ -13,7 +13,10 @@ void main() => runApp(MaterialApp(
   routes: {
     constants.ROUTE_LOGIN: (context) => LoginPage(),
     constants.ROUTE_SETTINGS: (context) => SettingsPage(),
-    constants.ROUTE_MASTER_PASS: (context) => MasterPassPage(),
+    constants.ROUTE_MASTER_PASS: (context) => BlocProvider(
+      create: (context) => ProfileBloc(ProfileRepository()),
+      child: MasterPassPage(),
+    ),
     constants.ROUTE_PROFILES: (context) => BlocProvider(
       create: (context) => ProfileBloc(ProfileRepository()),
       child: ProfilesPage(),
