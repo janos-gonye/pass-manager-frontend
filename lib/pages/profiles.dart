@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pass_manager_frontend/blocs/profile/profile_bloc.dart';
 import 'package:pass_manager_frontend/components/cards/profile.dart';
 import 'package:pass_manager_frontend/components/forms/profile.dart';
-import 'package:pass_manager_frontend/services/profile.dart';
-import 'package:pass_manager_frontend/models/profile.dart';
 
 class ProfilesPage extends StatefulWidget {
   @override
@@ -12,10 +12,10 @@ class ProfilesPage extends StatefulWidget {
 class _ProfilesPageState extends State<ProfilesPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   Map<String, String> _pageArgs;
-  final ProfileService _profileService = ProfileService();
 
   void initState() {
     super.initState();
+    BlocProvider.of<ProfileBloc>(context).add(GetProfiles());
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => _scaffoldKey.currentState.showSnackBar(SnackBar(
         content: Text(_pageArgs["message"]),
@@ -68,7 +68,8 @@ class _ProfilesPageState extends State<ProfilesPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Center(
-                child: Text('Your\nAccounts',
+                child: Text(
+                  'Your\nAccounts',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.grey[800],
@@ -80,22 +81,32 @@ class _ProfilesPageState extends State<ProfilesPage> {
               SizedBox(height: 10),
               Divider(color: Colors.grey[800]),
               Expanded(
-                child: FutureBuilder<List<Profile>>(
-                  future: _profileService.getProfiles(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    List<Profile> profiles = snapshot.data;
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                        itemCount: profiles.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ProfileCard(profiles[index]);
-                        }
+                child: BlocListener<ProfileBloc, ProfileState>(
+                  listener: (context, state) {
+                    if (state is ProfileError) {
+                      _scaffoldKey.currentState.showSnackBar(
+                        SnackBar(
+                          content: Text(state.message),
+                        ),
                       );
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text(snapshot.error));
                     }
-                    return Center(child: CircularProgressIndicator());
-                  }
+                  },
+                  child: BlocBuilder<ProfileBloc, ProfileState>(
+                    builder: (BuildContext context, ProfileState state) {
+                      if (state is ProfilesInitial) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (state is ProfilesLoading) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (state is ProfilesLoaded) {
+                        return ListView.builder(
+                          itemCount: state.profiles.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ProfileCard(state.profiles[index]);
+                          }
+                        );
+                      }
+                    }
+                  ),
                 ),
               ),
             ],
