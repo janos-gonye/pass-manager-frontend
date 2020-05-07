@@ -8,7 +8,7 @@ import 'package:pass_manager_frontend/constants.dart' as constants;
 import 'package:pass_manager_frontend/services/crypto.dart';
 import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
-class ProfileService extends AuthorizedApiService {
+class ProfileRepository extends AuthorizedApiService {
 
   Future<bool> _setProfiles(List<Profile> profiles) async {
     ProfileCrypter crypter = ProfileCrypterStorageService.crypter;

@@ -7,7 +7,7 @@ part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  final ProfileService repository;
+  final ProfileRepository repository;
 
   ProfileBloc(this.repository);
 

@@ -16,7 +16,7 @@ class MasterPassForm extends StatefulWidget {
 class _MasterPassFormState extends State<MasterPassForm> {
   final _formKey = GlobalKey<FormState>();
   final ProfileCrypter _crypter = ProfileCrypter(masterPassword: "");
-  final ProfileService _profileService = ProfileService();
+  final ProfileRepository _profileService = ProfileRepository();
 
   @override
   Widget build(BuildContext context) {

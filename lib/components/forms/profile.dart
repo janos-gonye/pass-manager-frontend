@@ -17,7 +17,7 @@ class ProfileForm extends StatefulWidget {
 class _ProfileFormState extends State<ProfileForm> {
   final _formKey = GlobalKey<FormState>();
   final Profile _profile = Profile();
-  final ProfileService _profileService = ProfileService();
+  final ProfileRepository _profileRepository = ProfileRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +100,7 @@ class _ProfileFormState extends State<ProfileForm> {
               RaisedButton(
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
-                    await _profileService.saveProfile(_profile);
+                    await _profileRepository.saveProfile(_profile);
                     String message = "Profile successfully saved";
                     widget.callAfterSave(message);
                   }

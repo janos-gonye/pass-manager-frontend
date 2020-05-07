@@ -15,7 +15,7 @@ void main() => runApp(MaterialApp(
     constants.ROUTE_SETTINGS: (context) => SettingsPage(),
     constants.ROUTE_MASTER_PASS: (context) => MasterPassPage(),
     constants.ROUTE_PROFILES: (context) => BlocProvider(
-      create: (context) => ProfileBloc(ProfileService()),
+      create: (context) => ProfileBloc(ProfileRepository()),
       child: ProfilesPage(),
     ),
   },
