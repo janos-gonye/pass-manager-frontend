@@ -44,13 +44,13 @@ class _MasterPassPageState extends State<MasterPassPage> {
                         content: Text(state.message),
                       ),
                     );
-                } else if (state is ProfilesLoaded) {
-                  String message;
-                  if (state.profiles.isNotEmpty) {
-                    message = "Decryption successful";
-                  }
-                  Navigator.pushReplacementNamed(
-                    context, constants.ROUTE_PROFILES, arguments: {
+                  } else if (state is ProfilesLoaded) {
+                    String message;
+                    if (state.profiles.isNotEmpty) {
+                      message = "Decryption successful";
+                    }
+                    Navigator.pushReplacementNamed(
+                      context, constants.ROUTE_PROFILES, arguments: {
                       "message": message
                     });
                   }
