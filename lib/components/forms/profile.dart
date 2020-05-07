@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pass_manager_frontend/blocs/profile/profile_bloc.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
-import 'package:pass_manager_frontend/services/profile.dart';
 
 class ProfileForm extends StatefulWidget {
-  final Function callAfterSave;
-  final Function callIfCancelled;
 
-  ProfileForm({
-    Key key, this.callAfterSave, this.callIfCancelled,
-  }): super(key:key);
+  ProfileForm({Key key}): super(key:key);
 
   @override
   _ProfileFormState createState() => _ProfileFormState();
@@ -16,8 +13,21 @@ class ProfileForm extends StatefulWidget {
 
 class _ProfileFormState extends State<ProfileForm> {
   final _formKey = GlobalKey<FormState>();
-  final Profile _profile = Profile();
-  final ProfileRepository _profileRepository = ProfileRepository();
+  final _titleController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _notesController = TextEditingController();
+  final _urlController = TextEditingController();
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
+    _notesController.dispose();
+    _urlController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +37,7 @@ class _ProfileFormState extends State<ProfileForm> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           TextFormField(
+            controller: _titleController,
             decoration: InputDecoration(
               labelText: 'Title *',
             ),
@@ -38,6 +49,7 @@ class _ProfileFormState extends State<ProfileForm> {
             },
           ),
           TextFormField(
+            controller: _usernameController,
             decoration: InputDecoration(
               labelText: 'Username',
             ),
@@ -48,6 +60,7 @@ class _ProfileFormState extends State<ProfileForm> {
           TextFormField(
             autovalidate: true,
             obscureText: true,
+            controller: _passwordController,
             decoration: InputDecoration(
               labelText: 'Password',
             ),
@@ -62,9 +75,9 @@ class _ProfileFormState extends State<ProfileForm> {
               labelText: 'Password repeat',
             ),
             validator: (value) {
-              if (value.isEmpty && _profile.password.isNotEmpty) {
+              if (value.isEmpty && _passwordController.text.isNotEmpty) {
                 return 'Please repeat password';
-              } else if (_profile.password != value) {
+              } else if (_passwordController.text != value) {
                 return "Passwords don't match";
               }
               return null;
@@ -72,6 +85,7 @@ class _ProfileFormState extends State<ProfileForm> {
           ),
           TextFormField(
             maxLines: 3,
+            controller: _notesController,
             decoration: InputDecoration(
               labelText: 'Notes'
             ),
@@ -80,6 +94,7 @@ class _ProfileFormState extends State<ProfileForm> {
             },
           ),
           TextFormField(
+            controller: _urlController,
             decoration: InputDecoration(
               labelText: 'URL'
             ),
@@ -92,17 +107,16 @@ class _ProfileFormState extends State<ProfileForm> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               RaisedButton(
-                onPressed: () async {
-                  widget.callIfCancelled();
+                onPressed: () {
+                  Navigator.of(context).pop();
                 },
                 child: Text('Back'),
               ),
               RaisedButton(
-                onPressed: () async {
+                onPressed: () {
                   if (_formKey.currentState.validate()) {
-                    await _profileRepository.saveProfile(_profile);
-                    String message = "Profile successfully saved";
-                    widget.callAfterSave(message);
+                    Navigator.of(context).pop();
+                    BlocProvider.of<ProfileBloc>(context).add(GetProfiles());
                   }
                 },
                 child: Text('Save'),
