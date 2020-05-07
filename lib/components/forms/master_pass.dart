@@ -14,7 +14,13 @@ class MasterPassForm extends StatefulWidget {
 
 class _MasterPassFormState extends State<MasterPassForm> {
   final _formKey = GlobalKey<FormState>();
-  final ProfileCrypter _crypter = ProfileCrypter(masterPassword: "");
+  final _masterPassController = TextEditingController();
+
+  @override
+  void dispose() {
+    _masterPassController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,20 +35,21 @@ class _MasterPassFormState extends State<MasterPassForm> {
               labelText: 'Unlock your profiles',
               hintText: 'Your master password',
             ),
+            controller: _masterPassController,
             obscureText: true,
             validator: (value) {
               if (value.isEmpty) {
                 return 'Please enter your master password';
               }
-              _crypter.masterPassword = value;
               return null;
             },
           ),
           RaisedButton(
             child: Text("Unlock"),
-            onPressed: () async {
+            onPressed: () {
               if (_formKey.currentState.validate()) {
-                ProfileCrypterStorageService.crypter = _crypter;
+                ProfileCrypterStorageService.crypter = ProfileCrypter(
+                  masterPassword: _masterPassController.text);
                 BlocProvider.of<ProfileBloc>(context).add(GetProfiles());
               }
             },
