@@ -19,18 +19,15 @@ class ProfileRepository extends AuthorizedApiService {
       'data': encrypted});
     if (response.statusCode == 200) {
       return true;
-    } else {
-      return false;
     }
     // TODO: Handle other status codes and errors.
   }
 
-  Future<bool> saveProfile(Profile profile) async {
+  Future<Profile> saveProfile(Profile profile) async {
     List<Profile> profiles = await getProfiles();
-    print(profiles);
     profiles.add(profile);
-    print(profiles);
-    return await _setProfiles(profiles);
+    await _setProfiles(profiles);
+    return profile;
   }
 
   Future<List<Profile>> getProfiles() async {
