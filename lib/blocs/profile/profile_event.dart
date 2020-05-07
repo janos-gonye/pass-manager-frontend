@@ -10,3 +10,12 @@ class GetProfiles extends ProfileEvent {
   @override
   List<Object> get props => [];
 }
+
+class AddProfile extends ProfileEvent {
+  final Profile profile;
+  
+  const AddProfile(this.profile);
+
+  @override
+  List<Object> get props => [profile];
+}
