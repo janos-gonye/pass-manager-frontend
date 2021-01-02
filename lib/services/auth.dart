@@ -14,12 +14,12 @@ class AuthService extends ApiService {
   static final _secureStorage = FlutterSecureStorage();
 
   Future<bool> login(AuthCredential authCredential) async {
-    final http.Response response = await post(
-      constants.PATH_OBTAIN_TOKENS, authCredential.toJson());
+    final http.Response response =
+        await post(constants.PATH_OBTAIN_TOKENS, authCredential.toJson());
     if (response.statusCode == 401) {
       return false;
     } else if (response.statusCode == 200) {
-      final Map <String, dynamic> tokens = json.decode(response.body.toString());
+      final Map<String, dynamic> tokens = json.decode(response.body.toString());
       accessToken = tokens["access"];
       refreshToken = tokens["refresh"];
       return true;
@@ -50,5 +50,4 @@ class AuthService extends ApiService {
   static Future<String> get refreshToken async {
     return _getToken(key: _refreshTokenName);
   }
-
 }

@@ -13,7 +13,7 @@ class GetProfiles extends ProfileEvent {
 
 class AddProfile extends ProfileEvent {
   final Profile profile;
-  
+
   const AddProfile(this.profile);
 
   @override

@@ -4,7 +4,7 @@ import 'package:flutter_string_encryption/flutter_string_encryption.dart';
 
 /// This service is responsible for symmetrically
 /// crypting/decryipting data.
-/// 
+///
 /// Typical usage:
 /// ```
 /// CryptoService cryptoService = CryptoService();

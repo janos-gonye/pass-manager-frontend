@@ -5,7 +5,7 @@ import 'package:pass_manager_frontend/services/auth.dart';
 class LoginForm extends StatefulWidget {
   final Function callAfterSuccess;
 
-  LoginForm({Key key, this.callAfterSuccess}): super(key: key);
+  LoginForm({Key key, this.callAfterSuccess}) : super(key: key);
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -13,7 +13,8 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
-  final AuthCredential _authCredential = AuthCredential(username: "", password: "");
+  final AuthCredential _authCredential =
+      AuthCredential(username: "", password: "");
   final AuthService _authService = AuthService();
 
   @override
@@ -56,12 +57,10 @@ class _LoginFormState extends State<LoginForm> {
                 if (success) {
                   widget.callAfterSuccess();
                 } else {
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Invalid credentials"),
-                      duration: Duration(seconds: 2),
-                    )
-                  );
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text("Invalid credentials"),
+                    duration: Duration(seconds: 2),
+                  ));
                 }
               }
             },

@@ -31,16 +31,16 @@ class Profile extends Equatable {
 
   @override
   List<Object> get props => [
-    id,
-    title,
-    username,
-    password,
-    notes,
-    url,
-  ];
+        id,
+        title,
+        username,
+        password,
+        notes,
+        url,
+      ];
 }
 
-Profile _profileFromJson(Map <String, dynamic> json) {
+Profile _profileFromJson(Map<String, dynamic> json) {
   return Profile(
     id: json['id'],
     title: json['title'],

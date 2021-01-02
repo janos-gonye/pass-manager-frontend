@@ -9,17 +9,17 @@ import 'package:pass_manager_frontend/pages/profiles.dart';
 import 'package:pass_manager_frontend/services/profile.dart';
 
 void main() => runApp(MaterialApp(
-  initialRoute: constants.ROUTE_LOGIN,
-  routes: {
-    constants.ROUTE_LOGIN: (context) => LoginPage(),
-    constants.ROUTE_SETTINGS: (context) => SettingsPage(),
-    constants.ROUTE_MASTER_PASS: (context) => BlocProvider(
-      create: (context) => ProfileBloc(ProfileRepository()),
-      child: MasterPassPage(),
-    ),
-    constants.ROUTE_PROFILES: (context) => BlocProvider(
-      create: (context) => ProfileBloc(ProfileRepository()),
-      child: ProfilesPage(),
-    ),
-  },
-));
+      initialRoute: constants.ROUTE_LOGIN,
+      routes: {
+        constants.ROUTE_LOGIN: (context) => LoginPage(),
+        constants.ROUTE_SETTINGS: (context) => SettingsPage(),
+        constants.ROUTE_MASTER_PASS: (context) => BlocProvider(
+              create: (context) => ProfileBloc(ProfileRepository()),
+              child: MasterPassPage(),
+            ),
+        constants.ROUTE_PROFILES: (context) => BlocProvider(
+              create: (context) => ProfileBloc(ProfileRepository()),
+              child: ProfilesPage(),
+            ),
+      },
+    ));

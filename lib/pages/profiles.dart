@@ -17,10 +17,10 @@ class _ProfilesPageState extends State<ProfilesPage> {
     super.initState();
     BlocProvider.of<ProfileBloc>(context).add(GetProfiles());
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text(_pageArgs["message"]),
-        duration: Duration(seconds: 2),
-      )));
+        (_) => _scaffoldKey.currentState.showSnackBar(SnackBar(
+              content: Text(_pageArgs["message"]),
+              duration: Duration(seconds: 2),
+            )));
   }
 
   @override
@@ -33,29 +33,26 @@ class _ProfilesPageState extends State<ProfilesPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Scrollbar(
-                child: SingleChildScrollView(
-                  child: AlertDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Scrollbar(
+                  child: SingleChildScrollView(
+                      child: AlertDialog(
                     title: Text('Add new account'),
-                    content: ProfileForm(
-                      callAfterSave: (message) {
-                        Navigator.of(context).pop();
-                        _scaffoldKey.currentState.showSnackBar(
-                          new SnackBar(
-                            content: Text(message),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
-                      }, callIfCancelled: () {
-                        Navigator.of(context).pop();
-                      }),
-                  )
-                ),
-              );
-            }
-          );
+                    content: ProfileForm(callAfterSave: (message) {
+                      Navigator.of(context).pop();
+                      _scaffoldKey.currentState.showSnackBar(
+                        new SnackBar(
+                          content: Text(message),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    }, callIfCancelled: () {
+                      Navigator.of(context).pop();
+                    }),
+                  )),
+                );
+              });
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.grey[800],
@@ -92,21 +89,19 @@ class _ProfilesPageState extends State<ProfilesPage> {
                     }
                   },
                   child: BlocBuilder<ProfileBloc, ProfileState>(
-                    builder: (BuildContext context, ProfileState state) {
-                      if (state is ProfilesInitial) {
-                        return Center(child: CircularProgressIndicator());
-                      } else if (state is ProfilesLoading) {
-                        return Center(child: CircularProgressIndicator());
-                      } else if (state is ProfilesLoaded) {
-                        return ListView.builder(
+                      builder: (BuildContext context, ProfileState state) {
+                    if (state is ProfilesInitial) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (state is ProfilesLoading) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (state is ProfilesLoaded) {
+                      return ListView.builder(
                           itemCount: state.profiles.length,
                           itemBuilder: (BuildContext context, int index) {
                             return ProfileCard(state.profiles[index]);
-                          }
-                        );
-                      }
+                          });
                     }
-                  ),
+                  }),
                 ),
               ),
             ],

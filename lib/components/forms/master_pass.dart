@@ -5,8 +5,7 @@ import 'package:pass_manager_frontend/models/profile_crypter.dart';
 import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
 class MasterPassForm extends StatefulWidget {
-
-  MasterPassForm({Key key}): super(key: key);
+  MasterPassForm({Key key}) : super(key: key);
 
   @override
   _MasterPassFormState createState() => _MasterPassFormState();
@@ -48,8 +47,8 @@ class _MasterPassFormState extends State<MasterPassForm> {
             child: Text("Unlock"),
             onPressed: () {
               if (_formKey.currentState.validate()) {
-                ProfileCrypterStorageService.crypter = ProfileCrypter(
-                  masterPassword: _masterPassController.text);
+                ProfileCrypterStorageService.crypter =
+                    ProfileCrypter(masterPassword: _masterPassController.text);
                 BlocProvider.of<ProfileBloc>(context).add(GetProfiles());
               }
             },

@@ -6,7 +6,7 @@ import 'package:pass_manager_frontend/models/profile_crypter.dart';
 /// Usage:
 /// ```
 /// import 'package:pass_manager_frontend/models/profile_crypter.dart';
-/// 
+///
 /// ProfileCrypter crypter = ProfileCrypter(masterPassword: "secret-key");
 /// ProfileCrypterStorageService.crypter = crypter;
 /// print(ProfileCrypterStorageService.crypter.masterPassword);
@@ -17,7 +17,7 @@ class ProfileCrypterStorageService {
   static ProfileCrypter get() {
     if (crypter.masterPassword.isEmpty) {
       throw new ProfileCrypterUnsetException(
-        "Nothing to return. The profile crypter is unset.");
+          "Nothing to return. The profile crypter is unset.");
     }
     return crypter;
   }

@@ -5,8 +5,7 @@ import 'package:pass_manager_frontend/models/profile.dart';
 import 'package:uuid/uuid.dart';
 
 class ProfileForm extends StatefulWidget {
-
-  ProfileForm({Key key}): super(key:key);
+  ProfileForm({Key key}) : super(key: key);
 
   @override
   _ProfileFormState createState() => _ProfileFormState();
@@ -33,106 +32,102 @@ class _ProfileFormState extends State<ProfileForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          TextFormField(
-            controller: _titleController,
-            decoration: InputDecoration(
-              labelText: 'Title *',
-            ),
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter title';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: _usernameController,
-            decoration: InputDecoration(
-              labelText: 'Username',
-            ),
-            validator: (value) {
-             return null;
-            },
-          ),
-          TextFormField(
-            autovalidate: true,
-            obscureText: true,
-            controller: _passwordController,
-            decoration: InputDecoration(
-              labelText: 'Password',
-            ),
-            validator: (value) {
-             return null;
-            },
-          ),
-          TextFormField(
-            autovalidate: true,
-            obscureText: true,
-            decoration: InputDecoration(
-              labelText: 'Password repeat',
-            ),
-            validator: (value) {
-              if (value.isEmpty && _passwordController.text.isNotEmpty) {
-                return 'Please repeat password';
-              } else if (_passwordController.text != value) {
-                return "Passwords don't match";
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            maxLines: 3,
-            controller: _notesController,
-            decoration: InputDecoration(
-              labelText: 'Notes'
-            ),
-            validator: (value) {
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: _urlController,
-            decoration: InputDecoration(
-              labelText: 'URL'
-            ),
-            validator: (value) {
-              return null;
-            },
-          ),
-          SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Back'),
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            TextFormField(
+              controller: _titleController,
+              decoration: InputDecoration(
+                labelText: 'Title *',
               ),
-              RaisedButton(
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter title';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: _usernameController,
+              decoration: InputDecoration(
+                labelText: 'Username',
+              ),
+              validator: (value) {
+                return null;
+              },
+            ),
+            TextFormField(
+              autovalidate: true,
+              obscureText: true,
+              controller: _passwordController,
+              decoration: InputDecoration(
+                labelText: 'Password',
+              ),
+              validator: (value) {
+                return null;
+              },
+            ),
+            TextFormField(
+              autovalidate: true,
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: 'Password repeat',
+              ),
+              validator: (value) {
+                if (value.isEmpty && _passwordController.text.isNotEmpty) {
+                  return 'Please repeat password';
+                } else if (_passwordController.text != value) {
+                  return "Passwords don't match";
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              maxLines: 3,
+              controller: _notesController,
+              decoration: InputDecoration(labelText: 'Notes'),
+              validator: (value) {
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: _urlController,
+              decoration: InputDecoration(labelText: 'URL'),
+              validator: (value) {
+                return null;
+              },
+            ),
+            SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                RaisedButton(
+                  onPressed: () {
                     Navigator.of(context).pop();
-                    BlocProvider.of<ProfileBloc>(context).add(AddProfile(Profile(
-                      id: Uuid().v4(),
-                      title: _titleController.text,
-                      username: _usernameController.text,
-                      password: _passwordController.text,
-                      notes: _notesController.text,
-                      url: _urlController.text,
-                    )));
-                  }
-                },
-                child: Text('Save'),
-              ),
-            ],
-          )
-        ],
-      )
-    );
+                  },
+                  child: Text('Back'),
+                ),
+                RaisedButton(
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      Navigator.of(context).pop();
+                      BlocProvider.of<ProfileBloc>(context)
+                          .add(AddProfile(Profile(
+                        id: Uuid().v4(),
+                        title: _titleController.text,
+                        username: _usernameController.text,
+                        password: _passwordController.text,
+                        notes: _notesController.text,
+                        url: _urlController.text,
+                      )));
+                    }
+                  },
+                  child: Text('Save'),
+                ),
+              ],
+            )
+          ],
+        ));
   }
 }

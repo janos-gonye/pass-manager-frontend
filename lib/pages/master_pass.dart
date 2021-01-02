@@ -16,10 +16,10 @@ class _MasterPassPageState extends State<MasterPassPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text(_pageArgs["message"]),
-        duration: Duration(seconds: 2),
-    )));
+        (_) => _scaffoldKey.currentState.showSnackBar(SnackBar(
+              content: Text(_pageArgs["message"]),
+              duration: Duration(seconds: 2),
+            )));
   }
 
   @override
@@ -33,44 +33,42 @@ class _MasterPassPageState extends State<MasterPassPage> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(60, 130, 60, 40),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              BlocListener<ProfileBloc, ProfileState>(
-                listener: (context, state) {
-                  if (state is ProfileError) {
-                    _scaffoldKey.currentState.showSnackBar(
-                      SnackBar(
-                        content: Text(state.message),
-                      ),
-                    );
-                  } else if (state is ProfilesLoaded) {
-                    String message;
-                    if (state.profiles.isNotEmpty) {
-                      message = "Decryption successful";
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                BlocListener<ProfileBloc, ProfileState>(
+                  listener: (context, state) {
+                    if (state is ProfileError) {
+                      _scaffoldKey.currentState.showSnackBar(
+                        SnackBar(
+                          content: Text(state.message),
+                        ),
+                      );
+                    } else if (state is ProfilesLoaded) {
+                      String message;
+                      if (state.profiles.isNotEmpty) {
+                        message = "Decryption successful";
+                      }
+                      Navigator.pushReplacementNamed(
+                          context, constants.ROUTE_PROFILES,
+                          arguments: {"message": message});
                     }
-                    Navigator.pushReplacementNamed(
-                      context, constants.ROUTE_PROFILES, arguments: {
-                      "message": message
-                    });
-                  }
-                },
-                child: MasterPassForm(),
-              ),
-              SizedBox(height: 15),
-              Text(
-                "This password gets used " +
-                "to encrypt/decrypt your data." +
-                "Do not forget it, because there is " +
-                "no other way to recover your data.",
-                style: TextStyle(
-                  color: Colors.grey[800],
-                  fontSize: 12,
-                  fontStyle: FontStyle.italic,
+                  },
+                  child: MasterPassForm(),
                 ),
-              ),
-            ]
-          ),
+                SizedBox(height: 15),
+                Text(
+                  "This password gets used " +
+                      "to encrypt/decrypt your data." +
+                      "Do not forget it, because there is " +
+                      "no other way to recover your data.",
+                  style: TextStyle(
+                    color: Colors.grey[800],
+                    fontSize: 12,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ]),
         ),
       ),
     );
