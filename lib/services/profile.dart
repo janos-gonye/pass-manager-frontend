@@ -22,11 +22,39 @@ class ProfileRepository extends AuthorizedApiService {
     // TODO: Handle other status codes and errors.
   }
 
-  Future<Profile> saveProfile(Profile profile) async {
+  Future<List<Profile>> saveProfile(Profile profile) async {
     List<Profile> profiles = await getProfiles();
     profiles.add(profile);
     await _setProfiles(profiles);
-    return profile;
+    return profiles;
+  }
+
+  Future<List<Profile>> editProfile(Profile profile) async {
+    List<Profile> profiles = await getProfiles();
+    int index;
+    for (var i = 0; i < profiles.length; i++) {
+      if (profiles[i].id == profile.id) {
+        index = i;
+        break;
+      }
+    }
+    profiles[index] = profile;
+    await _setProfiles(profiles);
+    return profiles;
+  }
+
+  Future<List<Profile>> deleteProfile(Profile profile) async {
+    List<Profile> profiles = await getProfiles();
+    int index;
+    for (var i = 0; i < profiles.length; i++) {
+      if (profiles[i].id == profile.id) {
+        index = i;
+        break;
+      }
+    }
+    profiles.removeAt(index);
+    await _setProfiles(profiles);
+    return profiles;
   }
 
   Future<List<Profile>> getProfiles() async {

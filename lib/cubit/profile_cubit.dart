@@ -22,11 +22,31 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> addProfile(Profile profile) async {
     try {
-      await _profileRepository.saveProfile(profile);
-      final List<Profile> profiles = await _profileRepository.getProfiles();
-      emit(ProfileLoaded(profiles));
+      emit(ProfileAddding());
+      List<Profile> profiles = await _profileRepository.saveProfile(profile);
+      emit(ProfileAdded(profiles));
     } on Error {
       emit(ProfileError('Error when saving profile.'));
+    }
+  }
+
+  Future<void> editProfile(Profile profile) async {
+    try {
+      emit(ProfileEditing());
+      List<Profile> profiles = await _profileRepository.editProfile(profile);
+      emit(ProfileEdited(profiles));
+    } on Error {
+      emit(ProfileError('Error when editing profile.'));
+    }
+  }
+
+  Future<void> deleteProfile(Profile profile) async {
+    try {
+      emit(ProfileDeleting());
+      List<Profile> profiles = await _profileRepository.deleteProfile(profile);
+      emit(ProfileDeleted(profiles));
+    } on Error {
+      emit(ProfileError('Error when deleting profile.'));
     }
   }
 }
