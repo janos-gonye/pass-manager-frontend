@@ -20,8 +20,8 @@ class AuthService extends ApiService {
       return false;
     } else if (response.statusCode == 200) {
       final Map<String, dynamic> tokens = json.decode(response.body.toString());
-      accessToken = tokens["access"];
-      refreshToken = tokens["refresh"];
+      setAccessToken(tokens["access"]);
+      setRefreshToken(tokens["refresh"]);
       return true;
     }
     // TODO: Handle exceptions and other status codes.
@@ -35,16 +35,16 @@ class AuthService extends ApiService {
     return await _secureStorage.read(key: key);
   }
 
-  static set accessToken(String value) {
-    return _setToken(key: _accesTokenName, value: value);
+  static void setAccessToken(String value) {
+    _setToken(key: _accesTokenName, value: value);
   }
 
   static Future<String> get accessToken async {
     return _getToken(key: _accesTokenName);
   }
 
-  static set refreshToken(String value) {
-    return _setToken(key: _refreshTokenName, value: value);
+  static void setRefreshToken(String value) {
+    _setToken(key: _refreshTokenName, value: value);
   }
 
   static Future<String> get refreshToken async {
