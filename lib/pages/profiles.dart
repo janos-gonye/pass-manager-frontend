@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pass_manager_frontend/components/cards/profile.dart';
 import 'package:pass_manager_frontend/components/forms/profile.dart';
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
-import 'package:pass_manager_frontend/services/profile.dart';
+import 'package:pass_manager_frontend/models/profile.dart';
 
 class ProfilesPage extends StatefulWidget {
   @override
@@ -24,6 +24,10 @@ class _ProfilesPageState extends State<ProfilesPage> {
             )));
   }
 
+  void refreshProfiles(Profile profile) {
+    BlocProvider.of<ProfileCubit>(context).addProfile(profile);
+  }
+
   @override
   Widget build(BuildContext context) {
     _pageArgs = ModalRoute.of(context).settings.arguments;
@@ -40,9 +44,9 @@ class _ProfilesPageState extends State<ProfilesPage> {
                   child: SingleChildScrollView(
                       child: AlertDialog(
                     title: Text('Add new account'),
-                    content: BlocProvider(
-                        create: (context) => ProfileCubit(ProfileRepository()),
-                        child: ProfileForm()),
+                    content: ProfileForm(callAfterSave: (Profile profile) {
+                      refreshProfiles(profile);
+                    }),
                   )),
                 );
               });
@@ -80,12 +84,15 @@ class _ProfilesPageState extends State<ProfilesPage> {
                       ),
                     );
                   }
-                }, builder: (BuildContext context, ProfileState state) {
+                }, builder: (BuildContext context, dynamic state) {
                   if (state is ProfileInitial) {
                     return Center(child: CircularProgressIndicator());
-                  } else if (state is ProfileLoading) {
+                  } else if (state is ProfileLoading ||
+                      state is ProfileAddding ||
+                      state is ProfileEditing ||
+                      state is ProfileDeleting) {
                     return Center(child: CircularProgressIndicator());
-                  } else if (state is ProfileLoaded) {
+                  } else {
                     return ListView.builder(
                         itemCount: state.profiles.length,
                         itemBuilder: (BuildContext context, int index) {

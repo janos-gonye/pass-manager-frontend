@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
 import 'package:uuid/uuid.dart';
 
 class ProfileForm extends StatefulWidget {
-  ProfileForm({Key key}) : super(key: key);
+  final Function callAfterSave;
+
+  ProfileForm({Key key, this.callAfterSave}) : super(key: key);
 
   @override
   _ProfileFormState createState() => _ProfileFormState();
@@ -111,8 +111,7 @@ class _ProfileFormState extends State<ProfileForm> {
                 RaisedButton(
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
-                      Navigator.of(context).pop();
-                      BlocProvider.of<ProfileCubit>(context).addProfile(Profile(
+                      widget.callAfterSave(Profile(
                         id: Uuid().v4(),
                         title: _titleController.text,
                         username: _usernameController.text,
@@ -121,6 +120,7 @@ class _ProfileFormState extends State<ProfileForm> {
                         url: _urlController.text,
                       ));
                     }
+                    Navigator.pop(context);
                   },
                   child: Text('Save'),
                 ),
