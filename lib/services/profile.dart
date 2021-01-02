@@ -9,14 +9,13 @@ import 'package:pass_manager_frontend/services/crypto.dart';
 import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
 class ProfileService extends AuthorizedApiService {
-
   Future<bool> _setProfiles(List<Profile> profiles) async {
     ProfileCrypter crypter = ProfileCrypterStorageService.crypter;
     final String encrypted = await CryptoService().symmetricEncrypt(
-      stringForEncryption: json.encode(profiles),
-      password: crypter.masterPassword);
-    http.Response response = await patch(constants.PATH_PROFILES, {
-      'data': encrypted});
+        stringForEncryption: json.encode(profiles),
+        password: crypter.masterPassword);
+    http.Response response =
+        await patch(constants.PATH_PROFILES, {'data': encrypted});
     if (response.statusCode == 200) {
       return true;
     } else {
@@ -44,10 +43,11 @@ class ProfileService extends AuthorizedApiService {
         return [];
       } else {
         final String decrypted = await CryptoService().symmetricDecrypt(
-          stringForDecryption: encryptedProfiles,
-          password: crypter.masterPassword);
+            stringForDecryption: encryptedProfiles,
+            password: crypter.masterPassword);
         final List parsedList = json.decode(decrypted);
-        final List<Profile> profiles = parsedList.map((val) => Profile.fromJson(val)).toList();
+        final List<Profile> profiles =
+            parsedList.map((val) => Profile.fromJson(val)).toList();
         return profiles;
       }
     }
