@@ -7,7 +7,7 @@ import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 class MasterPassForm extends StatefulWidget {
   final Function callAfterSuccess;
 
-  MasterPassForm({Key key, this.callAfterSuccess}): super(key: key);
+  MasterPassForm({Key key, this.callAfterSuccess}) : super(key: key);
 
   @override
   _MasterPassFormState createState() => _MasterPassFormState();

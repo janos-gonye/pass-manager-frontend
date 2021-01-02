@@ -25,8 +25,7 @@ class Profile {
         this.username.isEmpty &&
         this.password.isEmpty &&
         this.notes.isEmpty &&
-        this.url.isEmpty
-    ) {
+        this.url.isEmpty) {
       return true;
     }
     return false;
@@ -44,7 +43,7 @@ class Profile {
   }
 }
 
-Profile _profileFromJson(Map <String, dynamic> json) {
+Profile _profileFromJson(Map<String, dynamic> json) {
   Profile profile = Profile(
     title: json['title'],
     username: json['username'],

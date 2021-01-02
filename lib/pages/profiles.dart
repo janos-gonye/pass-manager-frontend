@@ -17,10 +17,10 @@ class _ProfilesPageState extends State<ProfilesPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text(_pageArgs["message"]),
-        duration: Duration(seconds: 2),
-      )));
+        (_) => _scaffoldKey.currentState.showSnackBar(SnackBar(
+              content: Text(_pageArgs["message"]),
+              duration: Duration(seconds: 2),
+            )));
   }
 
   @override
@@ -33,29 +33,26 @@ class _ProfilesPageState extends State<ProfilesPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Scrollbar(
-                child: SingleChildScrollView(
-                  child: AlertDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Scrollbar(
+                  child: SingleChildScrollView(
+                      child: AlertDialog(
                     title: Text('Add new account'),
-                    content: ProfileForm(
-                      callAfterSave: (message) {
-                        Navigator.of(context).pop();
-                        _scaffoldKey.currentState.showSnackBar(
-                          new SnackBar(
-                            content: Text(message),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
-                      }, callIfCancelled: () {
-                        Navigator.of(context).pop();
-                      }),
-                  )
-                ),
-              );
-            }
-          );
+                    content: ProfileForm(callAfterSave: (message) {
+                      Navigator.of(context).pop();
+                      _scaffoldKey.currentState.showSnackBar(
+                        new SnackBar(
+                          content: Text(message),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    }, callIfCancelled: () {
+                      Navigator.of(context).pop();
+                    }),
+                  )),
+                );
+              });
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.grey[800],
@@ -68,7 +65,8 @@ class _ProfilesPageState extends State<ProfilesPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Center(
-                child: Text('Your\nAccounts',
+                child: Text(
+                  'Your\nAccounts',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.grey[800],
@@ -81,22 +79,20 @@ class _ProfilesPageState extends State<ProfilesPage> {
               Divider(color: Colors.grey[800]),
               Expanded(
                 child: FutureBuilder<List<Profile>>(
-                  future: _profileService.getProfiles(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    List<Profile> profiles = snapshot.data;
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                        itemCount: profiles.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ProfileCard(profiles[index]);
-                        }
-                      );
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text(snapshot.error));
-                    }
-                    return Center(child: CircularProgressIndicator());
-                  }
-                ),
+                    future: _profileService.getProfiles(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      List<Profile> profiles = snapshot.data;
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                            itemCount: profiles.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ProfileCard(profiles[index]);
+                            });
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text(snapshot.error));
+                      }
+                      return Center(child: CircularProgressIndicator());
+                    }),
               ),
             ],
           ),

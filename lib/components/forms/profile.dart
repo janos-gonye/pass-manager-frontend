@@ -7,8 +7,10 @@ class ProfileForm extends StatefulWidget {
   final Function callIfCancelled;
 
   ProfileForm({
-    Key key, this.callAfterSave, this.callIfCancelled,
-  }): super(key:key);
+    Key key,
+    this.callAfterSave,
+    this.callIfCancelled,
+  }) : super(key: key);
 
   @override
   _ProfileFormState createState() => _ProfileFormState();
@@ -22,100 +24,95 @@ class _ProfileFormState extends State<ProfileForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Title *',
-            ),
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter title';
-              }
-              _profile.title = value;
-              return null;
-            },
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Username',
-            ),
-            validator: (value) {
-              _profile.username = value;
-             return null;
-            },
-          ),
-          TextFormField(
-            autovalidate: true,
-            obscureText: true,
-            decoration: InputDecoration(
-              labelText: 'Password',
-            ),
-            validator: (value) {
-              _profile.password = value;
-             return null;
-            },
-          ),
-          TextFormField(
-            autovalidate: true,
-            obscureText: true,
-            decoration: InputDecoration(
-              labelText: 'Password repeat',
-            ),
-            validator: (value) {
-              if (value.isEmpty && _profile.password.isNotEmpty) {
-                return 'Please repeat password';
-              } else if (_profile.password != value) {
-                return "Passwords don't match";
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            maxLines: 3,
-            decoration: InputDecoration(
-              labelText: 'Notes'
-            ),
-            validator: (value) {
-              _profile.notes = value;
-              return null;
-            },
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'URL'
-            ),
-            validator: (value) {
-              _profile.url = value;
-              return null;
-            },
-          ),
-          SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              RaisedButton(
-                onPressed: () async {
-                  widget.callIfCancelled();
-                },
-                child: Text('Back'),
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Title *',
               ),
-              RaisedButton(
-                onPressed: () async {
-                  if (_formKey.currentState.validate()) {
-                    await _profileService.saveProfile(_profile);
-                    String message = "Profile successfully saved";
-                    widget.callAfterSave(message);
-                  }
-                },
-                child: Text('Save'),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter title';
+                }
+                _profile.title = value;
+                return null;
+              },
+            ),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Username',
               ),
-            ],
-          )
-        ],
-      )
-    );
+              validator: (value) {
+                _profile.username = value;
+                return null;
+              },
+            ),
+            TextFormField(
+              autovalidate: true,
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: 'Password',
+              ),
+              validator: (value) {
+                _profile.password = value;
+                return null;
+              },
+            ),
+            TextFormField(
+              autovalidate: true,
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: 'Password repeat',
+              ),
+              validator: (value) {
+                if (value.isEmpty && _profile.password.isNotEmpty) {
+                  return 'Please repeat password';
+                } else if (_profile.password != value) {
+                  return "Passwords don't match";
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              maxLines: 3,
+              decoration: InputDecoration(labelText: 'Notes'),
+              validator: (value) {
+                _profile.notes = value;
+                return null;
+              },
+            ),
+            TextFormField(
+              decoration: InputDecoration(labelText: 'URL'),
+              validator: (value) {
+                _profile.url = value;
+                return null;
+              },
+            ),
+            SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                RaisedButton(
+                  onPressed: () async {
+                    widget.callIfCancelled();
+                  },
+                  child: Text('Back'),
+                ),
+                RaisedButton(
+                  onPressed: () async {
+                    if (_formKey.currentState.validate()) {
+                      await _profileService.saveProfile(_profile);
+                      String message = "Profile successfully saved";
+                      widget.callAfterSave(message);
+                    }
+                  },
+                  child: Text('Save'),
+                ),
+              ],
+            )
+          ],
+        ));
   }
 }

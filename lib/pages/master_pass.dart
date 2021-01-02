@@ -31,34 +31,31 @@ class _MasterPassPageState extends State<MasterPassPage> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(60, 130, 60, 40),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              MasterPassForm(callAfterSuccess: (hasProfiles) {
-                String message;
-                if (hasProfiles) {
-                  message = "Decryption successful";
-                }
-                Navigator.pushReplacementNamed(
-                  context, constants.ROUTE_PROFILES, arguments: {
-                    "message": message
-                  });
-                }
-              ),
-              SizedBox(height: 15),
-              Text(
-                "This password gets used " +
-                "to encrypt/decrypt your data." +
-                "Do not forget it, because there is " +
-                "no other way to recover your data.",
-                style: TextStyle(
-                  color: Colors.grey[800],
-                  fontSize: 12,
-                  fontStyle: FontStyle.italic,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                MasterPassForm(callAfterSuccess: (hasProfiles) {
+                  String message;
+                  if (hasProfiles) {
+                    message = "Decryption successful";
+                  }
+                  Navigator.pushReplacementNamed(
+                      context, constants.ROUTE_PROFILES,
+                      arguments: {"message": message});
+                }),
+                SizedBox(height: 15),
+                Text(
+                  "This password gets used " +
+                      "to encrypt/decrypt your data." +
+                      "Do not forget it, because there is " +
+                      "no other way to recover your data.",
+                  style: TextStyle(
+                    color: Colors.grey[800],
+                    fontSize: 12,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
-              ),
-            ]
-          ),
+              ]),
         ),
       ),
     );
