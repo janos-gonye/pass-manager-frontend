@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pass_manager_frontend/blocs/profile/profile_bloc.dart';
+import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
 import 'package:uuid/uuid.dart';
 
@@ -112,15 +112,14 @@ class _ProfileFormState extends State<ProfileForm> {
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
                       Navigator.of(context).pop();
-                      BlocProvider.of<ProfileBloc>(context)
-                          .add(AddProfile(Profile(
+                      BlocProvider.of<ProfileCubit>(context).addProfile(Profile(
                         id: Uuid().v4(),
                         title: _titleController.text,
                         username: _usernameController.text,
                         password: _passwordController.text,
                         notes: _notesController.text,
                         url: _urlController.text,
-                      )));
+                      ));
                     }
                   },
                   child: Text('Save'),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pass_manager_frontend/blocs/profile/profile_bloc.dart';
+import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/pages/login.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
 import 'package:pass_manager_frontend/pages/master_pass.dart';
@@ -14,11 +14,11 @@ void main() => runApp(MaterialApp(
         constants.ROUTE_LOGIN: (context) => LoginPage(),
         constants.ROUTE_SETTINGS: (context) => SettingsPage(),
         constants.ROUTE_MASTER_PASS: (context) => BlocProvider(
-              create: (context) => ProfileBloc(ProfileRepository()),
+              create: (context) => ProfileCubit(ProfileRepository()),
               child: MasterPassPage(),
             ),
         constants.ROUTE_PROFILES: (context) => BlocProvider(
-              create: (context) => ProfileBloc(ProfileRepository()),
+              create: (context) => ProfileCubit(ProfileRepository()),
               child: ProfilesPage(),
             ),
       },

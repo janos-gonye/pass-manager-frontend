@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pass_manager_frontend/blocs/profile/profile_bloc.dart';
 import 'package:pass_manager_frontend/components/forms/master_pass.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
+import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 
 class MasterPassPage extends StatefulWidget {
   @override
@@ -36,7 +36,7 @@ class _MasterPassPageState extends State<MasterPassPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                BlocListener<ProfileBloc, ProfileState>(
+                BlocListener<ProfileCubit, ProfileState>(
                   listener: (context, state) {
                     if (state is ProfileError) {
                       _scaffoldKey.currentState.showSnackBar(
@@ -44,7 +44,7 @@ class _MasterPassPageState extends State<MasterPassPage> {
                           content: Text(state.message),
                         ),
                       );
-                    } else if (state is ProfilesLoaded) {
+                    } else if (state is ProfileLoaded) {
                       String message;
                       if (state.profiles.isNotEmpty) {
                         message = "Decryption successful";

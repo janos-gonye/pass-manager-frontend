@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pass_manager_frontend/blocs/profile/profile_bloc.dart';
+import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/models/profile_crypter.dart';
 import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
@@ -49,7 +49,7 @@ class _MasterPassFormState extends State<MasterPassForm> {
               if (_formKey.currentState.validate()) {
                 ProfileCrypterStorageService.crypter =
                     ProfileCrypter(masterPassword: _masterPassController.text);
-                BlocProvider.of<ProfileBloc>(context).add(GetProfiles());
+                BlocProvider.of<ProfileCubit>(context).getProfiles();
               }
             },
           ),

@@ -1,24 +1,24 @@
-part of 'profile_bloc.dart';
+part of 'profile_cubit.dart';
 
 abstract class ProfileState extends Equatable {
   const ProfileState();
 }
 
-class ProfilesInitial extends ProfileState {
-  const ProfilesInitial();
+class ProfileInitial extends ProfileState {
+  const ProfileInitial();
   @override
   List<Object> get props => [];
 }
 
-class ProfilesLoading extends ProfileState {
-  const ProfilesLoading();
+class ProfileLoading extends ProfileState {
+  const ProfileLoading();
   @override
   List<Object> get props => [];
 }
 
-class ProfilesLoaded extends ProfileState {
+class ProfileLoaded extends ProfileState {
   final List<Profile> profiles;
-  const ProfilesLoaded(this.profiles);
+  const ProfileLoaded(this.profiles);
   @override
   List<Object> get props => [profiles];
 }

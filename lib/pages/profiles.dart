@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pass_manager_frontend/blocs/profile/profile_bloc.dart';
 import 'package:pass_manager_frontend/components/cards/profile.dart';
 import 'package:pass_manager_frontend/components/forms/profile.dart';
+import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 
 class ProfilesPage extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
 
   void initState() {
     super.initState();
-    BlocProvider.of<ProfileBloc>(context).add(GetProfiles());
+    BlocProvider.of<ProfileCubit>(context).getProfiles();
     WidgetsBinding.instance.addPostFrameCallback(
         (_) => _scaffoldKey.currentState.showSnackBar(SnackBar(
               content: Text(_pageArgs["message"]),
@@ -39,17 +39,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
                   child: SingleChildScrollView(
                       child: AlertDialog(
                     title: Text('Add new account'),
-                    content: ProfileForm(callAfterSave: (message) {
-                      Navigator.of(context).pop();
-                      _scaffoldKey.currentState.showSnackBar(
-                        new SnackBar(
-                          content: Text(message),
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
-                    }, callIfCancelled: () {
-                      Navigator.of(context).pop();
-                    }),
+                    content: ProfileForm(),
                   )),
                 );
               });
@@ -78,31 +68,28 @@ class _ProfilesPageState extends State<ProfilesPage> {
               SizedBox(height: 10),
               Divider(color: Colors.grey[800]),
               Expanded(
-                child: BlocListener<ProfileBloc, ProfileState>(
-                  listener: (context, state) {
-                    if (state is ProfileError) {
-                      _scaffoldKey.currentState.showSnackBar(
-                        SnackBar(
-                          content: Text(state.message),
-                        ),
-                      );
-                    }
-                  },
-                  child: BlocBuilder<ProfileBloc, ProfileState>(
-                      builder: (BuildContext context, ProfileState state) {
-                    if (state is ProfilesInitial) {
-                      return Center(child: CircularProgressIndicator());
-                    } else if (state is ProfilesLoading) {
-                      return Center(child: CircularProgressIndicator());
-                    } else if (state is ProfilesLoaded) {
-                      return ListView.builder(
-                          itemCount: state.profiles.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ProfileCard(state.profiles[index]);
-                          });
-                    }
-                  }),
-                ),
+                child: BlocConsumer<ProfileCubit, ProfileState>(
+                    listener: (context, state) {
+                  if (state is ProfileError) {
+                    _scaffoldKey.currentState.showSnackBar(
+                      SnackBar(
+                        content: Text(state.message),
+                      ),
+                    );
+                  }
+                }, builder: (BuildContext context, ProfileState state) {
+                  if (state is ProfileInitial) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state is ProfileLoading) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state is ProfileLoaded) {
+                    return ListView.builder(
+                        itemCount: state.profiles.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ProfileCard(state.profiles[index]);
+                        });
+                  }
+                }),
               ),
             ],
           ),
