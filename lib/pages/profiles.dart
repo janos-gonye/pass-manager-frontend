@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pass_manager_frontend/components/cards/profile.dart';
 import 'package:pass_manager_frontend/components/forms/profile.dart';
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
+import 'package:pass_manager_frontend/services/profile.dart';
 
 class ProfilesPage extends StatefulWidget {
   @override
@@ -39,7 +40,9 @@ class _ProfilesPageState extends State<ProfilesPage> {
                   child: SingleChildScrollView(
                       child: AlertDialog(
                     title: Text('Add new account'),
-                    content: ProfileForm(),
+                    content: BlocProvider(
+                        create: (context) => ProfileCubit(ProfileRepository()),
+                        child: ProfileForm()),
                   )),
                 );
               });
