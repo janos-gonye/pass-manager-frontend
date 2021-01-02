@@ -4,6 +4,7 @@ abstract class ProfileState extends Equatable {
   const ProfileState();
 }
 
+// Fetching
 class ProfileInitial extends ProfileState {
   const ProfileInitial();
   @override
@@ -23,6 +24,20 @@ class ProfileLoaded extends ProfileState {
   List<Object> get props => [profiles];
 }
 
+// Saving/editing
+class ProfileSaving extends ProfileState {
+  const ProfileSaving();
+  @override
+  List<Object> get props => [];
+}
+
+class ProfileSaved extends ProfileState {
+  const ProfileSaved();
+  @override
+  List<Object> get props => [];
+}
+
+// Error
 class ProfileError extends ProfileState {
   final String message;
   const ProfileError(this.message);
