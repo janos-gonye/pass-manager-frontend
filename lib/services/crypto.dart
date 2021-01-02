@@ -42,7 +42,7 @@ class CryptoService {
   Future<String> _generateNewKey(password) async {
     final String salt = await _cryptor.generateSalt();
     final String key = await _cryptor.generateKeyFromPassword(password, salt);
-    _SaltSecuryStorage.salt = salt;
+    _SaltSecuryStorage.setSalt(salt);
     return key;
   }
 
@@ -58,7 +58,7 @@ class _SaltSecuryStorage {
   static final _secureStorage = FlutterSecureStorage();
   static const _saltName = 'salt';
 
-  static set salt(String value) {
+  static setSalt(String value) {
     _secureStorage.write(key: _saltName, value: value);
   }
 
