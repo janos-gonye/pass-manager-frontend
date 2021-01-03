@@ -1,3 +1,4 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -49,8 +50,16 @@ class ProfileCard extends StatelessWidget {
                   FlatButton(
                     textColor: Colors.grey[800],
                     child: Icon(Icons.delete),
-                    onPressed: () {
-                      this.deleteCallback(profile);
+                    onPressed: () async {
+                      CoolAlert.show(
+                          context: context,
+                          type: CoolAlertType.confirm,
+                          confirmBtnText: "Delete",
+                          cancelBtnText: "Cancel",
+                          onConfirmBtnTap: () {
+                            this.deleteCallback(profile);
+                            Navigator.pop(context);
+                          });
                     },
                   ),
                 ],
