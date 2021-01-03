@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pass_manager_frontend/models/profile.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/models/profile_crypter.dart';
-import 'package:pass_manager_frontend/services/profile.dart';
 import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
 class MasterPassForm extends StatefulWidget {
-  final Function callAfterSuccess;
-
-  MasterPassForm({Key key, this.callAfterSuccess}) : super(key: key);
+  MasterPassForm({Key key}) : super(key: key);
 
   @override
   _MasterPassFormState createState() => _MasterPassFormState();
@@ -15,8 +13,13 @@ class MasterPassForm extends StatefulWidget {
 
 class _MasterPassFormState extends State<MasterPassForm> {
   final _formKey = GlobalKey<FormState>();
-  final ProfileCrypter _crypter = ProfileCrypter(masterPassword: "");
-  final ProfileService _profileService = ProfileService();
+  final _masterPassController = TextEditingController();
+
+  @override
+  void dispose() {
+    _masterPassController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,23 +34,22 @@ class _MasterPassFormState extends State<MasterPassForm> {
               labelText: 'Unlock your profiles',
               hintText: 'Your master password',
             ),
+            controller: _masterPassController,
             obscureText: true,
             validator: (value) {
               if (value.isEmpty) {
                 return 'Please enter your master password';
               }
-              _crypter.masterPassword = value;
               return null;
             },
           ),
           RaisedButton(
             child: Text("Unlock"),
-            onPressed: () async {
+            onPressed: () {
               if (_formKey.currentState.validate()) {
-                ProfileCrypterStorageService.crypter = _crypter;
-                // Handle decryption error.
-                List<Profile> profiles = await _profileService.getProfiles();
-                widget.callAfterSuccess(profiles.isNotEmpty);
+                ProfileCrypterStorageService.crypter =
+                    ProfileCrypter(masterPassword: _masterPassController.text);
+                BlocProvider.of<ProfileCubit>(context).getProfiles();
               }
             },
           ),

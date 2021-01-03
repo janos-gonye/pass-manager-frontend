@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pass_manager_frontend/components/cards/profile.dart';
 import 'package:pass_manager_frontend/components/forms/profile.dart';
-import 'package:pass_manager_frontend/services/profile.dart';
+import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
 
 class ProfilesPage extends StatefulWidget {
@@ -12,15 +13,19 @@ class ProfilesPage extends StatefulWidget {
 class _ProfilesPageState extends State<ProfilesPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   Map<String, String> _pageArgs;
-  final ProfileService _profileService = ProfileService();
 
   void initState() {
     super.initState();
+    BlocProvider.of<ProfileCubit>(context).getProfiles();
     WidgetsBinding.instance.addPostFrameCallback(
         (_) => _scaffoldKey.currentState.showSnackBar(SnackBar(
               content: Text(_pageArgs["message"]),
               duration: Duration(seconds: 2),
             )));
+  }
+
+  void addProfile(Profile profile) {
+    BlocProvider.of<ProfileCubit>(context).addProfile(profile);
   }
 
   @override
@@ -39,16 +44,8 @@ class _ProfilesPageState extends State<ProfilesPage> {
                   child: SingleChildScrollView(
                       child: AlertDialog(
                     title: Text('Add new account'),
-                    content: ProfileForm(callAfterSave: (message) {
-                      Navigator.of(context).pop();
-                      _scaffoldKey.currentState.showSnackBar(
-                        new SnackBar(
-                          content: Text(message),
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
-                    }, callIfCancelled: () {
-                      Navigator.of(context).pop();
+                    content: ProfileForm(callAfterSave: (Profile profile) {
+                      addProfile(profile);
                     }),
                   )),
                 );
@@ -78,21 +75,54 @@ class _ProfilesPageState extends State<ProfilesPage> {
               SizedBox(height: 10),
               Divider(color: Colors.grey[800]),
               Expanded(
-                child: FutureBuilder<List<Profile>>(
-                    future: _profileService.getProfiles(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      List<Profile> profiles = snapshot.data;
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                            itemCount: profiles.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return ProfileCard(profiles[index]);
-                            });
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text(snapshot.error));
-                      }
-                      return Center(child: CircularProgressIndicator());
-                    }),
+                child: BlocConsumer<ProfileCubit, ProfileState>(
+                    listener: (context, state) {
+                  String message = "";
+                  if (state is ProfileError) {
+                    message = state.message;
+                  } else if (state is ProfileAdded) {
+                    message = "Account successfully created.";
+                  } else if (state is ProfileEdited) {
+                    message = "Account successfully edited.";
+                  } else if (state is ProfileDeleted) {
+                    message = "Account successfully deleted.";
+                  }
+                  if (message.isNotEmpty)
+                    _scaffoldKey.currentState.showSnackBar(SnackBar(
+                      content: Text(message),
+                      duration: Duration(seconds: 2),
+                    ));
+                }, builder: (BuildContext context, dynamic state) {
+                  if (state is ProfileInitial) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state is ProfileInProgress) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state is ProfileSuccess) {
+                    return ListView.builder(
+                        itemCount: state.profiles.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ProfileCard(
+                              profile: state.profiles[index],
+                              deleteCallback: (Profile profile) {
+                                BlocProvider.of<ProfileCubit>(context)
+                                    .deleteProfile(profile);
+                              });
+                        });
+                  } else {
+                    return Center(
+                        child: Column(children: [
+                      SizedBox(height: 50),
+                      Icon(Icons.error),
+                      Text("Error occured, refresh"),
+                      FlatButton(
+                          child: Icon(Icons.refresh),
+                          onPressed: () {
+                            BlocProvider.of<ProfileCubit>(context)
+                                .getProfiles();
+                          })
+                    ]));
+                  }
+                }),
               ),
             ],
           ),

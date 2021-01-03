@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pass_manager_frontend/components/forms/master_pass.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
+import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 
 class MasterPassPage extends StatefulWidget {
   @override
@@ -34,15 +36,26 @@ class _MasterPassPageState extends State<MasterPassPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                MasterPassForm(callAfterSuccess: (hasProfiles) {
-                  String message;
-                  if (hasProfiles) {
-                    message = "Decryption successful";
-                  }
-                  Navigator.pushReplacementNamed(
-                      context, constants.ROUTE_PROFILES,
-                      arguments: {"message": message});
-                }),
+                BlocListener<ProfileCubit, ProfileState>(
+                  listener: (context, state) {
+                    if (state is ProfileError) {
+                      _scaffoldKey.currentState.showSnackBar(
+                        SnackBar(
+                          content: Text(state.message),
+                        ),
+                      );
+                    } else if (state is ProfileLoaded) {
+                      String message;
+                      if (state.profiles.isNotEmpty) {
+                        message = "Decryption successful";
+                      }
+                      Navigator.pushReplacementNamed(
+                          context, constants.ROUTE_PROFILES,
+                          arguments: {"message": message});
+                    }
+                  },
+                  child: MasterPassForm(),
+                ),
                 SizedBox(height: 15),
                 Text(
                   "This password gets used " +

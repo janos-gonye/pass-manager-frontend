@@ -53,7 +53,7 @@ class CryptoService {
   }
 }
 
-// TODO: Store salt in the cloud.
+// TODO: Use ASE encryption.
 class _SaltSecuryStorage {
   static final _secureStorage = FlutterSecureStorage();
   static const _saltName = 'salt';
