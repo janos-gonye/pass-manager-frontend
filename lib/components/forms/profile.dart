@@ -5,7 +5,7 @@ import 'package:uuid/uuid.dart';
 class ProfileForm extends StatefulWidget {
   final Function callAfterSave;
 
-  ProfileForm({Key key, this.callAfterSave}) : super(key: key);
+  ProfileForm({Key key, @required this.callAfterSave}) : super(key: key);
 
   @override
   _ProfileFormState createState() => _ProfileFormState();
@@ -119,8 +119,8 @@ class _ProfileFormState extends State<ProfileForm> {
                         notes: _notesController.text,
                         url: _urlController.text,
                       ));
+                      Navigator.pop(context);
                     }
-                    Navigator.pop(context);
                   },
                   child: Text('Save'),
                 ),
