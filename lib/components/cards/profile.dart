@@ -4,9 +4,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
 
 class ProfileCard extends StatelessWidget {
-  Profile profile;
+  final Profile profile;
+  final Function deleteCallback;
 
-  ProfileCard(this.profile, {Key key}) : super(key: key);
+  ProfileCard({@required this.profile, @required this.deleteCallback, Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,9 @@ class ProfileCard extends StatelessWidget {
                   FlatButton(
                     textColor: Colors.grey[800],
                     child: Icon(Icons.delete),
-                    onPressed: () {},
+                    onPressed: () {
+                      this.deleteCallback(profile);
+                    },
                   ),
                 ],
               ),

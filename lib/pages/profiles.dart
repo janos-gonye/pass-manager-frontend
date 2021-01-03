@@ -81,11 +81,11 @@ class _ProfilesPageState extends State<ProfilesPage> {
                   if (state is ProfileError) {
                     message = state.message;
                   } else if (state is ProfileAdded) {
-                    message = "Element successfully created.";
+                    message = "Account successfully created.";
                   } else if (state is ProfileEdited) {
-                    message = "Element successfully edited.";
+                    message = "Account successfully edited.";
                   } else if (state is ProfileDeleted) {
-                    message = "Element successfully deleted.";
+                    message = "Account successfully deleted.";
                   }
                   if (message.isNotEmpty)
                     _scaffoldKey.currentState.showSnackBar(SnackBar(
@@ -101,7 +101,12 @@ class _ProfilesPageState extends State<ProfilesPage> {
                     return ListView.builder(
                         itemCount: state.profiles.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return ProfileCard(state.profiles[index]);
+                          return ProfileCard(
+                              profile: state.profiles[index],
+                              deleteCallback: (Profile profile) {
+                                BlocProvider.of<ProfileCubit>(context)
+                                    .deleteProfile(profile);
+                              });
                         });
                   } else {
                     return Center(
