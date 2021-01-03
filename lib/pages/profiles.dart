@@ -105,14 +105,16 @@ class _ProfilesPageState extends State<ProfilesPage> {
                         });
                   } else {
                     return Center(
-                        child: Row(children: [
+                        child: Column(children: [
+                      SizedBox(height: 50),
                       Icon(Icons.error),
-                      // FlatButton(
-                      //     child: Icon(Icons.refresh),
-                      //     onPressed: () {
-                      //       BlocProvider.of<ProfileCubit>(context)
-                      //           .getProfiles();
-                      //     })
+                      Text("Error occured, refresh"),
+                      FlatButton(
+                          child: Icon(Icons.refresh),
+                          onPressed: () {
+                            BlocProvider.of<ProfileCubit>(context)
+                                .getProfiles();
+                          })
                     ]));
                   }
                 }),
