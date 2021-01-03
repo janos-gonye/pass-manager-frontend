@@ -24,7 +24,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
             )));
   }
 
-  void refreshProfiles(Profile profile) {
+  void addProfile(Profile profile) {
     BlocProvider.of<ProfileCubit>(context).addProfile(profile);
   }
 
@@ -45,7 +45,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
                       child: AlertDialog(
                     title: Text('Add new account'),
                     content: ProfileForm(callAfterSave: (Profile profile) {
-                      refreshProfiles(profile);
+                      addProfile(profile);
                     }),
                   )),
                 );
@@ -77,27 +77,43 @@ class _ProfilesPageState extends State<ProfilesPage> {
               Expanded(
                 child: BlocConsumer<ProfileCubit, ProfileState>(
                     listener: (context, state) {
+                  String message = "";
                   if (state is ProfileError) {
-                    _scaffoldKey.currentState.showSnackBar(
-                      SnackBar(
-                        content: Text(state.message),
-                      ),
-                    );
+                    message = state.message;
+                  } else if (state is ProfileAdded) {
+                    message = "Element successfully created.";
+                  } else if (state is ProfileEdited) {
+                    message = "Element successfully edited.";
+                  } else if (state is ProfileDeleted) {
+                    message = "Element successfully deleted.";
                   }
+                  if (message.isNotEmpty)
+                    _scaffoldKey.currentState.showSnackBar(SnackBar(
+                      content: Text(message),
+                      duration: Duration(seconds: 2),
+                    ));
                 }, builder: (BuildContext context, dynamic state) {
                   if (state is ProfileInitial) {
                     return Center(child: CircularProgressIndicator());
-                  } else if (state is ProfileLoading ||
-                      state is ProfileAddding ||
-                      state is ProfileEditing ||
-                      state is ProfileDeleting) {
+                  } else if (state is ProfileInProgress) {
                     return Center(child: CircularProgressIndicator());
-                  } else {
+                  } else if (state is ProfileSuccess) {
                     return ListView.builder(
                         itemCount: state.profiles.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ProfileCard(state.profiles[index]);
                         });
+                  } else {
+                    return Center(
+                        child: Row(children: [
+                      Icon(Icons.error),
+                      // FlatButton(
+                      //     child: Icon(Icons.refresh),
+                      //     onPressed: () {
+                      //       BlocProvider.of<ProfileCubit>(context)
+                      //           .getProfiles();
+                      //     })
+                    ]));
                   }
                 }),
               ),

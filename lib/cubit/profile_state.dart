@@ -21,7 +21,7 @@ class ProfileInitial extends ProfileState {
 }
 
 class ProfileLoading extends ProfileInProgress {
-  ProfileLoading();
+  const ProfileLoading();
   @override
   List<Object> get props => [];
 }
@@ -35,42 +35,42 @@ class ProfileLoaded extends ProfileSuccess {
 
 // Create
 class ProfileAddding extends ProfileInProgress {
-  ProfileAddding();
+  const ProfileAddding();
   @override
   List<Object> get props => [];
 }
 
 class ProfileAdded extends ProfileSuccess {
   final List<Profile> profiles;
-  ProfileAdded(this.profiles) : super(profiles);
+  const ProfileAdded(this.profiles) : super(profiles);
   @override
   List<Object> get props => [profiles];
 }
 
 // Edit
 class ProfileEditing extends ProfileInProgress {
-  ProfileEditing();
+  const ProfileEditing();
   @override
   List<Object> get props => [];
 }
 
 class ProfileEdited extends ProfileSuccess {
   final List<Profile> profiles;
-  ProfileEdited(this.profiles) : super(profiles);
+  const ProfileEdited(this.profiles) : super(profiles);
   @override
   List<Object> get props => [profiles];
 }
 
 // Delete
 class ProfileDeleting extends ProfileInProgress {
-  ProfileDeleting();
+  const ProfileDeleting();
   @override
   List<Object> get props => [];
 }
 
 class ProfileDeleted extends ProfileSuccess {
   final List<Profile> profiles;
-  ProfileDeleted(this.profiles) : super(profiles);
+  const ProfileDeleted(this.profiles) : super(profiles);
   @override
   List<Object> get props => [profiles];
 }
