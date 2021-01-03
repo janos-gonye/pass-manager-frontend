@@ -4,8 +4,10 @@ import 'package:uuid/uuid.dart';
 
 class ProfileForm extends StatefulWidget {
   final Function callAfterSave;
+  final Profile profile;
 
-  ProfileForm({Key key, @required this.callAfterSave}) : super(key: key);
+  ProfileForm({Key key, this.profile, @required this.callAfterSave})
+      : super(key: key);
 
   @override
   _ProfileFormState createState() => _ProfileFormState();
@@ -16,17 +18,37 @@ class _ProfileFormState extends State<ProfileForm> {
   final _titleController = TextEditingController();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _passwordRepeatController = TextEditingController();
   final _notesController = TextEditingController();
   final _urlController = TextEditingController();
+  bool editForm = false;
 
   @override
   void dispose() {
     _titleController.dispose();
     _usernameController.dispose();
     _passwordController.dispose();
+    _passwordRepeatController.dispose();
     _notesController.dispose();
     _urlController.dispose();
     super.dispose();
+  }
+
+  _fillFormWithProfileToBeEdited() {
+    _titleController.text = widget.profile.title;
+    _usernameController.text = widget.profile.username;
+    _passwordController.text = widget.profile.password;
+    _passwordRepeatController.text = widget.profile.password;
+    _notesController.text = widget.profile.notes;
+    _urlController.text = widget.profile.url;
+  }
+
+  void initState() {
+    super.initState();
+    if (widget.profile != null) {
+      _fillFormWithProfileToBeEdited();
+      editForm = true;
+    }
   }
 
   @override
@@ -71,6 +93,7 @@ class _ProfileFormState extends State<ProfileForm> {
             TextFormField(
               autovalidate: true,
               obscureText: true,
+              controller: _passwordRepeatController,
               decoration: InputDecoration(
                 labelText: 'Password repeat',
               ),
@@ -111,8 +134,14 @@ class _ProfileFormState extends State<ProfileForm> {
                 RaisedButton(
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
+                      String id;
+                      if (editForm) {
+                        id = widget.profile.id;
+                      } else {
+                        id = Uuid().v4();
+                      }
                       widget.callAfterSave(Profile(
-                        id: Uuid().v4(),
+                        id: id,
                         title: _titleController.text,
                         username: _usernameController.text,
                         password: _passwordController.text,

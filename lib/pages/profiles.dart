@@ -106,6 +106,10 @@ class _ProfilesPageState extends State<ProfilesPage> {
                               deleteCallback: (Profile profile) {
                                 BlocProvider.of<ProfileCubit>(context)
                                     .deleteProfile(profile);
+                              },
+                              editCallback: (Profile profile) {
+                                BlocProvider.of<ProfileCubit>(context)
+                                    .editProfile(profile);
                               });
                         });
                   } else {

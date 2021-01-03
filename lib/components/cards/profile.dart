@@ -2,13 +2,19 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pass_manager_frontend/components/forms/profile.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
 
 class ProfileCard extends StatelessWidget {
   final Profile profile;
   final Function deleteCallback;
+  final Function editCallback;
 
-  ProfileCard({@required this.profile, @required this.deleteCallback, Key key})
+  ProfileCard(
+      {@required this.profile,
+      @required this.deleteCallback,
+      @required this.editCallback,
+      Key key})
       : super(key: key);
 
   @override
@@ -44,7 +50,21 @@ class ProfileCard extends StatelessWidget {
                   FlatButton(
                     textColor: Colors.grey[800],
                     child: Icon(Icons.edit),
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Scrollbar(
+                                child: SingleChildScrollView(
+                                    child: AlertDialog(
+                                        title: Text('Edit account'),
+                                        content: ProfileForm(
+                                            profile: this.profile,
+                                            callAfterSave: (Profile profile) {
+                                              this.editCallback(profile);
+                                            }))));
+                          });
+                    },
                   ),
                   SizedBox(width: 10),
                   FlatButton(
