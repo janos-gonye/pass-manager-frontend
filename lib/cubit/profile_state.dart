@@ -4,6 +4,15 @@ abstract class ProfileState extends Equatable {
   const ProfileState();
 }
 
+abstract class ProfileSuccess extends ProfileState {
+  final List<Profile> profiles;
+  const ProfileSuccess(this.profiles);
+}
+
+abstract class ProfileInProgress extends ProfileState {
+  const ProfileInProgress();
+}
+
 // Fetching
 class ProfileInitial extends ProfileState {
   const ProfileInitial();
@@ -11,57 +20,57 @@ class ProfileInitial extends ProfileState {
   List<Object> get props => [];
 }
 
-class ProfileLoading extends ProfileState {
-  const ProfileLoading();
+class ProfileLoading extends ProfileInProgress {
+  ProfileLoading();
   @override
   List<Object> get props => [];
 }
 
-class ProfileLoaded extends ProfileState {
+class ProfileLoaded extends ProfileSuccess {
   final List<Profile> profiles;
-  const ProfileLoaded(this.profiles);
+  const ProfileLoaded(this.profiles) : super(profiles);
   @override
   List<Object> get props => [profiles];
 }
 
 // Create
-class ProfileAddding extends ProfileState {
-  const ProfileAddding();
+class ProfileAddding extends ProfileInProgress {
+  ProfileAddding();
   @override
   List<Object> get props => [];
 }
 
-class ProfileAdded extends ProfileState {
+class ProfileAdded extends ProfileSuccess {
   final List<Profile> profiles;
-  const ProfileAdded(this.profiles);
+  ProfileAdded(this.profiles) : super(profiles);
   @override
   List<Object> get props => [profiles];
 }
 
 // Edit
-class ProfileEditing extends ProfileState {
-  const ProfileEditing();
+class ProfileEditing extends ProfileInProgress {
+  ProfileEditing();
   @override
   List<Object> get props => [];
 }
 
-class ProfileEdited extends ProfileState {
+class ProfileEdited extends ProfileSuccess {
   final List<Profile> profiles;
-  const ProfileEdited(this.profiles);
+  ProfileEdited(this.profiles) : super(profiles);
   @override
   List<Object> get props => [profiles];
 }
 
 // Delete
-class ProfileDeleting extends ProfileState {
-  const ProfileDeleting();
+class ProfileDeleting extends ProfileInProgress {
+  ProfileDeleting();
   @override
   List<Object> get props => [];
 }
 
-class ProfileDeleted extends ProfileState {
+class ProfileDeleted extends ProfileSuccess {
   final List<Profile> profiles;
-  const ProfileDeleted(this.profiles);
+  ProfileDeleted(this.profiles) : super(profiles);
   @override
   List<Object> get props => [profiles];
 }
