@@ -63,7 +63,6 @@ class ProfileRepository extends AuthorizedApiService {
     if (response.statusCode == 200) {
       final Map<String, dynamic> body = json.decode(response.body);
       final String encryptedProfiles = body['data'];
-      // TODO: Change it to 'null'. Both here and in the back-end, too.
       if (encryptedProfiles == "") {
         return [];
       } else {

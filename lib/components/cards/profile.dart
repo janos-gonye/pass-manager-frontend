@@ -71,7 +71,7 @@ class ProfileCard extends StatelessWidget {
 }
 
 class _Password extends StatefulWidget {
-  String password;
+  final String password;
 
   _Password(this.password, {Key key}) : super(key: key);
 
