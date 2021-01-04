@@ -1,18 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ChangeEncryptionKeyForm extends StatefulWidget {
+class ChangeMasterPassForm extends StatefulWidget {
   final Function callChangeCallback;
 
-  ChangeEncryptionKeyForm({Key key, @required this.callChangeCallback})
+  ChangeMasterPassForm({Key key, @required this.callChangeCallback})
       : super(key: key);
 
   @override
-  _ChangeEncryptionKeyFormState createState() =>
-      _ChangeEncryptionKeyFormState();
+  _ChangeMasterPassFormState createState() => _ChangeMasterPassFormState();
 }
 
-class _ChangeEncryptionKeyFormState extends State<ChangeEncryptionKeyForm> {
+class _ChangeMasterPassFormState extends State<ChangeMasterPassForm> {
   final _formKey = GlobalKey<FormState>();
   final _oldKeyController = TextEditingController();
   final _newKeyController = TextEditingController();

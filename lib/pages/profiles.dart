@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pass_manager_frontend/components/buttons/logout.dart';
 import 'package:pass_manager_frontend/components/cards/profile.dart';
-import 'package:pass_manager_frontend/components/forms/change_encryption_key.dart';
+import 'package:pass_manager_frontend/components/forms/change_master_pass_form.dart';
 import 'package:pass_manager_frontend/components/forms/profile.dart';
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
@@ -61,7 +61,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
                             child: SingleChildScrollView(
                           child: AlertDialog(
                               title: Text('Change encryption key'),
-                              content: ChangeEncryptionKeyForm(
+                              content: ChangeMasterPassForm(
                                   callChangeCallback:
                                       (String oldKey, String newKey) {})),
                         ));
