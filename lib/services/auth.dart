@@ -7,6 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
 import 'package:pass_manager_frontend/models/auth_credential.dart';
 import 'package:pass_manager_frontend/services/api.dart';
+import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
 class AuthService extends ApiService {
   static const String _accesTokenName = 'accessToken';
@@ -30,6 +31,7 @@ class AuthService extends ApiService {
   static void logout() {
     deleteAccessToken();
     deleteRefreshToken();
+    ProfileCrypterStorageService.crypter.masterPassword = null;
   }
 
   static void _setToken({@required String key, @required String value}) {
