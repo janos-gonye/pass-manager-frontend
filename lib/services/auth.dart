@@ -31,6 +31,10 @@ class AuthService extends ApiService {
     _secureStorage.write(key: key, value: value);
   }
 
+  static void _deleteKey({@required String key}) {
+    _secureStorage.delete(key: key);
+  }
+
   static Future<String> _getToken({@required String key}) async {
     return await _secureStorage.read(key: key);
   }
@@ -49,5 +53,13 @@ class AuthService extends ApiService {
 
   static Future<String> get refreshToken async {
     return _getToken(key: _refreshTokenName);
+  }
+
+  static void deleteRefreshToken() async {
+    _deleteKey(key: _refreshTokenName);
+  }
+
+  static void deleteAccessToken() async {
+    _deleteKey(key: _accesTokenName);
   }
 }
