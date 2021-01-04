@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
 class ChangeMasterPassForm extends StatefulWidget {
   final Function callChangeCallback;
@@ -31,11 +32,17 @@ class _ChangeMasterPassFormState extends State<ChangeMasterPassForm> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             TextFormField(
+                autovalidate: true,
                 controller: _oldKeyController,
+                obscureText: true,
                 decoration: InputDecoration(labelText: 'Current key *'),
                 validator: (value) {
                   if (value.isEmpty)
                     return 'Please enter the current encryption key';
+                  if (value.isNotEmpty &&
+                      value !=
+                          ProfileCrypterStorageService.crypter.masterPassword)
+                    return "Doesn't match.";
                   return null;
                 }),
             TextFormField(
