@@ -9,6 +9,7 @@ class LogoutButton extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      heroTag: null,
       onPressed: () {
         AuthService.logout();
         Navigator.pushNamedAndRemoveUntil(

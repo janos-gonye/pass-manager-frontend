@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pass_manager_frontend/components/buttons/logout.dart';
 import 'package:pass_manager_frontend/components/cards/profile.dart';
 import 'package:pass_manager_frontend/components/forms/profile.dart';
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
@@ -35,25 +36,37 @@ class _ProfilesPageState extends State<ProfilesPage> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Scrollbar(
-                  child: SingleChildScrollView(
-                      child: AlertDialog(
-                    title: Text('Add new account'),
-                    content: ProfileForm(callAfterSave: (Profile profile) {
-                      addProfile(profile);
-                    }),
-                  )),
-                );
-              });
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.grey[800],
-      ),
+      floatingActionButton: Stack(children: [
+        Align(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30),
+              child: LogoutButton(),
+            )),
+        Align(
+          alignment: Alignment.bottomRight,
+          child: FloatingActionButton(
+            heroTag: null,
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Scrollbar(
+                      child: SingleChildScrollView(
+                          child: AlertDialog(
+                        title: Text('Add new account'),
+                        content: ProfileForm(callAfterSave: (Profile profile) {
+                          addProfile(profile);
+                        }),
+                      )),
+                    );
+                  });
+            },
+            child: Icon(Icons.add),
+            backgroundColor: Colors.grey[800],
+          ),
+        )
+      ]),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 20),
