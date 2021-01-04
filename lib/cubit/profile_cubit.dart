@@ -49,4 +49,18 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(ProfileError('Error when deleting profile.'));
     }
   }
+
+  /*
+   * Call this method to reencrypt the profiles with a new master password.
+   */
+  Future<void> reEncryptProfiles(String newMaterPass) async {
+    try {
+      emit(ProfileReEncrypting());
+      List<Profile> profiles =
+          await _profileRepository.reEncryptProfiles(newMaterPass);
+      emit(ProfileReEncrypted(profiles));
+    } on Error {
+      emit(ProfileError('Error when reencrypting profiles.'));
+    }
+  }
 }

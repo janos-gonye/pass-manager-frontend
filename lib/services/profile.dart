@@ -77,4 +77,12 @@ class ProfileRepository extends AuthorizedApiService {
     }
     // TODO: Handle other status codes and errors.
   }
+
+  Future<List<Profile>> reEncryptProfiles(String newMasterPass) async {
+    // Here the old master pass is being used
+    List<Profile> profiles = await getProfiles();
+    ProfileCrypterStorageService.crypter.masterPassword = newMasterPass;
+    await _setProfiles(profiles);
+    return profiles;
+  }
 }

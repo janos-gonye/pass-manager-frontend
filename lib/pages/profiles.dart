@@ -7,7 +7,6 @@ import 'package:pass_manager_frontend/components/forms/change_master_pass_form.d
 import 'package:pass_manager_frontend/components/forms/profile.dart';
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
-import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
 class ProfilesPage extends StatefulWidget {
   @override
@@ -30,6 +29,10 @@ class _ProfilesPageState extends State<ProfilesPage> {
 
   void addProfile(Profile profile) {
     BlocProvider.of<ProfileCubit>(context).addProfile(profile);
+  }
+
+  void reEncryptProfiles(String newMasterPass) {
+    BlocProvider.of<ProfileCubit>(context).reEncryptProfiles(newMasterPass);
   }
 
   @override
@@ -63,7 +66,9 @@ class _ProfilesPageState extends State<ProfilesPage> {
                           child: AlertDialog(
                               title: Text('Change encryption key'),
                               content: ChangeMasterPassForm(
-                                  changeCallback: (String newMaterPass) {})),
+                                  changeCallback: (String newMasterPass) {
+                                reEncryptProfiles(newMasterPass);
+                              })),
                         ));
                       });
                 },
@@ -125,6 +130,9 @@ class _ProfilesPageState extends State<ProfilesPage> {
                     message = "Account successfully edited.";
                   } else if (state is ProfileDeleted) {
                     message = "Account successfully deleted.";
+                  } else if (state is ProfileReEncrypted) {
+                    message = "Accounts successfuly encrypted " +
+                        "with the new master password.";
                   }
                   if (message.isNotEmpty)
                     _scaffoldKey.currentState.showSnackBar(SnackBar(

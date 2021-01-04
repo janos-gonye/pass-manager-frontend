@@ -75,6 +75,20 @@ class ProfileDeleted extends ProfileSuccess {
   List<Object> get props => [profiles];
 }
 
+// Reencrypting
+class ProfileReEncrypting extends ProfileInProgress {
+  const ProfileReEncrypting();
+  @override
+  List<Object> get props => [];
+}
+
+class ProfileReEncrypted extends ProfileSuccess {
+  final List<Profile> profiles;
+  const ProfileReEncrypted(this.profiles) : super(profiles);
+  @override
+  List<Object> get props => [profiles];
+}
+
 // Error
 class ProfileError extends ProfileState {
   final String message;
