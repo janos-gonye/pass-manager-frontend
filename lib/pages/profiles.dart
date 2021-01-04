@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pass_manager_frontend/components/buttons/logout.dart';
 import 'package:pass_manager_frontend/components/cards/profile.dart';
 import 'package:pass_manager_frontend/components/forms/profile.dart';
@@ -40,8 +41,19 @@ class _ProfilesPageState extends State<ProfilesPage> {
         Align(
             alignment: Alignment.bottomLeft,
             child: Padding(
-              padding: const EdgeInsets.only(left: 30),
+              padding: const EdgeInsets.only(left: 35),
               child: LogoutButton(),
+            )),
+        Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 35),
+              child: FloatingActionButton(
+                heroTag: null,
+                child: Icon(FontAwesomeIcons.key),
+                backgroundColor: Colors.grey[800],
+                onPressed: () {},
+              ),
             )),
         Align(
           alignment: Alignment.bottomRight,
