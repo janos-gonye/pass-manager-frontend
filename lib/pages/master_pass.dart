@@ -47,7 +47,7 @@ class _MasterPassPageState extends State<MasterPassPage> {
                       );
                     } else if (state is ProfileLoaded) {
                       String message;
-                      if (state.profiles.isNotEmpty) {
+                      if (!state.firstEncryption) {
                         message = "Decryption successful";
                       }
                       Navigator.pushReplacementNamed(
