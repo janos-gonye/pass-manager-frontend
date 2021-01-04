@@ -27,7 +27,7 @@ class AuthService extends ApiService {
     // TODO: Handle exceptions and other status codes.
   }
 
-  void logout() {
+  static void logout() {
     deleteAccessToken();
     deleteRefreshToken();
   }
