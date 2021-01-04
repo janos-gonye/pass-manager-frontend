@@ -4,6 +4,6 @@ class ApiException implements Exception {}
 
 class AuthException implements Exception {}
 
-class UnAuthenticated implements AuthException {}
+class UnAuthenticatedException implements AuthException {}
 
 class InternalServerErrorException implements ApiException {}
