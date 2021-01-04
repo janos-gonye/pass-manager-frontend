@@ -14,8 +14,10 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> getProfiles() async {
     try {
       emit(ProfileLoading());
-      final List<Profile> profiles = await _profileRepository.getProfiles();
-      emit(ProfileLoaded(profiles));
+      ProfilesResult profilesResult = await _profileRepository.getProfiles();
+      final List<Profile> profiles = profilesResult.profiles;
+      final bool firstEncryption = profilesResult.firstEncrypted;
+      emit(ProfileLoaded(profiles, firstEncryption: firstEncryption));
     } on Error {
       emit(ProfileError('Error when loading profiles.'));
     }

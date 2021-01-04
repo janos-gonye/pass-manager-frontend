@@ -27,8 +27,10 @@ class ProfileLoading extends ProfileInProgress {
 }
 
 class ProfileLoaded extends ProfileSuccess {
+  final bool firstEncryption;
   final List<Profile> profiles;
-  const ProfileLoaded(this.profiles) : super(profiles);
+  const ProfileLoaded(this.profiles, {this.firstEncryption = false})
+      : super(profiles);
   @override
   List<Object> get props => [profiles];
 }
