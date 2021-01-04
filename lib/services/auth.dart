@@ -27,6 +27,11 @@ class AuthService extends ApiService {
     // TODO: Handle exceptions and other status codes.
   }
 
+  void logout() {
+    deleteAccessToken();
+    deleteRefreshToken();
+  }
+
   static void _setToken({@required String key, @required String value}) {
     _secureStorage.write(key: key, value: value);
   }
