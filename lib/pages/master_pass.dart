@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pass_manager_frontend/components/buttons/logout.dart';
 import 'package:pass_manager_frontend/components/forms/master_pass.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
@@ -70,6 +71,16 @@ class _MasterPassPageState extends State<MasterPassPage> {
                 ),
               ]),
         ),
+      ),
+      floatingActionButton: Stack(
+        children: [
+          Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 30),
+                child: LogoutButton(),
+              ))
+        ],
       ),
     );
   }
