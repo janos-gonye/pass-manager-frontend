@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
 class ChangeMasterPassForm extends StatefulWidget {
-  final Function callChangeCallback;
+  final Function changeCallback;
 
-  ChangeMasterPassForm({Key key, @required this.callChangeCallback})
+  ChangeMasterPassForm({Key key, @required this.changeCallback})
       : super(key: key);
 
   @override
@@ -14,12 +14,10 @@ class ChangeMasterPassForm extends StatefulWidget {
 
 class _ChangeMasterPassFormState extends State<ChangeMasterPassForm> {
   final _formKey = GlobalKey<FormState>();
-  final _oldKeyController = TextEditingController();
   final _newKeyController = TextEditingController();
 
   @override
   void dispose() {
-    _oldKeyController.dispose();
     _newKeyController.dispose();
     super.dispose();
   }
@@ -33,7 +31,6 @@ class _ChangeMasterPassFormState extends State<ChangeMasterPassForm> {
           children: [
             TextFormField(
                 autovalidate: true,
-                controller: _oldKeyController,
                 obscureText: true,
                 decoration: InputDecoration(labelText: 'Current key *'),
                 validator: (value) {
@@ -78,10 +75,7 @@ class _ChangeMasterPassFormState extends State<ChangeMasterPassForm> {
                 child: Text('Save'),
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
-                    widget.callChangeCallback(
-                      _oldKeyController.text,
-                      _newKeyController.text,
-                    );
+                    widget.changeCallback(_newKeyController.text);
                     Navigator.pop(context);
                   }
                 },

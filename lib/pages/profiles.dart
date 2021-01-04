@@ -7,6 +7,7 @@ import 'package:pass_manager_frontend/components/forms/change_master_pass_form.d
 import 'package:pass_manager_frontend/components/forms/profile.dart';
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
+import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
 class ProfilesPage extends StatefulWidget {
   @override
@@ -62,8 +63,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
                           child: AlertDialog(
                               title: Text('Change encryption key'),
                               content: ChangeMasterPassForm(
-                                  callChangeCallback:
-                                      (String oldKey, String newKey) {})),
+                                  changeCallback: (String newMaterPass) {})),
                         ));
                       });
                 },
