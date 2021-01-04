@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
+import 'package:pass_manager_frontend/services/exceptions.dart';
 import 'package:pass_manager_frontend/services/profile.dart';
 import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
@@ -18,6 +19,8 @@ class ProfileCubit extends Cubit<ProfileState> {
       final List<Profile> profiles = profilesResult.profiles;
       final bool firstEncryption = profilesResult.firstEncrypted;
       emit(ProfileLoaded(profiles, firstEncryption: firstEncryption));
+    } on WrongMasterPasswordError {
+      emit(ProfileError("Wrong master password."));
     } on Error {
       emit(ProfileError('Error when loading profiles.'));
     }

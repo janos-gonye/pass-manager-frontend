@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart' as foundation;
+import 'package:pass_manager_frontend/services/exceptions.dart';
 import 'package:pass_manager_frontend/utils/cryptojs_aes_encryption_helper.dart';
 
 /// This service is responsible for symmetrically
@@ -27,7 +28,11 @@ class CryptoService {
     @foundation.required String stringForDecryption,
     @foundation.required String password,
   }) async {
-    return decryptAESCryptoJS(
-        encrypted: stringForDecryption, passphrase: password);
+    try {
+      return decryptAESCryptoJS(
+          encrypted: stringForDecryption, passphrase: password);
+    } on Error {
+      throw new WrongMasterPasswordError();
+    }
   }
 }

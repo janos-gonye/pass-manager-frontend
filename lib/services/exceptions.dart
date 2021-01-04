@@ -1,0 +1,1 @@
+class WrongMasterPasswordError extends Error {}
