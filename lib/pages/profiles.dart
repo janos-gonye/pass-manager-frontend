@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pass_manager_frontend/components/buttons/logout.dart';
 import 'package:pass_manager_frontend/components/cards/profile.dart';
+import 'package:pass_manager_frontend/components/forms/change_encryption_key.dart';
 import 'package:pass_manager_frontend/components/forms/profile.dart';
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
@@ -52,7 +53,20 @@ class _ProfilesPageState extends State<ProfilesPage> {
                 heroTag: null,
                 child: Icon(FontAwesomeIcons.key),
                 backgroundColor: Colors.grey[800],
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Scrollbar(
+                            child: SingleChildScrollView(
+                          child: AlertDialog(
+                              title: Text('Change encryption key'),
+                              content: ChangeEncryptionKeyForm(
+                                  callChangeCallback:
+                                      (String oldKey, String newKey) {})),
+                        ));
+                      });
+                },
               ),
             )),
         Align(
