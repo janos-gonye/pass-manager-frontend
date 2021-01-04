@@ -9,7 +9,7 @@ import 'package:pass_manager_frontend/models/auth_credential.dart';
 import 'package:pass_manager_frontend/services/api.dart';
 import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
-class AuthService extends ApiService {
+class AuthRepository extends ApiService {
   static const String _accesTokenName = 'accessToken';
   static const _refreshTokenName = 'refreshToken';
   static final _secureStorage = FlutterSecureStorage();

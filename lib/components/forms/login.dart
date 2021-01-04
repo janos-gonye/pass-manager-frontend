@@ -15,7 +15,7 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   final AuthCredential _authCredential =
       AuthCredential(username: "", password: "");
-  final AuthService _authService = AuthService();
+  final AuthRepository _authService = AuthRepository();
 
   @override
   Widget build(BuildContext context) {
