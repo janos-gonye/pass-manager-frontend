@@ -26,7 +26,7 @@ class ApiService {
     } else if (response.statusCode == 500) {
       throw new exceptions.InternalServerErrorException();
     } else {
-      throw new exceptions.ApiException();
+      throw new exceptions.ApiException('Error when connecting to the server');
     }
   }
 
@@ -35,7 +35,7 @@ class ApiService {
       return _handleResponse(await http.Client().get(await _getServerUrl(path),
           headers: await extendHeaders(headers)));
     } on http.ClientException {
-      throw new exceptions.ApiException();
+      throw new exceptions.ApiException('Error when connecting to the server');
     }
   }
 
@@ -45,7 +45,7 @@ class ApiService {
       return _handleResponse(await http.Client().post(await _getServerUrl(path),
           body: json.encode(body), headers: await extendHeaders(headers)));
     } on http.ClientException {
-      throw new exceptions.ApiException();
+      throw new exceptions.ApiException('Error when connecting to the server');
     }
   }
 
@@ -55,7 +55,7 @@ class ApiService {
       return _handleResponse(await http.Client().put(await _getServerUrl(path),
           body: json.encode(body), headers: await extendHeaders(headers)));
     } on http.ClientException {
-      throw new exceptions.ApiException();
+      throw new exceptions.ApiException('Error when connecting to the server');
     }
   }
 
@@ -67,7 +67,7 @@ class ApiService {
           body: json.encode(body),
           headers: await extendHeaders(headers)));
     } on http.ClientException {
-      throw new exceptions.ApiException();
+      throw new exceptions.ApiException('Error when connecting to the server');
     }
   }
 
@@ -78,7 +78,7 @@ class ApiService {
           await _getServerUrl(path),
           headers: await extendHeaders(headers)));
     } on http.ClientException {
-      throw new exceptions.ApiException();
+      throw new exceptions.ApiException('Error when connecting to the server');
     }
   }
 }

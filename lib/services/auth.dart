@@ -17,15 +17,10 @@ class AuthRepository extends ApiService {
   Future<bool> login(AuthCredential authCredential) async {
     final http.Response response =
         await post(constants.PATH_OBTAIN_TOKENS, authCredential.toJson());
-    if (response.statusCode == 401) {
-      return false;
-    } else if (response.statusCode == 200) {
-      final Map<String, dynamic> tokens = json.decode(response.body.toString());
-      setAccessToken(tokens["access"]);
-      setRefreshToken(tokens["refresh"]);
-      return true;
-    }
-    // TODO: Handle exceptions and other status codes.
+    final Map<String, dynamic> tokens = json.decode(response.body.toString());
+    setAccessToken(tokens["access"]);
+    setRefreshToken(tokens["refresh"]);
+    return true;
   }
 
   static void logout() {
