@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
 import 'package:pass_manager_frontend/services/profile.dart';
+import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
 part 'profile_state.dart';
 
@@ -54,13 +55,17 @@ class ProfileCubit extends Cubit<ProfileState> {
    * Call this method to reencrypt the profiles with a new master password.
    */
   Future<void> reEncryptProfiles(String newMaterPass) async {
+    String oldMasterPass;
     try {
       emit(ProfileReEncrypting());
+      oldMasterPass = ProfileCrypterStorageService.crypter.masterPassword;
       List<Profile> profiles =
           await _profileRepository.reEncryptProfiles(newMaterPass);
       emit(ProfileReEncrypted(profiles));
     } on Error {
-      emit(ProfileError('Error when reencrypting profiles.'));
+      emit(ProfileError(
+          'Error when reencrypting profiles. Old master password reset.'));
+      ProfileCrypterStorageService.crypter.masterPassword = oldMasterPass;
     }
   }
 }

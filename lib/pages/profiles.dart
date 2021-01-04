@@ -64,7 +64,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
                         return Scrollbar(
                             child: SingleChildScrollView(
                           child: AlertDialog(
-                              title: Text('Change encryption key'),
+                              title: Text('Change master password'),
                               content: ChangeMasterPassForm(
                                   changeCallback: (String newMasterPass) {
                                 reEncryptProfiles(newMasterPass);
