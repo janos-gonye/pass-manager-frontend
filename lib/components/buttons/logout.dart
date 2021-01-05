@@ -13,7 +13,8 @@ class LogoutButton extends StatelessWidget {
       onPressed: () {
         AuthService.logout();
         Navigator.pushNamedAndRemoveUntil(
-            context, constants.ROUTE_LOGIN, (context) => false);
+            context, constants.ROUTE_LOGIN, (context) => false,
+            arguments: {"message": "Successfully logged out."});
       },
       child: Transform(
         alignment: Alignment.center,
