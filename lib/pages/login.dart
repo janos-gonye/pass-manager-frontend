@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   _navigateToSettingsAndShowMessage(BuildContext context) async {
     final Map<String, String> result = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => SettingsPage()));
-    if (result.containsKey("message")) {
+    if (result != null && result.containsKey("message")) {
       String message = result['message'];
       Scaffold.of(context)
         ..removeCurrentSnackBar()

@@ -25,12 +25,9 @@ class ProfileCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
-              title: Row(
-                children: <Widget>[
-                  Icon(Icons.vpn_key),
-                  SizedBox(width: 4),
-                  Text(profile.title),
-                ],
+              title: Text(
+                profile.title,
+                style: TextStyle(fontSize: 24),
               ),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
