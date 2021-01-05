@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _pageArgs = ModalRoute.of(context).settings.arguments;
-      if (_pageArgs.containsKey("message"))
+      if (_pageArgs != null && _pageArgs.containsKey("message"))
         _scaffoldKey.currentState.showSnackBar(SnackBar(
             content: Text(_pageArgs["message"]),
             duration: Duration(seconds: 2)));

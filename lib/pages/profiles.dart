@@ -20,11 +20,14 @@ class _ProfilesPageState extends State<ProfilesPage> {
   void initState() {
     super.initState();
     BlocProvider.of<ProfileCubit>(context).getProfiles();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => _scaffoldKey.currentState.showSnackBar(SnackBar(
-              content: Text(_pageArgs["message"]),
-              duration: Duration(seconds: 2),
-            )));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _pageArgs = ModalRoute.of(context).settings.arguments;
+      if (_pageArgs != null && _pageArgs.containsKey("message"))
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: Text(_pageArgs["message"]),
+          duration: Duration(seconds: 2),
+        ));
+    });
   }
 
   void addProfile(Profile profile) {
@@ -37,8 +40,6 @@ class _ProfilesPageState extends State<ProfilesPage> {
 
   @override
   Widget build(BuildContext context) {
-    _pageArgs = ModalRoute.of(context).settings.arguments;
-
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
