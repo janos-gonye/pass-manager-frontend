@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pass_manager_frontend/models/auth_credential.dart';
-import 'package:pass_manager_frontend/services/auth.dart';
 
 class LoginForm extends StatefulWidget {
-  final Function callAfterSuccess;
+  final Function callAfterValidation;
 
-  LoginForm({Key key, this.callAfterSuccess}) : super(key: key);
+  LoginForm({Key key, this.callAfterValidation}) : super(key: key);
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -13,9 +12,15 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
-  final AuthCredential _authCredential =
-      AuthCredential(username: "", password: "");
-  final AuthRepository _authService = AuthRepository();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +34,9 @@ class _LoginFormState extends State<LoginForm> {
             decoration: InputDecoration(
               labelText: 'Username',
             ),
+            controller: _usernameController,
             validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter your username';
-              }
-              _authCredential.username = value;
+              if (value.isEmpty) return 'Please enter your username';
               return null;
             },
           ),
@@ -41,27 +44,19 @@ class _LoginFormState extends State<LoginForm> {
             decoration: InputDecoration(
               labelText: 'Password',
             ),
+            controller: _passwordController,
             obscureText: true,
             validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter your password';
-              }
-              _authCredential.password = value;
+              if (value.isEmpty) return 'Please enter your password';
               return null;
             },
           ),
           RaisedButton(
             onPressed: () async {
               if (_formKey.currentState.validate()) {
-                bool success = await _authService.login(_authCredential);
-                if (success) {
-                  widget.callAfterSuccess();
-                } else {
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                    content: Text("Invalid credentials"),
-                    duration: Duration(seconds: 2),
-                  ));
-                }
+                await widget.callAfterValidation(AuthCredential(
+                    username: _usernameController.text,
+                    password: _passwordController.text));
               }
             },
             child: Text('Login'),

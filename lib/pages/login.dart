@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pass_manager_frontend/components/forms/login.dart';
+import 'package:pass_manager_frontend/models/auth_credential.dart';
 import 'package:pass_manager_frontend/pages/settings.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
+import 'package:pass_manager_frontend/services/auth.dart';
+import 'package:pass_manager_frontend/services/exceptions.dart';
 
 class LoginPage extends StatelessWidget {
+  final _scaffoldKey = GlobalKey();
+  final AuthService _authService = AuthService();
+
   _navigateToSettingsAndShowMessage(BuildContext context) async {
     final Map<String, String> result = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => SettingsPage()));
@@ -16,9 +22,15 @@ class LoginPage extends StatelessWidget {
     }
   }
 
+  void showLoginError(String errorMessage) {
+    (_scaffoldKey.currentState as ScaffoldState).showSnackBar(
+        SnackBar(content: Text(errorMessage), duration: Duration(seconds: 2)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Colors.white,
         // Use a 'Builder' to avoid an error related to 'Scaffold.of'.
         // See more by visiting the following URL.
@@ -56,14 +68,22 @@ class LoginPage extends StatelessWidget {
                 color: Colors.grey[800],
                 size: 120,
               ),
-              LoginForm(callAfterSuccess: () {
-                Navigator.pushReplacementNamed(
-                  context,
-                  constants.ROUTE_MASTER_PASS,
-                  arguments: {
-                    'message': "Successfully logged in",
-                  },
-                );
+              LoginForm(
+                  callAfterValidation: (AuthCredential authCredential) async {
+                try {
+                  await _authService.login(authCredential);
+                  Navigator.pushReplacementNamed(
+                    context,
+                    constants.ROUTE_MASTER_PASS,
+                    arguments: {
+                      'message': "Successfully logged in",
+                    },
+                  );
+                } on UnAuthenticatedException {
+                  showLoginError("Invalid credentials");
+                } on ApiException catch (e) {
+                  showLoginError(e.message);
+                }
               }),
             ],
           ),

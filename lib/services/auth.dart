@@ -9,18 +9,17 @@ import 'package:pass_manager_frontend/models/auth_credential.dart';
 import 'package:pass_manager_frontend/services/api.dart';
 import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
-class AuthRepository extends ApiService {
+class AuthService extends ApiService {
   static const String _accesTokenName = 'accessToken';
   static const _refreshTokenName = 'refreshToken';
   static final _secureStorage = FlutterSecureStorage();
 
-  Future<bool> login(AuthCredential authCredential) async {
+  Future<void> login(AuthCredential authCredential) async {
     final http.Response response =
         await post(constants.PATH_OBTAIN_TOKENS, authCredential.toJson());
     final Map<String, dynamic> tokens = json.decode(response.body.toString());
     setAccessToken(tokens["access"]);
     setRefreshToken(tokens["refresh"]);
-    return true;
   }
 
   static void logout() {
