@@ -19,8 +19,10 @@ class AuthorizedApiService extends ApiService {
       return Future.delayed(Duration(seconds: 0), () => response);
     } else if (response.statusCode == 401) {
       AuthService.logout();
-      app.navigatorKey.currentState
-          .pushNamedAndRemoveUntil(constants.ROUTE_LOGIN, (route) => false);
+      app.navigatorKey.currentState.pushNamedAndRemoveUntil(
+          constants.ROUTE_LOGIN, (route) => false,
+          arguments: {"message": "Session expired."});
+      throw new exceptions.ApiException("");
     } else if (response.statusCode == 500) {
       throw new exceptions.InternalServerErrorException(
           'Internal server error');

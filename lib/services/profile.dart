@@ -80,7 +80,6 @@ class ProfileRepository extends AuthorizedApiService {
         return ProfilesResult(profiles: profiles, firstEncrypted: false);
       }
     }
-    // TODO: Handle other status codes and errors.
   }
 
   Future<List<Profile>> reEncryptProfiles(String newMasterPass) async {
