@@ -19,10 +19,6 @@ class _LoginPageState extends State<LoginPage> {
 
   void initState() {
     super.initState();
-    if (_pageArgs.containsKey("message")) {
-      _pageArgs = ModalRoute.of(context).settings.arguments;
-    }
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _pageArgs = ModalRoute.of(context).settings.arguments;
       if (_pageArgs.containsKey("message"))

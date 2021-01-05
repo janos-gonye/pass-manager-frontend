@@ -15,12 +15,8 @@ class ProfileRepository extends AuthorizedApiService {
     final String encrypted = await CryptoService().symmetricEncrypt(
         stringForEncryption: json.encode(profiles),
         password: crypter.masterPassword);
-    http.Response response =
-        await patch(constants.PATH_PROFILES, {'data': encrypted});
-    if (response.statusCode == 200) {
-      return true;
-    }
-    // TODO: Handle other status codes and errors.
+    await patch(constants.PATH_PROFILES, {'data': encrypted});
+    return true;
   }
 
   Future<List<Profile>> saveProfile(Profile profile) async {
@@ -64,21 +60,19 @@ class ProfileRepository extends AuthorizedApiService {
   Future<ProfilesResult> getProfiles() async {
     ProfileCrypter crypter = ProfileCrypterStorageService.crypter;
     final http.Response response = await get(constants.PATH_PROFILES);
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> body = json.decode(response.body);
-      final String encryptedProfiles = body['data'];
-      // This can only happen when the users logs in the first time.
-      if (encryptedProfiles == "") {
-        return ProfilesResult(profiles: [], firstEncrypted: true);
-      } else {
-        final String decrypted = await CryptoService().symmetricDecrypt(
-            stringForDecryption: encryptedProfiles,
-            password: crypter.masterPassword);
-        final List parsedList = json.decode(decrypted);
-        final List<Profile> profiles =
-            parsedList.map((val) => Profile.fromJson(val)).toList();
-        return ProfilesResult(profiles: profiles, firstEncrypted: false);
-      }
+    final Map<String, dynamic> body = json.decode(response.body);
+    final String encryptedProfiles = body['data'];
+    // This can only happen when the users logs in the first time.
+    if (encryptedProfiles == "") {
+      return ProfilesResult(profiles: [], firstEncrypted: true);
+    } else {
+      final String decrypted = await CryptoService().symmetricDecrypt(
+          stringForDecryption: encryptedProfiles,
+          password: crypter.masterPassword);
+      final List parsedList = json.decode(decrypted);
+      final List<Profile> profiles =
+          parsedList.map((val) => Profile.fromJson(val)).toList();
+      return ProfilesResult(profiles: profiles, firstEncrypted: false);
     }
   }
 
