@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pass_manager_frontend/components/buttons/logout.dart';
-import 'package:pass_manager_frontend/components/cards/profile.dart';
 import 'package:pass_manager_frontend/components/forms/change_master_pass_form.dart';
 import 'package:pass_manager_frontend/components/forms/profile.dart';
+import 'package:pass_manager_frontend/components/lists/profile.dart';
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
 
@@ -15,10 +15,16 @@ class ProfilesPage extends StatefulWidget {
 
 class _ProfilesPageState extends State<ProfilesPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  ProfileList _profileList;
   Map<String, String> _pageArgs;
 
   void initState() {
     super.initState();
+    _profileList = ProfileList(onDeleteProfile: (Profile profile) {
+      removeProfile(profile);
+    }, onEditProfile: (Profile profile) {
+      editProfile(profile);
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _pageArgs = ModalRoute.of(context).settings.arguments;
       if (_pageArgs != null && _pageArgs.containsKey("message"))
@@ -34,17 +40,17 @@ class _ProfilesPageState extends State<ProfilesPage> {
     BlocProvider.of<ProfileCubit>(context).addProfile(profile);
   }
 
+  void editProfile(Profile profile) {
+    BlocProvider.of<ProfileCubit>(context).editProfile(profile);
+  }
+
+  void removeProfile(Profile profile) {
+    BlocProvider.of<ProfileCubit>(context).deleteProfile(profile);
+  }
+
   void reEncryptProfiles(String newMasterPass) {
     BlocProvider.of<ProfileCubit>(context).reEncryptProfiles(newMasterPass);
   }
-
-  void listProfiles(List<Profile> profiles) {}
-
-  void addProfileToList(Profile profile) {}
-
-  void editProfileInList(Profile profile) {}
-
-  void removeProfileFromList(Profile profile) {}
 
   @override
   Widget build(BuildContext context) {
@@ -134,15 +140,15 @@ class _ProfilesPageState extends State<ProfilesPage> {
                       message = state.message;
                     } else if (state is ProfileAdded) {
                       message = "Account successfully created.";
-                      addProfileToList(state.profile);
+                      _profileList.addProfile(state.profile);
                     } else if (state is ProfileLoaded) {
-                      listProfiles(state.profiles);
+                      _profileList.listProfiles(state.profiles);
                     } else if (state is ProfileEdited) {
                       message = "Account successfully edited.";
-                      editProfileInList(state.profile);
+                      _profileList.editProfile(state.profile);
                     } else if (state is ProfileDeleted) {
                       message = "Account successfully deleted.";
-                      removeProfileFromList(state.profile);
+                      _profileList.removeProfile(state.profile);
                     } else if (state is ProfileReEncrypted) {
                       message = "Accounts successfuly encrypted " +
                           "with the new master password.";
@@ -154,40 +160,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
                       ));
                   },
                   child: SizedBox(height: 0)),
-              // builder: (BuildContext context, dynamic state) {
-              //   if (state is ProfileInitial) {
-              //     return Center(child: CircularProgressIndicator());
-              //   } else if (state is ProfileInProgress) {
-              //     return Center(child: CircularProgressIndicator());
-              //   } else if (state is ProfileSuccess) {
-              //     return ListView.builder(
-              //         itemCount: state.profiles.length,
-              //         itemBuilder: (BuildContext context, int index) {
-              //           return ProfileCard(
-              //               profile: state.profiles[index],
-              //               deleteCallback: (Profile profile) {
-              //                 BlocProvider.of<ProfileCubit>(context)
-              //                     .deleteProfile(profile);
-              //               },
-              //               editCallback: (Profile profile) {
-              //                 BlocProvider.of<ProfileCubit>(context)
-              //                     .editProfile(profile);
-              //               });
-              //         });
-              //   } else {
-              //     return Center(
-              //         child: Column(children: [
-              //       SizedBox(height: 50),
-              //       Icon(Icons.error),
-              //       Text("Error occured, refresh"),
-              //       FlatButton(
-              //           child: Icon(Icons.refresh),
-              //           onPressed: () {
-              //             BlocProvider.of<ProfileCubit>(context)
-              //                 .getProfiles();
-              //           })
-              //     ]));
-              //   }}
+              Expanded(child: _profileList),
               SizedBox(height: 90),
             ],
           ),
