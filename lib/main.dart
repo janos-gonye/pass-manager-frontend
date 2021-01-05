@@ -11,21 +11,38 @@ import 'package:pass_manager_frontend/services/profile.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey();
 
-void main() => runApp(OverlaySupport(
-      child: MaterialApp(
-        initialRoute: constants.ROUTE_LOGIN,
-        navigatorKey: navigatorKey,
-        routes: {
-          constants.ROUTE_LOGIN: (context) => LoginPage(),
-          constants.ROUTE_SETTINGS: (context) => SettingsPage(),
-          constants.ROUTE_MASTER_PASS: (context) => BlocProvider(
-                create: (context) => ProfileCubit(ProfileRepository()),
-                child: MasterPassPage(),
-              ),
-          constants.ROUTE_PROFILES: (context) => BlocProvider(
-                create: (context) => ProfileCubit(ProfileRepository()),
-                child: ProfilesPage(),
-              ),
-        },
-      ),
-    ));
+class PasswordManagerApp extends StatefulWidget {
+  PasswordManagerApp({Key key}) : super(key: key);
+
+  @override
+  _PasswordManagerAppState createState() => _PasswordManagerAppState();
+}
+
+class _PasswordManagerAppState extends State<PasswordManagerApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+          primaryColor: Colors.grey[800],
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            backgroundColor: Colors.grey[800],
+          )),
+      initialRoute: constants.ROUTE_LOGIN,
+      navigatorKey: navigatorKey,
+      routes: {
+        constants.ROUTE_LOGIN: (context) => LoginPage(),
+        constants.ROUTE_SETTINGS: (context) => SettingsPage(),
+        constants.ROUTE_MASTER_PASS: (context) => BlocProvider(
+              create: (context) => ProfileCubit(ProfileRepository()),
+              child: MasterPassPage(),
+            ),
+        constants.ROUTE_PROFILES: (context) => BlocProvider(
+              create: (context) => ProfileCubit(ProfileRepository()),
+              child: ProfilesPage(),
+            ),
+      },
+    );
+  }
+}
+
+void main() => runApp(OverlaySupport(child: PasswordManagerApp()));
