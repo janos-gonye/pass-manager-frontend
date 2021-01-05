@@ -5,11 +5,15 @@ class _Loader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-          child: Align(
-              alignment: Alignment.bottomCenter,
-              child: CircularProgressIndicator())),
-    );
+        child: Stack(children: [
+      Positioned(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+        height: 3,
+        left: 0,
+        right: 0,
+        child: LinearProgressIndicator(),
+      )
+    ]));
   }
 }
 
