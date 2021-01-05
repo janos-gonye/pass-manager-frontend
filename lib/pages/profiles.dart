@@ -17,6 +17,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   ProfileList _profileList;
   Map<String, String> _pageArgs;
+  bool _refreshDisabled = false;
 
   void initState() {
     super.initState();
@@ -32,8 +33,12 @@ class _ProfilesPageState extends State<ProfilesPage> {
           content: Text(_pageArgs["message"]),
           duration: Duration(seconds: 2),
         ));
-      BlocProvider.of<ProfileCubit>(context).getProfiles();
+      getProfiles();
     });
+  }
+
+  void getProfiles() {
+    BlocProvider.of<ProfileCubit>(context).getProfiles();
   }
 
   void addProfile(Profile profile) {
@@ -57,18 +62,14 @@ class _ProfilesPageState extends State<ProfilesPage> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
-      floatingActionButton: Stack(children: [
-        Align(
-            alignment: Alignment.bottomLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 35),
-              child: LogoutButton(),
-            )),
-        Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 35),
-              child: FloatingActionButton(
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(left: 35),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              LogoutButton(),
+              FloatingActionButton(
                 heroTag: null,
                 child: Icon(FontAwesomeIcons.key),
                 backgroundColor: Colors.grey[800],
@@ -88,31 +89,39 @@ class _ProfilesPageState extends State<ProfilesPage> {
                       });
                 },
               ),
-            )),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: FloatingActionButton(
-            heroTag: null,
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Scrollbar(
-                      child: SingleChildScrollView(
-                          child: AlertDialog(
-                        title: Text('Add new account'),
-                        content: ProfileForm(callAfterSave: (Profile profile) {
-                          addProfile(profile);
-                        }),
-                      )),
-                    );
-                  });
-            },
-            child: Icon(Icons.add),
-            backgroundColor: Colors.grey[800],
-          ),
-        )
-      ]),
+              FloatingActionButton(
+                heroTag: null,
+                child: Icon(Icons.refresh),
+                backgroundColor: Colors.grey[800],
+                onPressed: _refreshDisabled
+                    ? null
+                    : () {
+                        getProfiles();
+                      },
+              ),
+              FloatingActionButton(
+                heroTag: null,
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Scrollbar(
+                          child: SingleChildScrollView(
+                              child: AlertDialog(
+                            title: Text('Add new account'),
+                            content:
+                                ProfileForm(callAfterSave: (Profile profile) {
+                              addProfile(profile);
+                            }),
+                          )),
+                        );
+                      });
+                },
+                child: Icon(Icons.add),
+                backgroundColor: Colors.grey[800],
+              ),
+            ]),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 20),
@@ -152,6 +161,11 @@ class _ProfilesPageState extends State<ProfilesPage> {
                     } else if (state is ProfileReEncrypted) {
                       message = "Accounts successfuly encrypted " +
                           "with the new master password.";
+                    }
+                    if (state is ProfileInProgress) {
+                      setState(() => _refreshDisabled = true);
+                    } else {
+                      setState(() => _refreshDisabled = false);
                     }
                     if (message.isNotEmpty)
                       _scaffoldKey.currentState.showSnackBar(SnackBar(
