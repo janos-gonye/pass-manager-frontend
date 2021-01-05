@@ -21,8 +21,8 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(ProfileLoaded(profiles, firstEncryption: firstEncryption));
     } on exceptions.WrongMasterPasswordException {
       emit(ProfileError("Wrong master password."));
-    } on Error {
-      emit(ProfileError('Error when loading profiles.'));
+    } on exceptions.ApiException catch (e) {
+      emit(ProfileError('Error when loading profiles. Cause: ${e.message}'));
     }
   }
 
@@ -31,8 +31,8 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(ProfileAddding());
       List<Profile> profiles = await _profileRepository.saveProfile(profile);
       emit(ProfileAdded(profiles));
-    } on Error {
-      emit(ProfileError('Error when saving profile.'));
+    } on exceptions.ApiException catch (e) {
+      emit(ProfileError('Error when saving profile. Cause: ${e.message}'));
     }
   }
 
@@ -41,8 +41,8 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(ProfileEditing());
       List<Profile> profiles = await _profileRepository.editProfile(profile);
       emit(ProfileEdited(profiles));
-    } on Error {
-      emit(ProfileError('Error when editing profile.'));
+    } on exceptions.ApiException catch (e) {
+      emit(ProfileError('Error when editing profile. Cause: ${e.message}'));
     }
   }
 
@@ -51,8 +51,8 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(ProfileDeleting());
       List<Profile> profiles = await _profileRepository.deleteProfile(profile);
       emit(ProfileDeleted(profiles));
-    } on Error {
-      emit(ProfileError('Error when deleting profile.'));
+    } on exceptions.ApiException catch (e) {
+      emit(ProfileError('Error when deleting profile. Cause: ${e.message}'));
     }
   }
 
@@ -67,9 +67,9 @@ class ProfileCubit extends Cubit<ProfileState> {
       List<Profile> profiles =
           await _profileRepository.reEncryptProfiles(newMaterPass);
       emit(ProfileReEncrypted(profiles));
-    } on Error {
+    } on exceptions.ApiException catch (e) {
       emit(ProfileError(
-          'Error when reencrypting profiles. Old master password reset.'));
+          'Error when reencrypting profiles. Old master password reset. Cause: ${e.message}'));
       ProfileCrypterStorageService.crypter.masterPassword = oldMasterPass;
     }
   }
