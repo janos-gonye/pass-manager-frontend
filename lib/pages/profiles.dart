@@ -19,7 +19,6 @@ class _ProfilesPageState extends State<ProfilesPage> {
 
   void initState() {
     super.initState();
-    BlocProvider.of<ProfileCubit>(context).getProfiles();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _pageArgs = ModalRoute.of(context).settings.arguments;
       if (_pageArgs != null && _pageArgs.containsKey("message"))
@@ -27,6 +26,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
           content: Text(_pageArgs["message"]),
           duration: Duration(seconds: 2),
         ));
+      BlocProvider.of<ProfileCubit>(context).getProfiles();
     });
   }
 

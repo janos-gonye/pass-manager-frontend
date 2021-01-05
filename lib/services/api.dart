@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:pass_manager_frontend/services/exceptions.dart' as exceptions;
+import 'package:pass_manager_frontend/services/loader.dart' as loader;
 import 'package:pass_manager_frontend/services/settings.dart';
 
 class ApiService {
@@ -33,9 +34,14 @@ class ApiService {
 
   Future<http.Response> get(String path, {Map<String, String> headers}) async {
     try {
-      return handleResponse(await http.Client().get(await _getServerUrl(path),
-          headers: await extendHeaders(headers)));
+      loader.LoaderService.displayLoader();
+      http.Response response = await http.Client().get(
+          await _getServerUrl(path),
+          headers: await extendHeaders(headers));
+      loader.LoaderService.hideLoader();
+      return handleResponse(response);
     } on http.ClientException {
+      loader.LoaderService.hideLoader();
       throw new exceptions.ApiException('Error when connecting to the server');
     }
   }
@@ -43,9 +49,15 @@ class ApiService {
   Future<http.Response> post(String path, body,
       {Map<String, String> headers}) async {
     try {
-      return handleResponse(await http.Client().post(await _getServerUrl(path),
-          body: json.encode(body), headers: await extendHeaders(headers)));
+      loader.LoaderService.displayLoader();
+      http.Response response = await http.Client().post(
+          await _getServerUrl(path),
+          body: json.encode(body),
+          headers: await extendHeaders(headers));
+      loader.LoaderService.hideLoader();
+      return handleResponse(response);
     } on http.ClientException {
+      loader.LoaderService.hideLoader();
       throw new exceptions.ApiException('Error when connecting to the server');
     }
   }
@@ -53,9 +65,15 @@ class ApiService {
   Future<http.Response> put(String path, body,
       {Map<String, String> headers}) async {
     try {
-      return handleResponse(await http.Client().put(await _getServerUrl(path),
-          body: json.encode(body), headers: await extendHeaders(headers)));
+      loader.LoaderService.displayLoader();
+      http.Response response = await http.Client().put(
+          await _getServerUrl(path),
+          body: json.encode(body),
+          headers: await extendHeaders(headers));
+      loader.LoaderService.hideLoader();
+      return handleResponse(response);
     } on http.ClientException {
+      loader.LoaderService.hideLoader();
       throw new exceptions.ApiException('Error when connecting to the server');
     }
   }
@@ -63,9 +81,15 @@ class ApiService {
   Future<http.Response> patch(String path, body,
       {Map<String, String> headers}) async {
     try {
-      return handleResponse(await http.Client().patch(await _getServerUrl(path),
-          body: json.encode(body), headers: await extendHeaders(headers)));
+      loader.LoaderService.displayLoader();
+      http.Response response = await http.Client().patch(
+          await _getServerUrl(path),
+          body: json.encode(body),
+          headers: await extendHeaders(headers));
+      loader.LoaderService.hideLoader();
+      return handleResponse(response);
     } on http.ClientException {
+      loader.LoaderService.hideLoader();
       throw new exceptions.ApiException('Error when connecting to the server');
     }
   }
@@ -73,10 +97,14 @@ class ApiService {
   Future<http.Response> delete(String path,
       {Map<String, String> headers}) async {
     try {
-      return handleResponse(await http.Client().delete(
+      loader.LoaderService.displayLoader();
+      http.Response response = await http.Client().delete(
           await _getServerUrl(path),
-          headers: await extendHeaders(headers)));
+          headers: await extendHeaders(headers));
+      loader.LoaderService.hideLoader();
+      return handleResponse(response);
     } on http.ClientException {
+      loader.LoaderService.hideLoader();
       throw new exceptions.ApiException('Error when connecting to the server');
     }
   }
