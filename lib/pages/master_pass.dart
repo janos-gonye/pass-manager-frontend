@@ -4,6 +4,8 @@ import 'package:pass_manager_frontend/components/buttons/logout.dart';
 import 'package:pass_manager_frontend/components/forms/master_pass.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
+import 'package:pass_manager_frontend/models/profile_crypter.dart';
+import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
 class MasterPassPage extends StatefulWidget {
   @override
@@ -55,7 +57,12 @@ class _MasterPassPageState extends State<MasterPassPage> {
                           arguments: {"message": message});
                     }
                   },
-                  child: MasterPassForm(),
+                  child: MasterPassForm(
+                      callAfterValdiation: (String masterPassword) async {
+                    ProfileCrypterStorageService.crypter =
+                        ProfileCrypter(masterPassword: masterPassword);
+                    await BlocProvider.of<ProfileCubit>(context).getProfiles();
+                  }),
                 ),
                 SizedBox(height: 15),
                 Text(

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
-import 'package:pass_manager_frontend/models/profile_crypter.dart';
-import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
 
 class MasterPassForm extends StatefulWidget {
-  MasterPassForm({Key key}) : super(key: key);
+  final Function callAfterValdiation;
+  MasterPassForm({@required this.callAfterValdiation, Key key})
+      : super(key: key);
 
   @override
   _MasterPassFormState createState() => _MasterPassFormState();
@@ -14,6 +12,7 @@ class MasterPassForm extends StatefulWidget {
 class _MasterPassFormState extends State<MasterPassForm> {
   final _formKey = GlobalKey<FormState>();
   final _masterPassController = TextEditingController();
+  bool _buttonEnabled = true;
 
   @override
   void dispose() {
@@ -45,13 +44,16 @@ class _MasterPassFormState extends State<MasterPassForm> {
           ),
           RaisedButton(
             child: Text("Unlock"),
-            onPressed: () {
-              if (_formKey.currentState.validate()) {
-                ProfileCrypterStorageService.crypter =
-                    ProfileCrypter(masterPassword: _masterPassController.text);
-                BlocProvider.of<ProfileCubit>(context).getProfiles();
-              }
-            },
+            onPressed: !_buttonEnabled
+                ? null
+                : () async {
+                    if (_formKey.currentState.validate()) {
+                      setState(() => _buttonEnabled = false);
+                      await widget
+                          .callAfterValdiation(_masterPassController.text);
+                      setState(() => _buttonEnabled = true);
+                    }
+                  },
           ),
         ],
       ),
