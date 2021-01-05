@@ -8,8 +8,11 @@ import 'package:pass_manager_frontend/pages/settings.dart';
 import 'package:pass_manager_frontend/pages/profiles.dart';
 import 'package:pass_manager_frontend/services/profile.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = new GlobalKey();
+
 void main() => runApp(MaterialApp(
       initialRoute: constants.ROUTE_LOGIN,
+      navigatorKey: navigatorKey,
       routes: {
         constants.ROUTE_LOGIN: (context) => LoginPage(),
         constants.ROUTE_SETTINGS: (context) => SettingsPage(),
