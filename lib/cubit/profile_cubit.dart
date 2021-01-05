@@ -29,8 +29,8 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> addProfile(Profile profile) async {
     try {
       emit(ProfileAddding());
-      List<Profile> profiles = await _profileRepository.saveProfile(profile);
-      emit(ProfileAdded(profiles));
+      await _profileRepository.saveProfile(profile);
+      emit(ProfileAdded(profile));
     } on exceptions.ApiException catch (e) {
       emit(ProfileError('Error when saving profile. Cause: ${e.message}'));
     }
@@ -39,8 +39,8 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> editProfile(Profile profile) async {
     try {
       emit(ProfileEditing());
-      List<Profile> profiles = await _profileRepository.editProfile(profile);
-      emit(ProfileEdited(profiles));
+      await _profileRepository.editProfile(profile);
+      emit(ProfileEdited(profile));
     } on exceptions.ApiException catch (e) {
       emit(ProfileError('Error when editing profile. Cause: ${e.message}'));
     }
@@ -49,8 +49,8 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> deleteProfile(Profile profile) async {
     try {
       emit(ProfileDeleting());
-      List<Profile> profiles = await _profileRepository.deleteProfile(profile);
-      emit(ProfileDeleted(profiles));
+      await _profileRepository.deleteProfile(profile);
+      emit(ProfileDeleted(profile));
     } on exceptions.ApiException catch (e) {
       emit(ProfileError('Error when deleting profile. Cause: ${e.message}'));
     }
@@ -64,9 +64,8 @@ class ProfileCubit extends Cubit<ProfileState> {
     try {
       emit(ProfileReEncrypting());
       oldMasterPass = ProfileCrypterStorageService.crypter.masterPassword;
-      List<Profile> profiles =
-          await _profileRepository.reEncryptProfiles(newMaterPass);
-      emit(ProfileReEncrypted(profiles));
+      await _profileRepository.reEncryptProfiles(newMaterPass);
+      emit(ProfileReEncrypted());
     } on exceptions.ApiException catch (e) {
       emit(ProfileError(
           'Error when reencrypting profiles. Old master password reset. Cause: ${e.message}'));

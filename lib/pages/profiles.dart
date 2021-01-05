@@ -38,6 +38,14 @@ class _ProfilesPageState extends State<ProfilesPage> {
     BlocProvider.of<ProfileCubit>(context).reEncryptProfiles(newMasterPass);
   }
 
+  void listProfiles(List<Profile> profiles) {}
+
+  void addProfileToList(Profile profile) {}
+
+  void editProfileInList(Profile profile) {}
+
+  void removeProfileFromList(Profile profile) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,63 +127,67 @@ class _ProfilesPageState extends State<ProfilesPage> {
               ),
               SizedBox(height: 10),
               Divider(color: Colors.grey[800]),
-              Expanded(
-                child: BlocConsumer<ProfileCubit, ProfileState>(
-                    listener: (context, state) {
-                  String message = "";
-                  if (state is ProfileError) {
-                    message = state.message;
-                  } else if (state is ProfileAdded) {
-                    message = "Account successfully created.";
-                  } else if (state is ProfileEdited) {
-                    message = "Account successfully edited.";
-                  } else if (state is ProfileDeleted) {
-                    message = "Account successfully deleted.";
-                  } else if (state is ProfileReEncrypted) {
-                    message = "Accounts successfuly encrypted " +
-                        "with the new master password.";
-                  }
-                  if (message.isNotEmpty)
-                    _scaffoldKey.currentState.showSnackBar(SnackBar(
-                      content: Text(message),
-                      duration: Duration(seconds: 2),
-                    ));
-                }, builder: (BuildContext context, dynamic state) {
-                  if (state is ProfileInitial) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (state is ProfileInProgress) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (state is ProfileSuccess) {
-                    return ListView.builder(
-                        itemCount: state.profiles.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ProfileCard(
-                              profile: state.profiles[index],
-                              deleteCallback: (Profile profile) {
-                                BlocProvider.of<ProfileCubit>(context)
-                                    .deleteProfile(profile);
-                              },
-                              editCallback: (Profile profile) {
-                                BlocProvider.of<ProfileCubit>(context)
-                                    .editProfile(profile);
-                              });
-                        });
-                  } else {
-                    return Center(
-                        child: Column(children: [
-                      SizedBox(height: 50),
-                      Icon(Icons.error),
-                      Text("Error occured, refresh"),
-                      FlatButton(
-                          child: Icon(Icons.refresh),
-                          onPressed: () {
-                            BlocProvider.of<ProfileCubit>(context)
-                                .getProfiles();
-                          })
-                    ]));
-                  }
-                }),
-              ),
+              BlocListener<ProfileCubit, ProfileState>(
+                  listener: (context, state) {
+                    String message = "";
+                    if (state is ProfileError) {
+                      message = state.message;
+                    } else if (state is ProfileAdded) {
+                      message = "Account successfully created.";
+                      addProfileToList(state.profile);
+                    } else if (state is ProfileLoaded) {
+                      listProfiles(state.profiles);
+                    } else if (state is ProfileEdited) {
+                      message = "Account successfully edited.";
+                      editProfileInList(state.profile);
+                    } else if (state is ProfileDeleted) {
+                      message = "Account successfully deleted.";
+                      removeProfileFromList(state.profile);
+                    } else if (state is ProfileReEncrypted) {
+                      message = "Accounts successfuly encrypted " +
+                          "with the new master password.";
+                    }
+                    if (message.isNotEmpty)
+                      _scaffoldKey.currentState.showSnackBar(SnackBar(
+                        content: Text(message),
+                        duration: Duration(seconds: 2),
+                      ));
+                  },
+                  child: SizedBox(height: 0)),
+              // builder: (BuildContext context, dynamic state) {
+              //   if (state is ProfileInitial) {
+              //     return Center(child: CircularProgressIndicator());
+              //   } else if (state is ProfileInProgress) {
+              //     return Center(child: CircularProgressIndicator());
+              //   } else if (state is ProfileSuccess) {
+              //     return ListView.builder(
+              //         itemCount: state.profiles.length,
+              //         itemBuilder: (BuildContext context, int index) {
+              //           return ProfileCard(
+              //               profile: state.profiles[index],
+              //               deleteCallback: (Profile profile) {
+              //                 BlocProvider.of<ProfileCubit>(context)
+              //                     .deleteProfile(profile);
+              //               },
+              //               editCallback: (Profile profile) {
+              //                 BlocProvider.of<ProfileCubit>(context)
+              //                     .editProfile(profile);
+              //               });
+              //         });
+              //   } else {
+              //     return Center(
+              //         child: Column(children: [
+              //       SizedBox(height: 50),
+              //       Icon(Icons.error),
+              //       Text("Error occured, refresh"),
+              //       FlatButton(
+              //           child: Icon(Icons.refresh),
+              //           onPressed: () {
+              //             BlocProvider.of<ProfileCubit>(context)
+              //                 .getProfiles();
+              //           })
+              //     ]));
+              //   }}
               SizedBox(height: 90),
             ],
           ),

@@ -5,8 +5,8 @@ abstract class ProfileState extends Equatable {
 }
 
 abstract class ProfileSuccess extends ProfileState {
-  final List<Profile> profiles;
-  const ProfileSuccess(this.profiles);
+  final Profile profile;
+  const ProfileSuccess(this.profile);
 }
 
 abstract class ProfileInProgress extends ProfileState {
@@ -26,11 +26,10 @@ class ProfileLoading extends ProfileInProgress {
   List<Object> get props => [];
 }
 
-class ProfileLoaded extends ProfileSuccess {
+class ProfileLoaded extends ProfileState {
   final bool firstEncryption;
   final List<Profile> profiles;
-  const ProfileLoaded(this.profiles, {this.firstEncryption = false})
-      : super(profiles);
+  const ProfileLoaded(this.profiles, {this.firstEncryption = false});
   @override
   List<Object> get props => [profiles];
 }
@@ -43,10 +42,10 @@ class ProfileAddding extends ProfileInProgress {
 }
 
 class ProfileAdded extends ProfileSuccess {
-  final List<Profile> profiles;
-  const ProfileAdded(this.profiles) : super(profiles);
+  final Profile profile;
+  const ProfileAdded(this.profile) : super(profile);
   @override
-  List<Object> get props => [profiles];
+  List<Object> get props => [profile];
 }
 
 // Edit
@@ -57,10 +56,10 @@ class ProfileEditing extends ProfileInProgress {
 }
 
 class ProfileEdited extends ProfileSuccess {
-  final List<Profile> profiles;
-  const ProfileEdited(this.profiles) : super(profiles);
+  final Profile profile;
+  const ProfileEdited(this.profile) : super(profile);
   @override
-  List<Object> get props => [profiles];
+  List<Object> get props => [profile];
 }
 
 // Delete
@@ -71,10 +70,10 @@ class ProfileDeleting extends ProfileInProgress {
 }
 
 class ProfileDeleted extends ProfileSuccess {
-  final List<Profile> profiles;
-  const ProfileDeleted(this.profiles) : super(profiles);
+  final Profile profile;
+  const ProfileDeleted(this.profile) : super(profile);
   @override
-  List<Object> get props => [profiles];
+  List<Object> get props => [profile];
 }
 
 // Reencrypting
@@ -84,11 +83,10 @@ class ProfileReEncrypting extends ProfileInProgress {
   List<Object> get props => [];
 }
 
-class ProfileReEncrypted extends ProfileSuccess {
-  final List<Profile> profiles;
-  const ProfileReEncrypted(this.profiles) : super(profiles);
+class ProfileReEncrypted extends ProfileState {
+  const ProfileReEncrypted();
   @override
-  List<Object> get props => [profiles];
+  List<Object> get props => [];
 }
 
 // Error
