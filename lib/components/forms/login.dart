@@ -14,6 +14,7 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _buttonEnabled = true;
 
   @override
   void dispose() {
@@ -52,13 +53,17 @@ class _LoginFormState extends State<LoginForm> {
             },
           ),
           RaisedButton(
-            onPressed: () async {
-              if (_formKey.currentState.validate()) {
-                await widget.callAfterValidation(AuthCredential(
-                    username: _usernameController.text,
-                    password: _passwordController.text));
-              }
-            },
+            onPressed: !_buttonEnabled
+                ? null
+                : () async {
+                    if (_formKey.currentState.validate()) {
+                      setState(() => _buttonEnabled = false);
+                      await widget.callAfterValidation(AuthCredential(
+                          username: _usernameController.text,
+                          password: _passwordController.text));
+                      setState(() => _buttonEnabled = true);
+                    }
+                  },
             child: Text('Login'),
           ),
         ],
