@@ -49,7 +49,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        backgroundColor: Colors.white,
         // Use a 'Builder' to avoid an error related to 'Scaffold.of'.
         // See more by visiting the following URL.
         // https://api.flutter.dev/flutter/material/Scaffold/of.html#material.Scaffold.of.2
@@ -60,7 +59,6 @@ class _LoginPageState extends State<LoginPage> {
                 _navigateToSettingsAndShowMessage(context);
               },
               child: Icon(Icons.settings),
-              backgroundColor: Colors.grey[800],
             );
           },
         ),
@@ -76,14 +74,12 @@ class _LoginPageState extends State<LoginPage> {
                 'Johnny\'s\nPassword\nManager',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.grey[800],
                   fontWeight: FontWeight.w800,
                   fontSize: 30,
                 ),
               ),
               Icon(
                 Icons.vpn_key,
-                color: Colors.grey[800],
                 size: 120,
               ),
               LoginForm(

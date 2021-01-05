@@ -61,7 +61,6 @@ class _ProfilesPageState extends State<ProfilesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: Colors.white,
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(left: 35),
         child: Row(
@@ -72,7 +71,6 @@ class _ProfilesPageState extends State<ProfilesPage> {
               FloatingActionButton(
                 heroTag: null,
                 child: Icon(FontAwesomeIcons.key),
-                backgroundColor: Colors.grey[800],
                 onPressed: () {
                   showDialog(
                       context: context,
@@ -92,7 +90,6 @@ class _ProfilesPageState extends State<ProfilesPage> {
               FloatingActionButton(
                 heroTag: null,
                 child: Icon(Icons.refresh),
-                backgroundColor: Colors.grey[800],
                 onPressed: _refreshDisabled
                     ? null
                     : () {
@@ -118,7 +115,6 @@ class _ProfilesPageState extends State<ProfilesPage> {
                       });
                 },
                 child: Icon(Icons.add),
-                backgroundColor: Colors.grey[800],
               ),
             ]),
       ),
@@ -134,14 +130,13 @@ class _ProfilesPageState extends State<ProfilesPage> {
                   'Your\nAccounts',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.grey[800],
                     fontWeight: FontWeight.w800,
                     fontSize: 30,
                   ),
                 ),
               ),
               SizedBox(height: 10),
-              Divider(color: Colors.grey[800]),
+              Divider(),
               BlocListener<ProfileCubit, ProfileState>(
                   listener: (context, state) {
                     String message = "";

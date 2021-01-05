@@ -21,7 +21,6 @@ class LogoutButton extends StatelessWidget {
         transform: Matrix4.rotationY(math.pi),
         child: Icon(FontAwesomeIcons.signOutAlt),
       ),
-      backgroundColor: Colors.grey[800],
     );
   }
 }

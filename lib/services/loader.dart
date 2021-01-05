@@ -5,17 +5,10 @@ class _Loader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
-        children: [
-          Container(
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
-                    child: CircularProgressIndicator(),
-                  ))),
-        ],
-      ),
+      child: Container(
+          child: Align(
+              alignment: Alignment.bottomCenter,
+              child: CircularProgressIndicator())),
     );
   }
 }

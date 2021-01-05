@@ -5,13 +5,11 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.pop(context);
           },
           child: Icon(Icons.arrow_back),
-          backgroundColor: Colors.grey[800],
         ),
         body: Scrollbar(
             child: SingleChildScrollView(
@@ -26,7 +24,6 @@ class SettingsPage extends StatelessWidget {
                             'Settings',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.grey[800],
                               fontWeight: FontWeight.w800,
                               fontSize: 30,
                             ),

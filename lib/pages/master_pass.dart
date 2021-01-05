@@ -31,7 +31,6 @@ class _MasterPassPageState extends State<MasterPassPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: Colors.white,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(60, 130, 60, 40),
@@ -71,7 +70,6 @@ class _MasterPassPageState extends State<MasterPassPage> {
                       "Do not forget it, because there is " +
                       "no other way to recover your data.",
                   style: TextStyle(
-                    color: Colors.grey[800],
                     fontSize: 12,
                     fontStyle: FontStyle.italic,
                   ),

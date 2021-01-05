@@ -45,7 +45,6 @@ class ProfileCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   FlatButton(
-                    textColor: Colors.grey[800],
                     child: Icon(Icons.edit),
                     onPressed: () {
                       showDialog(
@@ -65,7 +64,6 @@ class ProfileCard extends StatelessWidget {
                   ),
                   SizedBox(width: 10),
                   FlatButton(
-                    textColor: Colors.grey[800],
                     child: Icon(Icons.delete),
                     onPressed: () async {
                       CoolAlert.show(
@@ -143,7 +141,6 @@ class __PasswordState extends State<_Password> {
             Text("password: "),
             Text(displayPassword ? widget.password : "*" * 6,
                 style: TextStyle(
-                  color: Colors.grey[800],
                   fontWeight: FontWeight.w600,
                 )),
           ],
