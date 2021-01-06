@@ -23,9 +23,6 @@ dependencies:
   http: ^0.12.0+4
   flutter_secure_storage: ^3.3.2
   uuid: ^2.0.4
-  # TODO: If IOS is the target, see the following documentation:
-  # https://pub.dev/packages/flutter_string_encryption#support
-  flutter_string_encryption: ^0.3.1
   font_awesome_flutter: ^8.8.1
   bloc: ^6.1.0
   flutter_bloc: ^6.1.0
