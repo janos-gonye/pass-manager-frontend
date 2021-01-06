@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Johnny\'s\nPassword\nManager',
+                'PassMan',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Roboto',
@@ -80,9 +80,17 @@ class _LoginPageState extends State<LoginPage> {
                   fontSize: 34,
                 ),
               ),
+              Text(
+                'your password manager',
+                style: TextStyle(
+                  fontFamily: 'Roboto',
+                  fontStyle: FontStyle.italic,
+                  fontSize: 17,
+                ),
+              ),
               SizedBox(height: 10),
               Icon(
-                FontAwesomeIcons.houseDamage,
+                FontAwesomeIcons.key,
                 size: 80,
               ),
               SizedBox(height: 10),
