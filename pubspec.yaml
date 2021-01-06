@@ -30,7 +30,6 @@ dependencies:
   bloc: ^6.1.0
   flutter_bloc: ^6.1.0
   equatable: ^1.2.5
-  cool_alert: ^1.0.3
   overlay_support: ^1.0.5
 
   tuple: ^1.0.3
@@ -76,7 +75,7 @@ flutter:
     - family: Roboto
       fonts:
         - asset: assets/fonts/Roboto/Roboto-Regular.ttf
-        - asset: assets/fonts/Robot/Robot-Bold.ttf
+        - asset: assets/fonts/Roboto/Roboto-Bold.ttf
           weight: 700
         - asset: assets/fonts/Roboto/Roboto-Italic.ttf
           style: italic

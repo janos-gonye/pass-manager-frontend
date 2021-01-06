@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pass_manager_frontend/components/forms/login.dart';
 import 'package:pass_manager_frontend/models/auth_credential.dart';
 import 'package:pass_manager_frontend/pages/settings.dart';
@@ -74,14 +75,17 @@ class _LoginPageState extends State<LoginPage> {
                 'Johnny\'s\nPassword\nManager',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 30,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 34,
                 ),
               ),
+              SizedBox(height: 10),
               Icon(
-                Icons.vpn_key,
-                size: 120,
+                FontAwesomeIcons.houseDamage,
+                size: 80,
               ),
+              SizedBox(height: 10),
               LoginForm(
                   callAfterValidation: (AuthCredential authCredential) async {
                 try {

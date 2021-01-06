@@ -1,4 +1,3 @@
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,68 +19,93 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        elevation: 4,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ListTile(
-              title: Text(
-                profile.title,
-                style: TextStyle(fontSize: 24),
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        ListTile(
+          title: Text(profile.title,
+              style: TextStyle(
+                fontSize: 24,
+                fontFamily: 'Roboto',
+              )),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text("username: ${profile.username}"),
+              _Password(profile.password),
+              Text("notes: ${profile.notes}"),
+              Text("url: ${profile.url}"),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              RaisedButton(
+                child: Icon(Icons.edit),
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Scrollbar(
+                            child: SingleChildScrollView(
+                                child: AlertDialog(
+                                    title: Text('Edit account'),
+                                    content: ProfileForm(
+                                        profile: this.profile,
+                                        callAfterSave: (Profile profile) {
+                                          this.editCallback(profile);
+                                        }))));
+                      });
+                },
               ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text("username: ${profile.username}"),
-                  _Password(profile.password),
-                  Text("notes: ${profile.notes}"),
-                  Text("url: ${profile.url}"),
-                ],
+              SizedBox(width: 10),
+              RaisedButton(
+                child: Icon(Icons.delete),
+                onPressed: () async {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          child: Scrollbar(
+                              child: SingleChildScrollView(
+                                  child: AlertDialog(
+                            title: Text('Delete account'),
+                            content: Column(children: [
+                              Text('Are you sure to delete?'),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  RaisedButton(
+                                    child: Text('Cancel'),
+                                    onPressed: () => Navigator.pop(context),
+                                  ),
+                                  RaisedButton(
+                                      child: Text('Delete',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          )),
+                                      onPressed: () {
+                                        this.deleteCallback(profile);
+                                        Navigator.pop(context);
+                                      }),
+                                ],
+                              )
+                            ]),
+                          ))),
+                        );
+                      });
+                },
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  FlatButton(
-                    child: Icon(Icons.edit),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Scrollbar(
-                                child: SingleChildScrollView(
-                                    child: AlertDialog(
-                                        title: Text('Edit account'),
-                                        content: ProfileForm(
-                                            profile: this.profile,
-                                            callAfterSave: (Profile profile) {
-                                              this.editCallback(profile);
-                                            }))));
-                          });
-                    },
-                  ),
-                  SizedBox(width: 10),
-                  FlatButton(
-                    child: Icon(Icons.delete),
-                    onPressed: () async {
-                      CoolAlert.show(
-                          context: context,
-                          type: CoolAlertType.confirm,
-                          confirmBtnText: "Delete",
-                          cancelBtnText: "Cancel",
-                          onConfirmBtnTap: () {
-                            this.deleteCallback(profile);
-                            Navigator.pop(context);
-                          });
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ));
+            ],
+          ),
+        ),
+      ],
+    ));
   }
 }
 
@@ -135,27 +159,28 @@ class __PasswordState extends State<_Password> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisSize: MainAxisSize.min
           children: <Widget>[
             Text("password: "),
             Text(displayPassword ? widget.password : "*" * 6,
                 style: TextStyle(
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.bold,
                 )),
           ],
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            FlatButton(
+            RaisedButton(
               child: Icon(displayPassword
                   ? FontAwesomeIcons.eyeSlash
                   : FontAwesomeIcons.eye),
               onPressed: _toggleDisplayPassword,
             ),
-            FlatButton(
+            SizedBox(width: 10),
+            RaisedButton(
               child: Icon(passwordCopiedToClipboard
                   ? FontAwesomeIcons.clipboardCheck
                   : FontAwesomeIcons.clipboard),

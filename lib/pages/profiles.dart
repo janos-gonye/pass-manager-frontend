@@ -130,7 +130,8 @@ class _ProfilesPageState extends State<ProfilesPage> {
                   'Your\nAccounts',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Roboto',
                     fontSize: 30,
                   ),
                 ),
@@ -170,6 +171,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
                   },
                   child: SizedBox(height: 0)),
               Expanded(child: _profileList),
+              Divider(),
               SizedBox(height: 90),
             ],
           ),

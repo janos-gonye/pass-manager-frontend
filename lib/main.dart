@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:overlay_support/overlay_support.dart';
@@ -19,14 +20,61 @@ class PasswordManagerApp extends StatefulWidget {
 }
 
 class _PasswordManagerAppState extends State<PasswordManagerApp> {
+  ThemeMode _themeMode = ThemeMode.light;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          primaryColor: Colors.grey[800],
-          floatingActionButtonTheme: FloatingActionButtonThemeData(
-            backgroundColor: Colors.grey[800],
-          )),
+        fontFamily: 'Open Sans',
+        brightness: Brightness.light,
+        buttonColor: Colors.white,
+        buttonTheme: ButtonThemeData(
+          textTheme: ButtonTextTheme.primary,
+          splashColor: Colors.blueGrey[700],
+          buttonColor: Colors.blueGrey[800],
+          disabledColor: Colors.blueGrey[900],
+          focusColor: Colors.blueGrey[900],
+          highlightColor: Colors.blueGrey[650],
+          colorScheme: ColorScheme.light(),
+        ),
+        appBarTheme: AppBarTheme(color: Colors.green),
+        accentColor: Colors.pinkAccent[500],
+        cursorColor: Colors.blueGrey[800],
+        disabledColor: Colors.blueGrey[900],
+        primaryColor: Colors.blueGrey[800],
+        dividerColor: Colors.pinkAccent[200],
+        focusColor: Colors.blueGrey[800],
+        highlightColor: Colors.blueGrey[800],
+        splashColor: Colors.blueGrey[800],
+        primaryColorLight: Colors.blueGrey[800],
+        primaryColorDark: Colors.blueGrey[800],
+        hintColor: Colors.blueGrey[800],
+        hoverColor: Colors.blueGrey[800],
+        primarySwatch: Colors.pink,
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          foregroundColor: Colors.white,
+          splashColor: Colors.blueGrey[700],
+          hoverColor: Colors.blueGrey[800],
+          focusColor: Colors.blueGrey[900],
+          backgroundColor: Colors.blueGrey[800],
+        ),
+        indicatorColor: Colors.blueGrey[800],
+        errorColor: Colors.pinkAccent[200],
+        iconTheme: IconThemeData(color: Colors.blueGrey[800]),
+        snackBarTheme: SnackBarThemeData(
+          actionTextColor: Colors.white,
+          backgroundColor: Colors.blueGrey[900],
+        ),
+        primaryIconTheme: IconThemeData(
+          color: Colors.blueGrey[800],
+        ),
+        cardTheme: CardTheme(shadowColor: Colors.blueGrey[800], elevation: 10),
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+      ),
+      themeMode: _themeMode,
       initialRoute: constants.ROUTE_LOGIN,
       navigatorKey: navigatorKey,
       routes: {
