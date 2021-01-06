@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pass_manager_frontend/components/forms/profile.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
 
-class ProfileCard extends StatelessWidget {
+class ProfileCard extends StatefulWidget {
   final Profile profile;
   final Function deleteCallback;
   final Function editCallback;
@@ -17,117 +17,19 @@ class ProfileCard extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        ListTile(
-          title: Text(profile.title,
-              style: TextStyle(
-                fontSize: 24,
-                fontFamily: 'Roboto',
-              )),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text("username: ${profile.username}"),
-              _Password(profile.password),
-              Text("notes: ${profile.notes}"),
-              Text("url: ${profile.url}"),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              RaisedButton(
-                child: Icon(Icons.edit),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Scrollbar(
-                            child: SingleChildScrollView(
-                                child: AlertDialog(
-                                    title: Text('Edit account'),
-                                    content: ProfileForm(
-                                        profile: this.profile,
-                                        callAfterSave: (Profile profile) {
-                                          this.editCallback(profile);
-                                        }))));
-                      });
-                },
-              ),
-              SizedBox(width: 10),
-              RaisedButton(
-                child: Icon(Icons.delete),
-                onPressed: () async {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Container(
-                          child: Scrollbar(
-                              child: SingleChildScrollView(
-                                  child: AlertDialog(
-                            title: Text('Delete account'),
-                            content: Column(children: [
-                              Text('Are you sure to delete?'),
-                              SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  RaisedButton(
-                                    child: Text('Cancel'),
-                                    onPressed: () => Navigator.pop(context),
-                                  ),
-                                  RaisedButton(
-                                      child: Text('Delete',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                      onPressed: () {
-                                        this.deleteCallback(profile);
-                                        Navigator.pop(context);
-                                      }),
-                                ],
-                              )
-                            ]),
-                          ))),
-                        );
-                      });
-                },
-              ),
-            ],
-          ),
-        ),
-      ],
-    ));
-  }
+  _ProfileCardState createState() => _ProfileCardState();
 }
 
-class _Password extends StatefulWidget {
-  final String password;
-
-  _Password(this.password, {Key key}) : super(key: key);
-
-  @override
-  __PasswordState createState() => __PasswordState();
-}
-
-class __PasswordState extends State<_Password> {
-  bool displayPassword = false;
-  bool passwordCopiedToClipboard = false;
+class _ProfileCardState extends State<ProfileCard> {
+  bool _displayPassword = false;
+  bool _passwordCopiedToClipboard = false;
 
   _copyPasswordToClipboard() {
     setState(() {
-      passwordCopiedToClipboard = !passwordCopiedToClipboard;
+      _passwordCopiedToClipboard = !_passwordCopiedToClipboard;
     });
-    if (passwordCopiedToClipboard) {
-      Clipboard.setData(ClipboardData(text: widget.password));
+    if (_passwordCopiedToClipboard) {
+      Clipboard.setData(ClipboardData(text: widget.profile.password));
       Scaffold.of(context)
         ..removeCurrentSnackBar()
         ..showSnackBar(SnackBar(
@@ -141,12 +43,12 @@ class __PasswordState extends State<_Password> {
 
   _toggleDisplayPassword() {
     setState(() {
-      displayPassword = !displayPassword;
+      _displayPassword = !_displayPassword;
     });
-    if (displayPassword) {
+    if (_displayPassword) {
       Future.delayed(Duration(seconds: 5), () {
         // Only invoke if the password is still displayed.
-        if (displayPassword) {
+        if (_displayPassword) {
           _toggleDisplayPassword();
         }
       });
@@ -155,41 +57,135 @@ class __PasswordState extends State<_Password> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Card(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          // mainAxisSize: MainAxisSize.min
-          children: <Widget>[
-            Text("password: "),
-            Text(displayPassword ? widget.password : "*" * 6,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                )),
-          ],
+        ListTile(
+          title: Text(widget.profile.title,
+              style: TextStyle(
+                fontSize: 24,
+                fontFamily: 'Roboto',
+              )),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text("username: ${widget.profile.username}"),
+              Divider(),
+              Text(
+                  "password: ${_displayPassword ? widget.profile.password : "*" * 6}"),
+              Divider(),
+              Text("notes: ${widget.profile.notes}",
+                  style: TextStyle(fontStyle: FontStyle.italic)),
+              Divider(),
+              Text("url: ${widget.profile.url}"),
+            ],
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            RaisedButton(
-              child: Icon(displayPassword
-                  ? FontAwesomeIcons.eyeSlash
-                  : FontAwesomeIcons.eye),
-              onPressed: _toggleDisplayPassword,
-            ),
-            SizedBox(width: 10),
-            RaisedButton(
-              child: Icon(passwordCopiedToClipboard
-                  ? FontAwesomeIcons.clipboardCheck
-                  : FontAwesomeIcons.clipboard),
-              onPressed:
-                  passwordCopiedToClipboard ? null : _copyPasswordToClipboard,
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.fromLTRB(2, 4, 4, 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              SizedBox(
+                width: 40,
+                height: 40,
+                child: FloatingActionButton(
+                  child: Icon(Icons.delete, size: 17),
+                  onPressed: () async {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Container(
+                            child: Scrollbar(
+                                child: SingleChildScrollView(
+                                    child: AlertDialog(
+                              title: Text('Delete account'),
+                              content: Column(children: [
+                                Text('Are you sure to delete?'),
+                                SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    RaisedButton(
+                                      child: Text('Cancel'),
+                                      onPressed: () => Navigator.pop(context),
+                                    ),
+                                    RaisedButton(
+                                        child: Text('Delete',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            )),
+                                        onPressed: () {
+                                          widget.deleteCallback(widget.profile);
+                                          Navigator.pop(context);
+                                        }),
+                                  ],
+                                )
+                              ]),
+                            ))),
+                          );
+                        });
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 40,
+                width: 40,
+                child: FloatingActionButton(
+                  child: Icon(
+                      _displayPassword
+                          ? FontAwesomeIcons.eyeSlash
+                          : FontAwesomeIcons.eye,
+                      size: 17),
+                  onPressed: _toggleDisplayPassword,
+                ),
+              ),
+              SizedBox(
+                height: 40,
+                width: 40,
+                child: FloatingActionButton(
+                  child: Icon(
+                    _passwordCopiedToClipboard
+                        ? FontAwesomeIcons.clipboardCheck
+                        : FontAwesomeIcons.clipboard,
+                    size: 17,
+                  ),
+                  onPressed: _passwordCopiedToClipboard
+                      ? null
+                      : _copyPasswordToClipboard,
+                ),
+              ),
+              SizedBox(
+                width: 40,
+                height: 40,
+                child: FloatingActionButton(
+                  child: Icon(Icons.edit),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Scrollbar(
+                          child: SingleChildScrollView(
+                              child: AlertDialog(
+                            title: Text('Edit account'),
+                            content: ProfileForm(
+                                profile: widget.profile,
+                                callAfterSave: (Profile profile) {
+                                  widget.editCallback(profile);
+                                }),
+                          )),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ],
-    );
+    ));
   }
 }

@@ -69,7 +69,7 @@ class _PasswordManagerAppState extends State<PasswordManagerApp> {
         primaryIconTheme: IconThemeData(
           color: Colors.blueGrey[800],
         ),
-        cardTheme: CardTheme(shadowColor: Colors.blueGrey[800], elevation: 10),
+        cardTheme: CardTheme(shadowColor: Colors.blueGrey[800], elevation: 4),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
