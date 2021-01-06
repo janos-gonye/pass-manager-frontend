@@ -83,7 +83,7 @@ class _ProfileCardState extends State<ProfileCard> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(2, 4, 4, 8),
+          padding: const EdgeInsets.fromLTRB(2, 4, 4, 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -91,6 +91,7 @@ class _ProfileCardState extends State<ProfileCard> {
                 width: 40,
                 height: 40,
                 child: FloatingActionButton(
+                  heroTag: null,
                   child: Icon(Icons.delete, size: 17),
                   onPressed: () async {
                     showDialog(
@@ -134,6 +135,7 @@ class _ProfileCardState extends State<ProfileCard> {
                 height: 40,
                 width: 40,
                 child: FloatingActionButton(
+                  heroTag: null,
                   child: Icon(
                       _displayPassword
                           ? FontAwesomeIcons.eyeSlash
@@ -146,6 +148,7 @@ class _ProfileCardState extends State<ProfileCard> {
                 height: 40,
                 width: 40,
                 child: FloatingActionButton(
+                  heroTag: null,
                   child: Icon(
                     _passwordCopiedToClipboard
                         ? FontAwesomeIcons.clipboardCheck
@@ -161,7 +164,11 @@ class _ProfileCardState extends State<ProfileCard> {
                 width: 40,
                 height: 40,
                 child: FloatingActionButton(
-                  child: Icon(Icons.edit),
+                  heroTag: null,
+                  child: Icon(
+                    Icons.edit,
+                    size: 17,
+                  ),
                   onPressed: () {
                     showDialog(
                       context: context,
