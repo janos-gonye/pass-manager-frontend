@@ -1,15 +1,36 @@
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pass_manager_frontend/components/forms/settings.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Icon(Icons.arrow_back),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(left: 35),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              FloatingActionButton(
+                heroTag: null,
+                onPressed: () {
+                  DynamicTheme.of(context).setBrightness(
+                      Theme.of(context).brightness == Brightness.dark
+                          ? Brightness.light
+                          : Brightness.dark);
+                },
+                child: Icon(FontAwesomeIcons.palette),
+              ),
+              FloatingActionButton(
+                heroTag: null,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_back),
+              ),
+            ],
+          ),
         ),
         body: Scrollbar(
             child: SingleChildScrollView(
