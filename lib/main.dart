@@ -1,5 +1,6 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
@@ -23,6 +24,17 @@ class PasswordManagerApp extends StatelessWidget {
             : themes.darkThemeData;
       },
       themedWidgetBuilder: (context, theme) {
+        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+          systemNavigationBarColor: theme.snackBarTheme.backgroundColor,
+          statusBarColor: theme.canvasColor,
+          statusBarIconBrightness: theme.brightness == Brightness.light
+              ? Brightness.dark
+              : Brightness.light,
+          systemNavigationBarIconBrightness:
+              theme.brightness == Brightness.light
+                  ? Brightness.dark
+                  : Brightness.light,
+        ));
         return OverlaySupport(
           child: MaterialApp(
             theme: theme,
