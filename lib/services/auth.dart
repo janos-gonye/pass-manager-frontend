@@ -22,7 +22,7 @@ class AuthService extends ApiService {
     setRefreshToken(tokens["refresh"]);
   }
 
-  static void logout() {
+  void logout() {
     deleteAccessToken();
     deleteRefreshToken();
     ProfileCrypterStorageService.crypter.masterPassword = null;

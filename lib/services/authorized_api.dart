@@ -18,7 +18,7 @@ class AuthorizedApiService extends ApiService {
     if (200 <= response.statusCode && response.statusCode < 300) {
       return Future.delayed(Duration(seconds: 0), () => response);
     } else if (response.statusCode == 401) {
-      AuthService.logout();
+      AuthService().logout();
       app.navigatorKey.currentState.pushNamedAndRemoveUntil(
           constants.ROUTE_LOGIN, (route) => false,
           arguments: {"message": "Session expired."});
