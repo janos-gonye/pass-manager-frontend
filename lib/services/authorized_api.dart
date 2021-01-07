@@ -1,17 +1,17 @@
+import 'package:http_interceptor/http_client_with_interceptor.dart';
 import 'package:pass_manager_frontend/services/api.dart';
 import 'package:pass_manager_frontend/services/auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:pass_manager_frontend/services/exceptions.dart' as exceptions;
 import 'package:pass_manager_frontend/main.dart' as app;
 import 'package:pass_manager_frontend/constants.dart' as constants;
+import 'package:pass_manager_frontend/services/interceptors.dart';
 
 class AuthorizedApiService extends ApiService {
-  @override
-  Future<Map<String, String>> extendHeaders(Map<String, String> headers) async {
-    headers = await super.extendHeaders(headers);
-    headers["Authorization"] = "Bearer ${await AuthService.accessToken}";
-    return headers;
-  }
+  http.Client client = HttpClientWithInterceptor.build(interceptors: [
+    ContentTypeJsonInterceptor(),
+    AuthenticationInterceptor(),
+  ]);
 
   @override
   Future<http.Response> handleResponse(http.Response response) {
