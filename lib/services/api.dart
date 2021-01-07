@@ -20,12 +20,14 @@ class ApiService {
     if (200 <= response.statusCode && response.statusCode < 300) {
       return Future.delayed(Duration(seconds: 0), () => response);
     } else if (response.statusCode == 401) {
-      throw new exceptions.UnAuthenticatedException('Unauthenticated');
+      return Future.error(
+          exceptions.UnAuthenticatedException('Unauthenticated'));
     } else if (response.statusCode == 500) {
-      throw new exceptions.InternalServerErrorException(
-          'Internal server error');
+      return Future.error(
+          exceptions.InternalServerErrorException('Internal server error'));
     } else {
-      throw new exceptions.ApiException('Error when connecting to the server');
+      return Future.error(
+          exceptions.ApiException('Error when connecting to the server'));
     }
   }
 
@@ -37,7 +39,8 @@ class ApiService {
       return handleResponse(response);
     } on http.ClientException {
       loader.LoaderService.hideLoader();
-      throw new exceptions.ApiException('Error when connecting to the server');
+      return Future.error(
+          exceptions.ApiException('Error when connecting to the server'));
     }
   }
 
@@ -51,7 +54,8 @@ class ApiService {
       return handleResponse(response);
     } on http.ClientException {
       loader.LoaderService.hideLoader();
-      throw new exceptions.ApiException('Error when connecting to the server');
+      return Future.error(
+          exceptions.ApiException('Error when connecting to the server'));
     }
   }
 
@@ -65,7 +69,8 @@ class ApiService {
       return handleResponse(response);
     } on http.ClientException {
       loader.LoaderService.hideLoader();
-      throw new exceptions.ApiException('Error when connecting to the server');
+      return Future.error(
+          exceptions.ApiException('Error when connecting to the server'));
     }
   }
 
@@ -79,7 +84,8 @@ class ApiService {
       return handleResponse(response);
     } on http.ClientException {
       loader.LoaderService.hideLoader();
-      throw new exceptions.ApiException('Error when connecting to the server');
+      return Future.error(
+          exceptions.ApiException('Error when connecting to the server'));
     }
   }
 
@@ -92,7 +98,8 @@ class ApiService {
       return handleResponse(response);
     } on http.ClientException {
       loader.LoaderService.hideLoader();
-      throw new exceptions.ApiException('Error when connecting to the server');
+      return Future.error(
+          exceptions.ApiException('Error when connecting to the server'));
     }
   }
 }

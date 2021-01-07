@@ -20,12 +20,21 @@ class AuthService extends ApiService {
     final Map<String, dynamic> tokens = json.decode(response.body.toString());
     setAccessToken(tokens["access"]);
     setRefreshToken(tokens["refresh"]);
+    return;
   }
 
   void logout() {
     deleteAccessToken();
     deleteRefreshToken();
     ProfileCrypterStorageService.crypter.masterPassword = null;
+  }
+
+  Future<void> refreshAccesToken() async {
+    final http.Response response = await post(constants.PATH_REFRESH_TOKEN,
+        {'refresh': await AuthService.refreshToken});
+    final Map<String, dynamic> body = json.decode(response.body.toString());
+    setAccessToken(body['access']);
+    return;
   }
 
   static void _setToken({@required String key, @required String value}) {
