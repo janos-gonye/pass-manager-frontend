@@ -73,7 +73,7 @@ ThemeData darkThemeData = ThemeData(
   primaryColor: constants.darkThemeSecondary,
   dividerColor: constants.darkThemePrimary,
   focusColor: constants.darkThemeSecondary,
-  highlightColor: constants.darkThemeForeground,
+  highlightColor: constants.darkThemePrimary,
   splashColor: constants.darkThemeForeground,
   primaryColorLight: constants.darkThemeSecondary,
   primaryColorDark: constants.darkThemeBackground,
