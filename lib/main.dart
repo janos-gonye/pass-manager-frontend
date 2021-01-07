@@ -10,7 +10,6 @@ import 'package:pass_manager_frontend/pages/settings.dart';
 import 'package:pass_manager_frontend/pages/profiles.dart';
 import 'package:pass_manager_frontend/services/profile.dart';
 import 'package:pass_manager_frontend/theme_data.dart' as themes;
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey();
 
@@ -24,14 +23,6 @@ class PasswordManagerApp extends StatelessWidget {
             : themes.darkThemeData;
       },
       themedWidgetBuilder: (context, theme) {
-        FlutterStatusbarcolor.setStatusBarColor(theme.canvasColor,
-            animate: true);
-        FlutterStatusbarcolor.setStatusBarWhiteForeground(
-            theme.brightness == Brightness.dark);
-        FlutterStatusbarcolor.setNavigationBarColor(theme.canvasColor,
-            animate: true);
-        FlutterStatusbarcolor.setNavigationBarWhiteForeground(
-            theme.brightness == Brightness.dark);
         return OverlaySupport(
           child: MaterialApp(
             theme: theme,
