@@ -43,6 +43,7 @@ class ApiService {
       return Future.error(
           exceptions.ApiException('Error when connecting to the server'));
     } on SocketException {
+      loader.LoaderService.hideLoader();
       return Future.error(exceptions.ApiException(
           'Error when connecting to the server. Possible causes: wrong port number or no internet connection'));
     }
@@ -61,6 +62,7 @@ class ApiService {
       return Future.error(
           exceptions.ApiException('Error when connecting to the server'));
     } on SocketException {
+      loader.LoaderService.hideLoader();
       return Future.error(exceptions.ApiException(
           'Error when connecting to the server. Possible causes: wrong port number or no internet connection'));
     }
@@ -79,6 +81,7 @@ class ApiService {
       return Future.error(
           exceptions.ApiException('Error when connecting to the server'));
     } on SocketException {
+      loader.LoaderService.hideLoader();
       return Future.error(exceptions.ApiException(
           'Error when connecting to the server. Possible causes: wrong port number or no internet connection'));
     }
@@ -97,6 +100,7 @@ class ApiService {
       return Future.error(
           exceptions.ApiException('Error when connecting to the server'));
     } on SocketException {
+      loader.LoaderService.hideLoader();
       return Future.error(exceptions.ApiException(
           'Error when connecting to the server. Possible causes: wrong port number or no internet connection'));
     }
@@ -114,6 +118,7 @@ class ApiService {
       return Future.error(
           exceptions.ApiException('Error when connecting to the server'));
     } on SocketException {
+      loader.LoaderService.hideLoader();
       return Future.error(exceptions.ApiException(
           'Error when connecting to the server. Possible causes: wrong port number or no internet connection'));
     }
