@@ -44,7 +44,7 @@ class ApiService {
           exceptions.ApiException('Error when connecting to the server'));
     } on SocketException {
       return Future.error(exceptions.ApiException(
-          'Error when connecting to the server. Possible causes: invalid port number or no internet connection'));
+          'Error when connecting to the server. Possible causes: wrong port number or no internet connection'));
     }
   }
 
@@ -62,7 +62,7 @@ class ApiService {
           exceptions.ApiException('Error when connecting to the server'));
     } on SocketException {
       return Future.error(exceptions.ApiException(
-          'Error when connecting to the server. Possible causes: invalid port number or no internet connection'));
+          'Error when connecting to the server. Possible causes: wrong port number or no internet connection'));
     }
   }
 
@@ -80,7 +80,7 @@ class ApiService {
           exceptions.ApiException('Error when connecting to the server'));
     } on SocketException {
       return Future.error(exceptions.ApiException(
-          'Error when connecting to the server. Possible causes: invalid port number or no internet connection'));
+          'Error when connecting to the server. Possible causes: wrong port number or no internet connection'));
     }
   }
 
@@ -98,7 +98,7 @@ class ApiService {
           exceptions.ApiException('Error when connecting to the server'));
     } on SocketException {
       return Future.error(exceptions.ApiException(
-          'Error when connecting to the server. Possible causes: invalid port number or no internet connection'));
+          'Error when connecting to the server. Possible causes: wrong port number or no internet connection'));
     }
   }
 
@@ -115,7 +115,7 @@ class ApiService {
           exceptions.ApiException('Error when connecting to the server'));
     } on SocketException {
       return Future.error(exceptions.ApiException(
-          'Error when connecting to the server. Possible causes: invalid port number or no internet connection'));
+          'Error when connecting to the server. Possible causes: wrong port number or no internet connection'));
     }
   }
 }
