@@ -30,6 +30,7 @@ dependencies:
   overlay_support: ^1.0.5
   dynamic_theme: ^1.0.1
   http_interceptor: ^0.3.3
+  flutter_easyloading: ^2.2.2
 
   tuple: ^1.0.3
   encrypt: ^4.0.0
