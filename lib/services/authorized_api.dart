@@ -9,10 +9,14 @@ import 'package:pass_manager_frontend/services/interceptors.dart';
 import 'package:pass_manager_frontend/services/policies.dart';
 
 class AuthorizedApiService extends ApiService {
-  http.Client client = HttpClientWithInterceptor.build(interceptors: [
-    ContentTypeJsonInterceptor(),
-    AuthenticationInterceptor(),
-  ], retryPolicy: ExpiredTokenRetryPolicy());
+  http.Client client = HttpClientWithInterceptor.build(
+    interceptors: [
+      ContentTypeJsonInterceptor(),
+      AuthenticationInterceptor(),
+    ],
+    retryPolicy: ExpiredTokenRetryPolicy(),
+    requestTimeout: constants.requestTimeout,
+  );
 
   @override
   Future<http.Response> handleResponse(http.Response response) {

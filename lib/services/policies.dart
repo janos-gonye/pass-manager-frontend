@@ -10,7 +10,7 @@ class ExpiredTokenRetryPolicy extends RetryPolicy {
       try {
         await AuthService().refreshAccesToken();
         return true;
-      } on UnAuthenticatedException {
+      } on ApiException {
         return false;
       }
     }

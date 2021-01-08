@@ -15,3 +15,5 @@ const Color darkThemePrimary = Color.fromRGBO(240, 84, 84, 1);
 const Color darkThemeSecondary = Color.fromRGBO(221, 221, 221, 1);
 const Color darkThemeForeground = Color.fromRGBO(26, 26, 26, 1);
 const Color darkThemeBackground = Color.fromRGBO(18, 18, 18, 1);
+
+const Duration requestTimeout = Duration(seconds: 8);
