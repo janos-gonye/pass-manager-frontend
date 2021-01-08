@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/pages/login.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
@@ -26,6 +27,8 @@ class MyMaterialApp extends StatefulWidget {
 
 class _MyMaterialAppState extends State<MyMaterialApp>
     with WidgetsBindingObserver {
+  static bool _appSecured = false;
+
   @override
   void initState() {
     super.initState();
@@ -39,7 +42,11 @@ class _MyMaterialAppState extends State<MyMaterialApp>
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (!_appSecured) {
+      await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+      _appSecured = true;
+    }
     if (state == AppLifecycleState.inactive && SecurePageService.isSecurePage)
       Navigator.of(navigatorKey.currentState.context).pushNamedAndRemoveUntil(
         constants.ROUTE_LOGIN,
