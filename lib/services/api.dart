@@ -7,6 +7,8 @@ import 'package:pass_manager_frontend/services/interceptors.dart';
 import 'package:pass_manager_frontend/services/loader.dart' as loader;
 import 'package:pass_manager_frontend/services/settings.dart';
 
+// TODO: Use the Dio package
+// https://pub.dev/packages/dio
 class ApiService {
   http.Client client = HttpClientWithInterceptor.build(interceptors: [
     ContentTypeJsonInterceptor(),
