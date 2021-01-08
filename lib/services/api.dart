@@ -46,6 +46,10 @@ class ApiService {
       loader.LoaderService.hideLoader();
       return Future.error(exceptions.ApiException(
           'Error when connecting to the server. Possible causes: wrong port number or no internet connection'));
+    } on FormatException {
+      loader.LoaderService.hideLoader();
+      return Future.error(exceptions.ApiException(
+          'Error when connecting to the server. Possible causes: invalid hostname or IP address set'));
     }
   }
 
@@ -65,6 +69,10 @@ class ApiService {
       loader.LoaderService.hideLoader();
       return Future.error(exceptions.ApiException(
           'Error when connecting to the server. Possible causes: wrong port number or no internet connection'));
+    } on FormatException {
+      loader.LoaderService.hideLoader();
+      return Future.error(exceptions.ApiException(
+          'Error when connecting to the server. Possible causes: invalid hostname or IP address set'));
     }
   }
 
@@ -84,6 +92,10 @@ class ApiService {
       loader.LoaderService.hideLoader();
       return Future.error(exceptions.ApiException(
           'Error when connecting to the server. Possible causes: wrong port number or no internet connection'));
+    } on FormatException {
+      loader.LoaderService.hideLoader();
+      return Future.error(exceptions.ApiException(
+          'Error when connecting to the server. Possible causes: invalid hostname or IP address set'));
     }
   }
 
@@ -103,6 +115,10 @@ class ApiService {
       loader.LoaderService.hideLoader();
       return Future.error(exceptions.ApiException(
           'Error when connecting to the server. Possible causes: wrong port number or no internet connection'));
+    } on FormatException {
+      loader.LoaderService.hideLoader();
+      return Future.error(exceptions.ApiException(
+          'Error when connecting to the server. Possible causes: invalid hostname or IP address set'));
     }
   }
 
@@ -121,6 +137,10 @@ class ApiService {
       loader.LoaderService.hideLoader();
       return Future.error(exceptions.ApiException(
           'Error when connecting to the server. Possible causes: wrong port number or no internet connection'));
+    } on FormatException {
+      loader.LoaderService.hideLoader();
+      return Future.error(exceptions.ApiException(
+          'Error when connecting to the server. Possible causes: invalid hostname or IP address set'));
     }
   }
 }
