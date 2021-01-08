@@ -27,7 +27,6 @@ dependencies:
   bloc: ^6.1.0
   flutter_bloc: ^6.1.0
   equatable: ^1.2.5
-  overlay_support: ^1.0.5
   dynamic_theme: ^1.0.1
   http_interceptor: ^0.3.3
   flutter_easyloading: ^2.2.2
