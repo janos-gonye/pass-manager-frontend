@@ -23,6 +23,12 @@ class AuthService extends ApiService {
     return;
   }
 
+  Future<void> verifyToken() async {
+    await post(
+        constants.PATH_VERIFY_TOKEN, {'token': await AuthService.accessToken});
+    return;
+  }
+
   void logout() {
     deleteAccessToken();
     deleteRefreshToken();
