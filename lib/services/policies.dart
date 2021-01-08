@@ -12,8 +12,6 @@ class ExpiredTokenRetryPolicy extends RetryPolicy {
         return true;
       } on UnAuthenticatedException {
         return false;
-      } on ApiException {
-        return false;
       }
     }
     return false;
