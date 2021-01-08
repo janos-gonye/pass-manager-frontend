@@ -2,6 +2,7 @@ import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/pages/login.dart';
@@ -15,6 +16,14 @@ import 'package:pass_manager_frontend/theme_data.dart' as themes;
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey();
 
 class PasswordManagerApp extends StatelessWidget {
+  void initLoader() {
+    EasyLoading.instance
+      ..indicatorWidget = LinearProgressIndicator()
+      ..userInteractions = false
+      ..toastPosition = EasyLoadingToastPosition.bottom
+      ..dismissOnTap = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return DynamicTheme(
@@ -35,8 +44,10 @@ class PasswordManagerApp extends StatelessWidget {
                   ? Brightness.dark
                   : Brightness.light,
         ));
+        initLoader();
         return OverlaySupport(
           child: MaterialApp(
+            builder: EasyLoading.init(),
             theme: theme,
             initialRoute: constants.ROUTE_LOGIN,
             navigatorKey: navigatorKey,
