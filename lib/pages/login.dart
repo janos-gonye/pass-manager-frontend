@@ -6,6 +6,7 @@ import 'package:pass_manager_frontend/pages/settings.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
 import 'package:pass_manager_frontend/services/auth.dart';
 import 'package:pass_manager_frontend/services/exceptions.dart';
+import 'package:pass_manager_frontend/services/secure_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -20,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void initState() {
     super.initState();
+    SecurePageService.isSecurePage = false;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _pageArgs = ModalRoute.of(context).settings.arguments;
       if (_pageArgs != null && _pageArgs.containsKey("message"))

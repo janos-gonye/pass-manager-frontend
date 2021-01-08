@@ -6,6 +6,7 @@ import 'package:pass_manager_frontend/constants.dart' as constants;
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/models/profile_crypter.dart';
 import 'package:pass_manager_frontend/services/profile_crypter_storage.dart';
+import 'package:pass_manager_frontend/services/secure_page.dart';
 
 class MasterPassPage extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class _MasterPassPageState extends State<MasterPassPage> {
 
   void initState() {
     super.initState();
+    SecurePageService.isSecurePage = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _pageArgs = ModalRoute.of(context).settings.arguments;
       if (_pageArgs.containsKey("message"))

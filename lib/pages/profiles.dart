@@ -7,6 +7,7 @@ import 'package:pass_manager_frontend/components/forms/profile.dart';
 import 'package:pass_manager_frontend/components/lists/profile.dart';
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/models/profile.dart';
+import 'package:pass_manager_frontend/services/secure_page.dart';
 
 class ProfilesPage extends StatefulWidget {
   @override
@@ -21,6 +22,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
 
   void initState() {
     super.initState();
+    SecurePageService.isSecurePage = true;
     _profileList = ProfileList(onDeleteProfile: (Profile profile) {
       removeProfile(profile);
     }, onEditProfile: (Profile profile) {

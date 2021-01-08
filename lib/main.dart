@@ -10,16 +10,74 @@ import 'package:pass_manager_frontend/pages/master_pass.dart';
 import 'package:pass_manager_frontend/pages/settings.dart';
 import 'package:pass_manager_frontend/pages/profiles.dart';
 import 'package:pass_manager_frontend/services/profile.dart';
+import 'package:pass_manager_frontend/services/secure_page.dart';
 import 'package:pass_manager_frontend/theme_data.dart' as themes;
 
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey();
+
+class MyMaterialApp extends StatefulWidget {
+  final ThemeData theme;
+
+  MyMaterialApp({@required this.theme, Key key}) : super(key: key);
+
+  @override
+  _MyMaterialAppState createState() => _MyMaterialAppState();
+}
+
+class _MyMaterialAppState extends State<MyMaterialApp>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive && SecurePageService.isSecurePage)
+      Navigator.of(navigatorKey.currentState.context).pushNamedAndRemoveUntil(
+        constants.ROUTE_LOGIN,
+        (route) => false,
+        arguments: {
+          'message': 'You have been logged out for leaving the application.'
+        },
+      );
+    super.didChangeAppLifecycleState(state);
+  }
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      builder: EasyLoading.init(),
+      theme: widget.theme,
+      initialRoute: constants.ROUTE_LOGIN,
+      navigatorKey: navigatorKey,
+      routes: {
+        constants.ROUTE_LOGIN: (context) => LoginPage(),
+        constants.ROUTE_SETTINGS: (context) => SettingsPage(),
+        constants.ROUTE_MASTER_PASS: (context) => BlocProvider(
+              create: (context) => ProfileCubit(ProfileRepository()),
+              child: MasterPassPage(),
+            ),
+        constants.ROUTE_PROFILES: (context) => BlocProvider(
+              create: (context) => ProfileCubit(ProfileRepository()),
+              child: ProfilesPage(),
+            ),
+      },
+    );
+  }
+}
 
 class PasswordManagerApp extends StatelessWidget {
   void initLoader() {
     EasyLoading.instance
       ..indicatorWidget = CircularProgressIndicator()
       ..userInteractions = false
-      ..toastPosition = EasyLoadingToastPosition.bottom
       ..dismissOnTap = false;
   }
 
@@ -44,24 +102,7 @@ class PasswordManagerApp extends StatelessWidget {
                   : Brightness.light,
         ));
         initLoader();
-        return MaterialApp(
-          builder: EasyLoading.init(),
-          theme: theme,
-          initialRoute: constants.ROUTE_LOGIN,
-          navigatorKey: navigatorKey,
-          routes: {
-            constants.ROUTE_LOGIN: (context) => LoginPage(),
-            constants.ROUTE_SETTINGS: (context) => SettingsPage(),
-            constants.ROUTE_MASTER_PASS: (context) => BlocProvider(
-                  create: (context) => ProfileCubit(ProfileRepository()),
-                  child: MasterPassPage(),
-                ),
-            constants.ROUTE_PROFILES: (context) => BlocProvider(
-                  create: (context) => ProfileCubit(ProfileRepository()),
-                  child: ProfilesPage(),
-                ),
-          },
-        );
+        return MyMaterialApp(theme: theme);
       },
     );
   }
