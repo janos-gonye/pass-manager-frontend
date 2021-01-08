@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:http_interceptor/http_client_with_interceptor.dart';
 import 'package:pass_manager_frontend/services/exceptions.dart' as exceptions;
@@ -41,6 +42,9 @@ class ApiService {
       loader.LoaderService.hideLoader();
       return Future.error(
           exceptions.ApiException('Error when connecting to the server'));
+    } on SocketException {
+      return Future.error(exceptions.ApiException(
+          'Error when connecting to the server. Possible causes: invalid port number or no internet connection'));
     }
   }
 
@@ -56,6 +60,9 @@ class ApiService {
       loader.LoaderService.hideLoader();
       return Future.error(
           exceptions.ApiException('Error when connecting to the server'));
+    } on SocketException {
+      return Future.error(exceptions.ApiException(
+          'Error when connecting to the server. Possible causes: invalid port number or no internet connection'));
     }
   }
 
@@ -71,6 +78,9 @@ class ApiService {
       loader.LoaderService.hideLoader();
       return Future.error(
           exceptions.ApiException('Error when connecting to the server'));
+    } on SocketException {
+      return Future.error(exceptions.ApiException(
+          'Error when connecting to the server. Possible causes: invalid port number or no internet connection'));
     }
   }
 
@@ -86,6 +96,9 @@ class ApiService {
       loader.LoaderService.hideLoader();
       return Future.error(
           exceptions.ApiException('Error when connecting to the server'));
+    } on SocketException {
+      return Future.error(exceptions.ApiException(
+          'Error when connecting to the server. Possible causes: invalid port number or no internet connection'));
     }
   }
 
@@ -100,6 +113,9 @@ class ApiService {
       loader.LoaderService.hideLoader();
       return Future.error(
           exceptions.ApiException('Error when connecting to the server'));
+    } on SocketException {
+      return Future.error(exceptions.ApiException(
+          'Error when connecting to the server. Possible causes: invalid port number or no internet connection'));
     }
   }
 }
