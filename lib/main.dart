@@ -17,7 +17,7 @@ final GlobalKey<NavigatorState> navigatorKey = new GlobalKey();
 class PasswordManagerApp extends StatelessWidget {
   void initLoader() {
     EasyLoading.instance
-      ..indicatorWidget = LinearProgressIndicator()
+      ..indicatorWidget = CircularProgressIndicator()
       ..userInteractions = false
       ..toastPosition = EasyLoadingToastPosition.bottom
       ..dismissOnTap = false;
