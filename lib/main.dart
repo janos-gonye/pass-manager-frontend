@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:overlay_support/overlay_support.dart';
 import 'package:pass_manager_frontend/cubit/profile_cubit.dart';
 import 'package:pass_manager_frontend/pages/login.dart';
 import 'package:pass_manager_frontend/constants.dart' as constants;
@@ -45,25 +44,23 @@ class PasswordManagerApp extends StatelessWidget {
                   : Brightness.light,
         ));
         initLoader();
-        return OverlaySupport(
-          child: MaterialApp(
-            builder: EasyLoading.init(),
-            theme: theme,
-            initialRoute: constants.ROUTE_LOGIN,
-            navigatorKey: navigatorKey,
-            routes: {
-              constants.ROUTE_LOGIN: (context) => LoginPage(),
-              constants.ROUTE_SETTINGS: (context) => SettingsPage(),
-              constants.ROUTE_MASTER_PASS: (context) => BlocProvider(
-                    create: (context) => ProfileCubit(ProfileRepository()),
-                    child: MasterPassPage(),
-                  ),
-              constants.ROUTE_PROFILES: (context) => BlocProvider(
-                    create: (context) => ProfileCubit(ProfileRepository()),
-                    child: ProfilesPage(),
-                  ),
-            },
-          ),
+        return MaterialApp(
+          builder: EasyLoading.init(),
+          theme: theme,
+          initialRoute: constants.ROUTE_LOGIN,
+          navigatorKey: navigatorKey,
+          routes: {
+            constants.ROUTE_LOGIN: (context) => LoginPage(),
+            constants.ROUTE_SETTINGS: (context) => SettingsPage(),
+            constants.ROUTE_MASTER_PASS: (context) => BlocProvider(
+                  create: (context) => ProfileCubit(ProfileRepository()),
+                  child: MasterPassPage(),
+                ),
+            constants.ROUTE_PROFILES: (context) => BlocProvider(
+                  create: (context) => ProfileCubit(ProfileRepository()),
+                  child: ProfilesPage(),
+                ),
+          },
         );
       },
     );
