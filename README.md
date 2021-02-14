@@ -1,6 +1,6 @@
 # Password Manager Frontend
 
-A simple Flutter application for managing accounts.
+A simple Flutter application for managing client-side encrypted accounts.
 
 You can find the related back-end application [here](https://github.com/janos-gonye/pass-manager).
 
