@@ -62,11 +62,27 @@ class _ProfileCardState extends State<ProfileCard> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         ListTile(
-          title: Text(widget.profile.title,
-              style: TextStyle(
-                fontSize: 24,
-                fontFamily: 'Roboto',
-              )),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                widget.profile.title,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                'Tap to edit',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'Roboto',
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ],
+          ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
