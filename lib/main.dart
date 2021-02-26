@@ -47,14 +47,14 @@ class _MyMaterialAppState extends State<MyMaterialApp>
       await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
       _appSecured = true;
     }
-    if (state == AppLifecycleState.inactive && SecurePageService.isSecurePage)
-      Navigator.of(navigatorKey.currentState.context).pushNamedAndRemoveUntil(
-        constants.ROUTE_LOGIN,
-        (route) => false,
-        arguments: {
-          'message': 'You have been logged out for leaving the application.'
-        },
-      );
+    // if (state == AppLifecycleState.inactive && SecurePageService.isSecurePage)
+    //   Navigator.of(navigatorKey.currentState.context).pushNamedAndRemoveUntil(
+    //     constants.ROUTE_LOGIN,
+    //     (route) => false,
+    //     arguments: {
+    //       'message': 'You have been logged out for leaving the application.'
+    //     },
+    //   );
     super.didChangeAppLifecycleState(state);
   }
 
