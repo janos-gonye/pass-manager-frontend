@@ -141,37 +141,38 @@ class _ProfilesPageState extends State<ProfilesPage> {
               SizedBox(height: 10),
               Divider(),
               BlocListener<ProfileCubit, ProfileState>(
-                  listener: (context, state) {
-                    String message = "";
-                    if (state is ProfileError) {
-                      message = state.message;
-                    } else if (state is ProfileAdded) {
-                      message = "Account successfully created.";
-                      _profileList.addProfile(state.profile);
-                    } else if (state is ProfileLoaded) {
-                      _profileList.listProfiles(state.profiles);
-                    } else if (state is ProfileEdited) {
-                      message = "Account successfully edited.";
-                      _profileList.editProfile(state.profile);
-                    } else if (state is ProfileDeleted) {
-                      message = "Account successfully deleted.";
-                      _profileList.removeProfile(state.profile);
-                    } else if (state is ProfileReEncrypted) {
-                      message = "Accounts successfuly encrypted " +
-                          "with the new master password.";
-                    }
-                    if (state is ProfileInProgress) {
-                      setState(() => _refreshDisabled = true);
-                    } else {
-                      setState(() => _refreshDisabled = false);
-                    }
-                    if (message.isNotEmpty)
-                      _scaffoldKey.currentState.showSnackBar(SnackBar(
-                        content: Text(message),
-                        duration: Duration(seconds: 2),
-                      ));
-                  },
-                  child: SizedBox(height: 0)),
+                listener: (context, state) {
+                  String message = "";
+                  if (state is ProfileError) {
+                    message = state.message;
+                  } else if (state is ProfileAdded) {
+                    message = "Account successfully created.";
+                    _profileList.addProfile(state.profile);
+                  } else if (state is ProfileLoaded) {
+                    _profileList.listProfiles(state.profiles);
+                  } else if (state is ProfileEdited) {
+                    message = "Account successfully edited.";
+                    _profileList.editProfile(state.profile);
+                  } else if (state is ProfileDeleted) {
+                    message = "Account successfully deleted.";
+                    _profileList.removeProfile(state.profile);
+                  } else if (state is ProfileReEncrypted) {
+                    message = "Accounts successfuly encrypted " +
+                        "with the new master password.";
+                  }
+                  if (state is ProfileInProgress) {
+                    setState(() => _refreshDisabled = true);
+                  } else {
+                    setState(() => _refreshDisabled = false);
+                  }
+                  if (message.isNotEmpty)
+                    _scaffoldKey.currentState.showSnackBar(SnackBar(
+                      content: Text(message),
+                      duration: Duration(seconds: 2),
+                    ));
+                },
+                child: SizedBox(height: 0),
+              ),
               Expanded(child: _profileList),
               Divider(),
               SizedBox(height: 90),
