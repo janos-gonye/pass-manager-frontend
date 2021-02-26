@@ -196,35 +196,6 @@ class _ProfileCardState extends State<ProfileCard> {
                       : _copyPasswordToClipboard,
                 ),
               ),
-              SizedBox(
-                width: 40,
-                height: 40,
-                child: FloatingActionButton(
-                  heroTag: null,
-                  child: Icon(
-                    Icons.edit,
-                    size: 17,
-                  ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Scrollbar(
-                          child: SingleChildScrollView(
-                              child: AlertDialog(
-                            title: Text('Edit account'),
-                            content: ProfileForm(
-                                profile: widget.profile,
-                                callAfterSave: (Profile profile) {
-                                  widget.editCallback(profile);
-                                }),
-                          )),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
             ],
           ),
         ),
