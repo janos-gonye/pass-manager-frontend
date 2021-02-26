@@ -6,15 +6,13 @@ import 'package:pass_manager_frontend/models/profile.dart';
 
 class ProfileCard extends StatefulWidget {
   final Profile profile;
-  final Function deleteCallback;
   final Function editCallback;
 
-  ProfileCard(
-      {@required this.profile,
-      @required this.deleteCallback,
-      @required this.editCallback,
-      Key key})
-      : super(key: key);
+  ProfileCard({
+    @required this.profile,
+    @required this.editCallback,
+    Key key,
+  }) : super(key: key);
 
   @override
   _ProfileCardState createState() => _ProfileCardState();
@@ -136,50 +134,6 @@ class _ProfileCardState extends State<ProfileCard> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              SizedBox(
-                width: 40,
-                height: 40,
-                child: FloatingActionButton(
-                  heroTag: null,
-                  child: Icon(Icons.delete, size: 17),
-                  onPressed: () async {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Container(
-                            child: Scrollbar(
-                                child: SingleChildScrollView(
-                                    child: AlertDialog(
-                              title: Text('Delete account'),
-                              content: Column(children: [
-                                Text('Are you sure to delete?'),
-                                SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    RaisedButton(
-                                      child: Text('Cancel'),
-                                      onPressed: () => Navigator.pop(context),
-                                    ),
-                                    RaisedButton(
-                                        child: Text('Delete',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            )),
-                                        onPressed: () {
-                                          widget.deleteCallback(widget.profile);
-                                          Navigator.pop(context);
-                                        }),
-                                  ],
-                                )
-                              ]),
-                            ))),
-                          );
-                        });
-                  },
-                ),
-              ),
               SizedBox(
                 height: 40,
                 width: 40,

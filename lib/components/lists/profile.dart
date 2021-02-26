@@ -61,9 +61,6 @@ class _ProfileListState extends State<ProfileList> {
         itemCount: _profiles.length,
         itemBuilder: (BuildContext context, int index) => ProfileCard(
             profile: _profiles[index],
-            deleteCallback: (Profile profile) {
-              widget.onDeleteProfile(profile);
-            },
             editCallback: (Profile profile) {
               widget.onEditProfile(profile);
             }));
