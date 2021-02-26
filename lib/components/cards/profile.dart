@@ -61,41 +61,61 @@ class _ProfileCardState extends State<ProfileCard> {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        ListTile(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                widget.profile.title,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w500,
+        GestureDetector(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Scrollbar(
+                  child: SingleChildScrollView(
+                      child: AlertDialog(
+                    title: Text('Edit account'),
+                    content: ProfileForm(
+                        profile: widget.profile,
+                        callAfterSave: (Profile profile) {
+                          widget.editCallback(profile);
+                        }),
+                  )),
+                );
+              },
+            );
+          },
+          child: ListTile(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.profile.title,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              Text(
-                'Tap to edit',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontFamily: 'Roboto',
-                  fontStyle: FontStyle.italic,
+                Text(
+                  'Tap to edit',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontFamily: 'Roboto',
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text("username: ${widget.profile.username}"),
-              Divider(),
-              Text(
-                  "password: ${_displayPassword ? widget.profile.password : "*" * 6}"),
-              Divider(),
-              Text("notes: ${widget.profile.notes}",
-                  style: TextStyle(fontStyle: FontStyle.italic)),
-              Divider(),
-              Text("url: ${widget.profile.url}"),
-            ],
+              ],
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text("username: ${widget.profile.username}"),
+                Divider(),
+                Text(
+                    "password: ${_displayPassword ? widget.profile.password : "*" * 6}"),
+                Divider(),
+                Text("notes: ${widget.profile.notes}",
+                    style: TextStyle(fontStyle: FontStyle.italic)),
+                Divider(),
+                Text("url: ${widget.profile.url}"),
+              ],
+            ),
           ),
         ),
         Padding(
