@@ -58,11 +58,60 @@ class _ProfileListState extends State<ProfileList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: _profiles.length,
-        itemBuilder: (BuildContext context, int index) => ProfileCard(
-            profile: _profiles[index],
-            editCallback: (Profile profile) {
-              widget.onEditProfile(profile);
-            }));
+      itemCount: _profiles.length,
+      itemBuilder: (BuildContext context, int index) => Dismissible(
+        direction: DismissDirection.endToStart,
+        onDismissed: (direction) {
+          widget.onDeleteProfile(_profiles[index]);
+        },
+        confirmDismiss: (DismissDirection direction) async {
+          return await showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Container(
+                child: Scrollbar(
+                  child: SingleChildScrollView(
+                    child: AlertDialog(
+                      title: Text('Delete account'),
+                      content: Column(children: [
+                        Text('Are you sure to delete?'),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            RaisedButton(
+                              child: Text('Cancel'),
+                              onPressed: () => Navigator.pop(context, false),
+                            ),
+                            RaisedButton(
+                              child: Text(
+                                'Delete',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context, true);
+                              },
+                            ),
+                          ],
+                        ),
+                      ]),
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        },
+        key: UniqueKey(),
+        child: ProfileCard(
+          profile: _profiles[index],
+          editCallback: (Profile profile) {
+            widget.onEditProfile(profile);
+          },
+        ),
+      ),
+    );
   }
 }
