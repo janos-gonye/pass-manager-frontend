@@ -61,6 +61,18 @@ class _ProfileListState extends State<ProfileList> {
       itemCount: _profiles.length,
       itemBuilder: (BuildContext context, int index) => Dismissible(
         direction: DismissDirection.endToStart,
+        background: Container(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 30),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Icon(
+                Icons.delete,
+                size: 90,
+              ),
+            ),
+          ),
+        ),
         onDismissed: (direction) {
           widget.onDeleteProfile(_profiles[index]);
         },
