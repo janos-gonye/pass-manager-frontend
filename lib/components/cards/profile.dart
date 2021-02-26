@@ -92,13 +92,26 @@ class _ProfileCardState extends State<ProfileCard> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                Text(
-                  'Tap to edit',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: 'Roboto',
-                    fontStyle: FontStyle.italic,
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Tap to edit',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: 'Roboto',
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    Text(
+                      'Swipe left to delete',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: 'Roboto',
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
