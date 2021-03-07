@@ -89,6 +89,7 @@ class _SettingsFormState extends State<SettingsForm> {
                         return null;
                       },
                     ),
+                    SizedBox(height: 10),
                     RaisedButton(
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
