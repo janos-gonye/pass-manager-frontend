@@ -90,12 +90,12 @@ class _LoginPageState extends State<LoginPage> {
                   fontSize: 17,
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
               Icon(
                 FontAwesomeIcons.key,
                 size: 80,
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
               LoginForm(
                   callAfterValidation: (AuthCredential authCredential) async {
                 try {
