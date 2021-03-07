@@ -52,6 +52,7 @@ class _LoginFormState extends State<LoginForm> {
               return null;
             },
           ),
+          SizedBox(height: 10),
           RaisedButton(
             onPressed: !_buttonEnabled
                 ? null
