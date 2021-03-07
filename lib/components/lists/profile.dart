@@ -63,12 +63,12 @@ class _ProfileListState extends State<ProfileList> {
         direction: DismissDirection.endToStart,
         background: Container(
           child: Padding(
-            padding: const EdgeInsets.only(right: 30),
+            padding: const EdgeInsets.only(right: 15),
             child: Align(
               alignment: Alignment.centerRight,
               child: Icon(
                 Icons.delete,
-                size: 90,
+                size: 45,
               ),
             ),
           ),
