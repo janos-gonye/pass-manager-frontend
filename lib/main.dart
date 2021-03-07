@@ -11,7 +11,6 @@ import 'package:pass_manager_frontend/pages/master_pass.dart';
 import 'package:pass_manager_frontend/pages/settings.dart';
 import 'package:pass_manager_frontend/pages/profiles.dart';
 import 'package:pass_manager_frontend/services/profile.dart';
-import 'package:pass_manager_frontend/services/secure_page.dart';
 import 'package:pass_manager_frontend/theme_data.dart' as themes;
 
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey();
