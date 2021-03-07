@@ -92,8 +92,12 @@ class PasswordManagerApp extends StatelessWidget {
     return DynamicTheme(
       data: (Brightness brightness) {
         return brightness == Brightness.light
-            ? FlexColorScheme.light(scheme: FlexScheme.mandyRed).toTheme
-            : FlexColorScheme.dark(scheme: FlexScheme.mandyRed).toTheme;
+            ? FlexColorScheme.light(
+                scheme: FlexScheme.hippieBlue,
+              ).toTheme
+            : FlexColorScheme.dark(
+                scheme: FlexScheme.hippieBlue,
+              ).toTheme;
       },
       themedWidgetBuilder: (context, theme) {
         SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
