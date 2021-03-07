@@ -42,6 +42,7 @@ class _MasterPassFormState extends State<MasterPassForm> {
               return null;
             },
           ),
+          SizedBox(height: 10),
           RaisedButton(
             child: Text("Unlock"),
             onPressed: !_buttonEnabled
