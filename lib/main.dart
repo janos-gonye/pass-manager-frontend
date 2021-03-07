@@ -1,4 +1,5 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +12,6 @@ import 'package:pass_manager_frontend/pages/master_pass.dart';
 import 'package:pass_manager_frontend/pages/settings.dart';
 import 'package:pass_manager_frontend/pages/profiles.dart';
 import 'package:pass_manager_frontend/services/profile.dart';
-import 'package:pass_manager_frontend/theme_data.dart' as themes;
 
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey();
 
@@ -92,8 +92,8 @@ class PasswordManagerApp extends StatelessWidget {
     return DynamicTheme(
       data: (Brightness brightness) {
         return brightness == Brightness.light
-            ? themes.lightThemeData
-            : themes.darkThemeData;
+            ? FlexColorScheme.light(scheme: FlexScheme.mandyRed).toTheme
+            : FlexColorScheme.dark(scheme: FlexScheme.mandyRed).toTheme;
       },
       themedWidgetBuilder: (context, theme) {
         SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
